@@ -43,24 +43,24 @@ export function TimeSpentChartDetails(props: Props) {
             <AccordionItem className="border-0" value="item-1">
                 <AccordionTrigger className="justify-center gap-4">time spent in details</AccordionTrigger>
                 <AccordionContent>
-                    <div className={cn('h-96 flex flex-wrap justify-center items-center')}>
-                        <ChartContainer
-                            config={chartConfig}
-                            className="aspect-square h-96"
-                        >
-                            <PieChart>
-                                <ChartTooltip
-                                    cursor={false}
-                                    content={<ChartTooltipContent hideLabel />}
-                                />
-                                <Pie
-                                    data={processedData}
-                                    dataKey="minutesSpent"
-                                    nameKey="label"
-                                    innerRadius={60}
-                                />
-                            </PieChart>
-                        </ChartContainer>
+                    <div className='grid grid-cols-2'>
+                            <ChartContainer
+                                config={chartConfig}
+                                className="aspect-square h-72 md:h-96 col-span-2 md:col-auto mx-auto md:ml-auto md:mr-0"
+                            >
+                                <PieChart>
+                                    <ChartTooltip
+                                        cursor={false}
+                                        content={<ChartTooltipContent hideLabel />}
+                                    />
+                                    <Pie
+                                        data={processedData}
+                                        dataKey="minutesSpent"
+                                        nameKey="label"
+                                        innerRadius={60}
+                                    />
+                                </PieChart>
+                            </ChartContainer>
                         <div className="flex flex-col justify-center space-y-5">
                             <h4 className="text-2xl font-semibold">Time</h4>
                             <ul className="space-y-2 max-w-[500px]">

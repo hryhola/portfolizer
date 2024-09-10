@@ -46,7 +46,7 @@ export const TimeSpentChart = (props: Props) => {
     'bg-chart-5'
   ]
 
-  return <div className='flex flex-wrap justify-center w-full'>
+  return <div className='flex flex-wrap justify-start w-full'>
     {cleanedData.map((b, i) => <div
       key={b.id}
       style={{ width: b.percentOfMinutesSpent + '%' }}
