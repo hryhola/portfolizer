@@ -1,14 +1,13 @@
 import React from 'react'
-import { MdAccessTime, MdSignalCellular1Bar, MdSignalCellular2Bar , MdSignalCellular4Bar  } from "react-icons/md";
+import { MdSignalCellular1Bar, MdSignalCellular2Bar , MdSignalCellular4Bar  } from "react-icons/md";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { cn } from '@/lib/utils';
-import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@radix-ui/react-tooltip';
 import { Tip } from './tip';
 
 type Props = {
     className?: string
     level: 'Low' | 'Medium' | 'High'
-    explanation: string
+    explanation?: string
 }
 
 const ComplexityLevel = (props: Props) => {
@@ -23,9 +22,9 @@ const ComplexityLevel = (props: Props) => {
   return (
     <div className={cn('inline-block', props.className)}>
         <b><LevelIcon className='inline-block relative top-[-2px] ' /> {props.level} </b>
-        <Tip content={props.explanation}>
+        {props.explanation ? <Tip content={props.explanation}>
             <IoIosInformationCircleOutline className='inline opacity-55 relative top-[-1px]' />
-        </Tip>
+        </Tip> : <></>}
     </div>
   )
 }
