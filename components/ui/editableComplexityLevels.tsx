@@ -9,6 +9,7 @@ import { Button } from './button';
 import { ChevronUp, ChevronDown, Plus } from 'lucide-react';
 import { moveOrderedElementDown, moveOrderedElementUp } from '@/lib/array';
 import { v4 } from 'uuid';
+import { EditButtons } from './editButtons';
 
 interface EditableComplexityLevel extends ComplexityLevelData {
     onRemove: React.MouseEventHandler<HTMLButtonElement>
@@ -18,27 +19,7 @@ interface EditableComplexityLevel extends ComplexityLevelData {
 
 export const EditableComplexityLevel: React.FC<EditableComplexityLevel> = (props) => {
     return <li className='flex gap-2'>
-        <Button variant='ghost'
-            type="button"
-            onClick={props.onRemove}
-            data-id={props.id}
-        >❌</Button>
-        <Button className='opacity-40 hover:opacity-100'
-                variant='ghost'
-                type='button'
-                onClick={props.onUp}
-                data-id={props.id}
-            >
-                <ChevronUp />
-            </Button>
-            <Button className='opacity-40 hover:opacity-100'
-                variant='ghost'
-                type='button'
-                onClick={props.onDown}
-                data-id={props.id}
-            >
-                <ChevronDown />
-            </Button>
+        <EditButtons {...props} />
         <Input placeholder='Name' required defaultValue={props.label} />
         <Select required>
             <SelectTrigger className="w-[180px]">
@@ -59,28 +40,28 @@ interface EditableComplexityLevelsProps {
 }
 
 export const EditableComplexityLevels: React.FC<EditableComplexityLevelsProps> = (props) => {
-    const [levels, setLevels] = useState([...props.data].sort((a,b) => a.order - b.order))
- 
-    
+    const [levels, setLevels] = useState([...props.data].sort((a, b) => a.order - b.order))
+
+
     const handleRemove: React.MouseEventHandler<HTMLButtonElement> = (e) => {
         const id = (e.currentTarget as HTMLButtonElement).dataset.id
-    
+
         setLevels((prev) => prev.filter(p => p.id !== id))
     }
 
     const handleUp: React.MouseEventHandler<HTMLButtonElement> = (e) => {
         const id = (e.currentTarget as HTMLButtonElement).dataset.id
-    
+
         if (!id) return
-    
+
         setLevels(prev => moveOrderedElementUp(prev, id))
     }
 
     const handleDown: React.MouseEventHandler<HTMLButtonElement> = (e) => {
         const id = (e.currentTarget as HTMLButtonElement).dataset.id
-    
+
         if (!id) return
-    
+
         setLevels(prev => moveOrderedElementDown(prev, id))
     }
 

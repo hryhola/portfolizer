@@ -4,11 +4,11 @@ import React, { useRef, useState } from 'react'
 import { StackData } from './stackBlock';
 import { Button } from './button';
 import { Separator } from './separator';
-import { cn } from '@/lib/utils';
-import { ChevronDown, ChevronUp, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { moveOrderedElementDown, moveOrderedElementUp } from '@/lib/array';
 import { Input } from './input';
 import { v4 } from 'uuid';
+import { EditButtons } from './editButtons';
 
 interface EditableStackBlockProps {
     data: StackData[]
@@ -65,31 +65,13 @@ export const EditableStackBlock: React.FC<EditableStackBlockProps> = (props) => 
     }
 
     return <ul>
-        {stack.map((d, i) => <React.Fragment key={d.id}><li className='mb-px whitespace-nowrap'>
-            <Button className='rounded-full px-2 h-8'
-                data-id={d.id}
-                type='button'
-                variant='destructive'
-                onClick={handleRemove}
-            >
-                ❌ {d.field}:&nbsp;<b>{d.value}</b>
-            </Button>
-            <Button className='h-8 px-2 opacity-40 hover:opacity-100 relative top-2'
-                variant='ghost'
-                data-id={d.id}
-                onClick={handleUp}
-                type='button'
-            >
-                <ChevronUp />
-            </Button>
-            <Button className='h-8 px-2 opacity-40 hover:opacity-100 relative top-2'
-                variant='ghost'
-                data-id={d.id}
-                onClick={handleDown}
-                type='button'
-            >
-                <ChevronDown />
-            </Button>
+        {stack.map((d, i) => <React.Fragment key={d.id}><li className='mb-px flex justify-end'>
+            <EditButtons id={d.id}
+                onDown={handleDown}
+                onRemove={handleRemove}
+                onUp={handleUp}
+                removeButtonContent={<>{d.field}:&nbsp;<b>{d.value}</b>&nbsp;❌</>}
+            />
         </li>{i === 4 && <Separator className='bg-gray-300 mt-2' />}</React.Fragment>)}
         <li className='mt-2 flex'>
             <Input className='rounded-r-none'

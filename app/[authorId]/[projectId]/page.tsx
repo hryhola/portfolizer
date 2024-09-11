@@ -7,6 +7,7 @@ import { ProjectTimeTotal } from '@/components/ui/project/projectTimeTotal';
 import { ProjectSign } from '@/components/ui/project/projectSign';
 import { StackBlock } from '@/components/ui/stackBlock';
 import { ProjectDescription } from '@/components/ui/project/projectDescription';
+import { LinksBlock } from '@/components/ui/linksBlock';
 
 type Page = {
   searchParams: { mode: string },
@@ -43,22 +44,28 @@ export default async function Page(page: Page) {
   ];
 
   const features = [
-    { order: 0, text: '🤓 Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
-    { order: 1, text: '😎 Aliquam lobortis sem euismod suscipit maximus.' },
-    { order: 2, text: '😧 Praesent dictum nisl ut neque facilisis mollis.' },
-    { order: 3, text: '🤩 Etiam nec ligula convallis tortor ornare fermentum vulputate eu nisl.' },
-    { order: 4, text: '🥳 Aliquam porttitor est a ante ultricies porta.' },
-    { order: 5, text: '😒 Duis ac mauris eget nulla semper gravida.' },
-    { order: 6, text: '😔 Quisque in nunc ac felis rutrum eleifend.' },
-    { order: 7, text: '😟 Vivamus eu nulla sit amet lacus malesuada pretium.' },
-    { order: 8, text: '😱 Vivamus et quam in lorem maximus elementum.' },
-    { order: 9, text: '😐 Quisque egestas tortor vel justo blandit, in ornare risus posuere.' },
-    { order: 10, text: '🥴 Morbi et tortor a orci interdum aliquam eu dictum elit.' },
-    { order: 11, text: '🎃 Nulla pulvinar velit id ultrices cursus.' },
-    { order: 12, text: '✊ Donec consectetur lacus vitae metus faucibus consectetur.' },
-    { order: 13, text: '🎃 Suspendisse sit amet lorem eget felis porttitor consequat ac sed tellus.' },
-    { order: 14, text: '🎃 Ut in purus id nisi ultricies vestibulum.' },
+    { id: 'id-1', order: 0, text: '🤓 Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
+    { id: 'id-2', order: 1, text: '😎 Aliquam lobortis sem euismod suscipit maximus.' },
+    { id: 'id-3', order: 2, text: '😧 Praesent dictum nisl ut neque facilisis mollis.' },
+    { id: 'id-4', order: 3, text: '🤩 Etiam nec ligula convallis tortor ornare fermentum vulputate eu nisl.' },
+    { id: 'id-5', order: 4, text: '🥳 Aliquam porttitor est a ante ultricies porta.' },
+    { id: 'id-6', order: 5, text: '😒 Duis ac mauris eget nulla semper gravida.' },
+    { id: 'id-7', order: 6, text: '😔 Quisque in nunc ac felis rutrum eleifend.' },
+    { id: 'id-8', order: 7, text: '😟 Vivamus eu nulla sit amet lacus malesuada pretium.' },
+    { id: 'id-9', order: 8, text: '😱 Vivamus et quam in lorem maximus elementum.' },
+    { id: 'id-10', order: 9, text: '😐 Quisque egestas tortor vel justo blandit, in ornare risus posuere.' },
+    { id: 'id-11', order: 10, text: '🥴 Morbi et tortor a orci interdum aliquam eu dictum elit.' },
+    { id: 'id-12', order: 11, text: '🎃 Nulla pulvinar velit id ultrices cursus.' },
+    { id: 'id-13', order: 12, text: '✊ Donec consectetur lacus vitae metus faucibus consectetur.' },
+    { id: 'id-14', order: 13, text: '🎃 Suspendisse sit amet lorem eget felis porttitor consequat ac sed tellus.' },
+    { id: 'id-15', order: 14, text: '🎃 Ut in purus id nisi ultricies vestibulum.' },
   ];
+
+  const links = [
+    { id: 'id-1', order: 1, label: 'See live:', url: 'https://www.google.com/' },
+    { id: 'id-2', order: 2, label: 'Figma Design:', url: 'https://www.google.com/' },
+    { id: 'id-3', order: 3, label: 'Source Code:', url: 'https://www.google.com/' }
+  ]
 
   return (<form>
     <Image className="w-full h-80 object-cover" src='/images/image_25.png' alt={'alt'} width={1400} height={300} />
@@ -71,11 +78,7 @@ export default async function Page(page: Page) {
         <StackBlock className='text-left order-5 sm:order-4 col-span-2 sm:col-span-1 sm:row-span-2 sm:text-right' data={stack} mode={mode} />
         <ComplexityLevelsBlock className='order-last col-span-2 sm:text-center' data={complexity} mode={mode} />
       </div>
-      <div className='my-5 text-center divide-y-2'>
-        <p className='py-3'>See live: <a className='underline' href='https://www.google.com/'>https://www.google.com/</a></p>
-        <p className='py-3'>Source Code: <a className='underline' href='https://www.google.com/'>https://www.google.com/</a></p>
-        <p className='py-3'>Designs: <a className='underline' href='https://www.google.com/'>https://www.google.com/</a></p>
-      </div>
+      <LinksBlock className='my-5' data={links} mode={mode} />
       <TimeSpentChart data={timeSpent} />
       <TimeSpentChartDetails data={timeSpent} />
       <h3 className='text-3xl pb-3'>Features</h3>
