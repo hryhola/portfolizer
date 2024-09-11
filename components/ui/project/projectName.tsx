@@ -11,6 +11,12 @@ type Props = {
 export const ProjectName = (props: Props) => {
     const className = cn("text-5xl font-extrabold", props.className)
 
-    return props.mode === 'edit' ? <Input required variant='slim' className={cn(className, 'h-auto')} defaultValue={props.value} /> : <h1 className={className}>{props.value}</h1>
+    return props.mode === 'edit' ? <Input className={cn(className, 'h-auto')}
+        name='name'
+        required
+        variant='slim'
+        defaultValue={props.value}
+        placeholder='Project Name'
+    /> : <h1 className={className}>{props.value}</h1>
 }
 

@@ -1,10 +1,4 @@
 import Image from 'next/image'
-import { MdAccessTime } from "react-icons/md";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
 import { TimeSpentChart } from '@/components/ui/timeSpentChart';
 import { TimeSpentChartDetails } from '@/components/ui/timeSpentChartDetails';
 import { ComplexityLevelsBlock } from '@/components/ui/complexityLevelsBlock';
@@ -12,6 +6,7 @@ import { ProjectName } from '@/components/ui/project/projectName';
 import { ProjectTimeTotal } from '@/components/ui/project/projectTimeTotal';
 import { ProjectSign } from '@/components/ui/project/projectSign';
 import { StackBlock } from '@/components/ui/stackBlock';
+import { ProjectDescription } from '@/components/ui/project/projectDescription';
 
 type Page = {
   searchParams: { mode: string },
@@ -32,19 +27,19 @@ export default async function Page(page: Page) {
   ];
 
   const stack = [
-    { order: 0, field: 'Backend', value: 'Node' },
-    { order: 1, field: 'Database', value: 'MongoDB' },
-    { order: 2, field: 'Frontend', value: 'React' },
-    { order: 3, field: 'UI', value: 'Flat' },
-    { order: 4, field: 'Styling', value: 'Tailwind' },
-    { order: 5, field: 'State', value: 'Redux' },
+    { id: 'id-6', order: 5, field: 'State', value: 'Redux' },
+    { id: 'id-3', order: 2, field: 'Frontend', value: 'React' },
+    { id: 'id-4', order: 3, field: 'UI', value: 'Flat' },
+    { id: 'id-2', order: 1, field: 'Database', value: 'MongoDB' },
+    { id: 'id-1', order: 0, field: 'Backend', value: 'Node' },
+    { id: 'id-5', order: 4, field: 'Styling', value: 'Tailwind' },
   ];
 
   const complexity = [
-    { order: 0, label: 'Backend logic', level: 'High', levelsExplanation: 'Explanation' },
-    { order: 1, label: 'Frontend logic', level: 'Low' },
-    { order: 2, label: 'Database design', level: 'High', levelsExplanation: 'Explanation' },
-    { order: 3, label: 'Styling', level: 'Medium' }
+    { order: 0, label: 'Backend logic', level: 'High' as const, levelsExplanation: 'Explanation' },
+    { order: 1, label: 'Frontend logic', level: 'Low' as const },
+    { order: 2, label: 'Database design', level: 'High' as const, levelsExplanation: 'Explanation' },
+    { order: 3, label: 'Styling', level: 'Medium' as const }
   ];
 
   const features = [
@@ -72,8 +67,8 @@ export default async function Page(page: Page) {
         <ProjectName className='align-text-bottom col-span-2 sm:col-span-1 order-1' mode={mode} value='Project Name' />
         <ProjectTimeTotal className='order-3 sm:order-2' mode={mode} value='99' />
         <ProjectSign className='order-2 sm:order-3' value='Username' projectClient='Some Client' authorPictureSrc='https://github.com/shadcn.png' mode={mode} />
-        <p className='order-4 sm:order-5 col-span-2 sm:col-span-1'>Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus convallis porta. Vestibulum luctus a ligula a eleifend. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nulla eget nibh at leo consectetur rutrum. Etiam in quam mi. Pellentesque quis aliquam nisi. Sed finibus purus nec risus vulputate, ac imperdiet odio aliquet. Mauris sodales felis in mattis volutpat. Fusce non gravida metus. Mauris non nisi id ipsum tincidunt gravida nec sit amet metus. In sed nisi non erat semper accumsan vel condimentum libero. Curabitur interdum lorem massa, eu euismod leo lacinia eu.</p>
-        <StackBlock className=' text-left order-5 sm:order-4 col-span-2 sm:col-span-1 sm:row-span-2 sm:text-right' data={stack} />
+        <ProjectDescription className='order-4 sm:order-5 col-span-2 sm:col-span-1' value='Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus faucibus convallis porta. Vestibulum luctus a ligula a eleifend. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nulla eget nibh at leo consectetur rutrum. Etiam in quam mi. Pellentesque quis aliquam nisi. Sed finibus purus nec risus vulputate, ac imperdiet odio aliquet. Mauris sodales felis in mattis volutpat. Fusce non gravida metus. Mauris non nisi id ipsum tincidunt gravida nec sit amet metus. In sed nisi non erat semper accumsan vel condimentum libero. Curabitur interdum lorem massa, eu euismod leo lacinia eu.' mode={mode} />
+        <StackBlock className='text-left order-5 sm:order-4 col-span-2 sm:col-span-1 sm:row-span-2 sm:text-right' data={stack} mode={mode} />
         <ComplexityLevelsBlock className='order-last col-span-2 sm:text-center' data={complexity} />
       </div>
       <div className='my-5 text-center divide-y-2'>

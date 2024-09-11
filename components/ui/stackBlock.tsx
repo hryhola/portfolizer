@@ -1,14 +1,19 @@
-import { cn } from '@/lib/utils'
-import React from 'react'
-import { StateBlockRest } from './StateBlockRest'
+import React from 'react';
+import { cn } from '@/lib/utils';
+import { StateBlockRest } from './stateBlockRest';
+import { EditableComponentProps } from './types';
+import { EditableStackBlock } from './editableStackBlock';
 
-export type StackBlockProps = {
+export type StackData = {
+    id: string,
+    order: number,
+    field: string
+    value: string
+}
+
+export type StackBlockProps = EditableComponentProps & {
     className?: string
-    data: {
-        order: number,
-        field: string
-        value: string
-    }[]
+    data: StackData[]
 }
 
 export const StackBlock: React.FC<StackBlockProps> = (props) => {
@@ -18,10 +23,13 @@ export const StackBlock: React.FC<StackBlockProps> = (props) => {
     return (
         <div className={cn('', props.className)}>
             <h4 className='font-mono mb-1'>Stack</h4>
-            <ul className="whitespace-nowrap ">
-                {top5.map(s => <li key={s.order}>{s.field}: <b>{s.value}</b></li>)}
-                <StateBlockRest data={rest} />
-            </ul>
+            {props.mode === 'view' ?
+                <ul className="whitespace-nowrap">
+                    {top5.map(s => <li key={s.id}>{s.field}: <b>{s.value}</b></li>)}
+                    <StateBlockRest data={rest} />
+                </ul>
+                : <></>}
+            {props.mode === 'edit' ? <EditableStackBlock data={props.data} /> : <></>}
         </div>
     )
 }

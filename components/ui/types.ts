@@ -1,5 +1,5 @@
 export interface EditableComponentProps {
     mode: 'view' | 'edit'
-    value: string|number
+    value?: string|number
     className?: string
 }

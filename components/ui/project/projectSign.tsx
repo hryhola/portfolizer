@@ -21,6 +21,15 @@ export const ProjectSign: React.FC<ProjectSignProps> = (props) => {
             </Avatar>
             <span>{props.value}</span>
         </div>
-        <div className={cn({ 'flex gap-2 items-start': props.mode === 'edit' })}>& {props.mode === 'edit' ? <Input className={cn('relative top-[-6px]', textClasses)} variant='slim' required defaultValue={props.projectClient} /> : props.projectClient}</div>
+        <div className={cn({ 'flex gap-2 items-start': props.mode === 'edit' })}>& {props.mode === 'edit'
+            ? <Input className={cn('relative top-[-6px]', textClasses)}
+                name="client"
+                variant='slim'
+                required
+                defaultValue={props.projectClient}
+                placeholder='Project Client'
+            />
+            : props.projectClient}
+        </div>
     </h3>;
 }

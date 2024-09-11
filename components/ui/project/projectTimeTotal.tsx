@@ -13,7 +13,14 @@ export const ProjectTimeTotal: React.FC<ProjectTimeTotalProps> = (props) => {
     return <h3 className={className}>
         <MdAccessTime className='inline opacity-20 relative top-[1px]' />
         {props.mode === 'edit'
-            ? <Input required type='number' variant='slim' className={cn('h-auto min-w-20 sm:min-w-28', textClasses)} defaultValue={props.value} />
+            ? <Input className={cn('h-auto min-w-20 sm:min-w-28', textClasses)}
+                name="timeTotal"
+                required
+                type='number'
+                variant='slim'
+                defaultValue={props.value}
+                placeholder='99'
+            />
             : props.value}
         h
     </h3>;
