@@ -1,6 +1,4 @@
 import Image from 'next/image'
-import { TimeSpentChart } from '@/components/ui/project/timeSpentChart';
-import { TimeSpentChartDetails } from '@/components/ui/project/timeSpentChartDetails';
 import { ComplexityLevelsBlock } from '@/components/ui/project/complexityLevelsBlock';
 import { ProjectName } from '@/components/ui/project/projectName';
 import { ProjectTimeTotal } from '@/components/ui/project/projectTimeTotal';
@@ -8,7 +6,8 @@ import { ProjectSign } from '@/components/ui/project/projectSign';
 import { StackBlock } from '@/components/ui/project/stackBlock';
 import { ProjectDescription } from '@/components/ui/project/projectDescription';
 import { LinksBlock } from '@/components/ui/project/linksBlock';
-import { EditableTimeSpent } from '@/components/ui/project/editableTimeSpent';
+import { ProjectFeatures } from '@/components/ui/project/features';
+import { ProjectTimeSpent } from '@/components/ui/project/projectTimeSpent';
 
 type Page = {
   searchParams: { mode: string },
@@ -80,15 +79,8 @@ export default async function Page(page: Page) {
         <ComplexityLevelsBlock className='order-last col-span-2 sm:text-center' data={complexity} mode={mode} />
       </div>
       <LinksBlock className='my-5' data={links} mode={mode} />
-      {mode === 'view' && <>
-        <TimeSpentChart data={timeSpent} />
-        <TimeSpentChartDetails data={timeSpent} />
-      </>}
-      {mode === 'edit' && <EditableTimeSpent data={timeSpent} />}
-      <h3 className='text-3xl pb-3'>Features</h3>
-      <ul className='space-y-3'>
-        {features.map(f => <li key={f.order}>{f.text}</li>)}
-      </ul>
+      <ProjectTimeSpent data={timeSpent} mode={mode}/>
+      <ProjectFeatures data={features} mode={mode} />
     </div>
     <Image className="w-full h-80 object-cover my-5" src='/images/image_25.png' alt={'alt'} width={1400} height={300} />
   </form>);
