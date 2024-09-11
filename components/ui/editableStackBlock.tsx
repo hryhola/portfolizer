@@ -74,7 +74,7 @@ export const EditableStackBlock: React.FC<EditableStackBlockProps> = (props) => 
             >
                 ❌ {d.field}:&nbsp;<b>{d.value}</b>
             </Button>
-            <Button className='h-8 px-2 opacity-40 hover:opacity-100 focus:opacity-100 relative top-2'
+            <Button className='h-8 px-2 opacity-40 hover:opacity-100 relative top-2'
                 variant='ghost'
                 data-id={d.id}
                 onClick={handleUp}
@@ -82,7 +82,7 @@ export const EditableStackBlock: React.FC<EditableStackBlockProps> = (props) => 
             >
                 <ChevronUp />
             </Button>
-            <Button className='h-8 px-2 opacity-40 hover:opacity-100 focus:opacity-100 relative top-2'
+            <Button className='h-8 px-2 opacity-40 hover:opacity-100 relative top-2'
                 variant='ghost'
                 data-id={d.id}
                 onClick={handleDown}
