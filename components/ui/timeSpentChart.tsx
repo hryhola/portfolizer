@@ -1,16 +1,16 @@
 import React from 'react'
 import { cn } from '@/lib/utils';
 
-export type ChartData = {
+export type TimeData = {
   id: string
   label: string
-  percentOfMinutesSpent?: number
   description?: string
   minutesSpent: number
-}[]
+  percentOfMinutesSpent?: number // Calculated on frontend
+}
 
 type Props = {
-  data: ChartData
+  data: TimeData[]
 }
 
 export const TimeSpentChart = (props: Props) => {

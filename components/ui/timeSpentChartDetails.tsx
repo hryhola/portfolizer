@@ -7,14 +7,13 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from "@/components/ui/chart"
-import { ChartData } from "./timeSpentChart"
-import { cn } from "@/lib/utils"
+import { TimeData } from "./timeSpentChart"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./accordion"
 
 export const description = "A donut chart"
 
 type Props = {
-    data: ChartData
+    data: TimeData[]
 }
 
 export function TimeSpentChartDetails(props: Props) {

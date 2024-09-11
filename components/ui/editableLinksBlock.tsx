@@ -62,7 +62,7 @@ export const EditableLinksBlock: React.FC<EditableLinksBlockProps> = (props) => 
     }
 
     return <>
-        {links.map(l => <li className='py-3 flex justify-center items-center'>
+        {links.map(l => <li key={l.id} className='py-3 flex justify-center items-center'>
             <EditButtons id={l.id} onRemove={handleRemove} onUp={handleUp} onDown={handleDown} />
             <span>
                 {l.label} <a className='underline' target='_blank' href={l.url}>{l.url}</a>

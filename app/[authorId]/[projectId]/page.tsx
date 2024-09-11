@@ -8,6 +8,7 @@ import { ProjectSign } from '@/components/ui/project/projectSign';
 import { StackBlock } from '@/components/ui/stackBlock';
 import { ProjectDescription } from '@/components/ui/project/projectDescription';
 import { LinksBlock } from '@/components/ui/linksBlock';
+import { EditableTimeSpent } from '@/components/ui/editableTimeSpent';
 
 type Page = {
   searchParams: { mode: string },
@@ -79,8 +80,11 @@ export default async function Page(page: Page) {
         <ComplexityLevelsBlock className='order-last col-span-2 sm:text-center' data={complexity} mode={mode} />
       </div>
       <LinksBlock className='my-5' data={links} mode={mode} />
-      <TimeSpentChart data={timeSpent} />
-      <TimeSpentChartDetails data={timeSpent} />
+      {mode === 'view' && <>
+        <TimeSpentChart data={timeSpent} />
+        <TimeSpentChartDetails data={timeSpent} />
+      </>}
+      {mode === 'edit' && <EditableTimeSpent data={timeSpent} />}
       <h3 className='text-3xl pb-3'>Features</h3>
       <ul className='space-y-3'>
         {features.map(f => <li key={f.order}>{f.text}</li>)}
