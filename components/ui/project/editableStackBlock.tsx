@@ -2,13 +2,13 @@
 
 import React, { useRef, useState } from 'react'
 import { StackData } from './stackBlock';
-import { Button } from './button';
-import { Separator } from './separator';
+import { Button } from '../button';
+import { Separator } from '../separator';
 import { Plus } from 'lucide-react';
 import { moveOrderedElementDown, moveOrderedElementUp } from '@/lib/array';
-import { Input } from './input';
+import { Input } from '../input';
 import { v4 } from 'uuid';
-import { EditButtons } from './editButtons';
+import { EditButtons } from '../editButtons';
 
 interface EditableStackBlockProps {
     data: StackData[]

@@ -1,13 +1,13 @@
 'use client'
 
 import React, { useRef, useState } from 'react'
-import { EditableComponentProps } from './types';
+import { EditableComponentProps } from '../types';
 import { cn } from '@/lib/utils';
 import { LinkData } from './linksBlock';
-import { Button } from './button';
+import { Button } from '../button';
 import { Plus } from 'lucide-react';
-import { Input } from './input';
-import { EditButtons } from './editButtons';
+import { Input } from '../input';
+import { EditButtons } from '../editButtons';
 import { moveOrderedElementUp, moveOrderedElementDown } from '@/lib/array';
 import { v4 } from 'uuid';
 import { url } from 'inspector';

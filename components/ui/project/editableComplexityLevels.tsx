@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react'
 import { ComplexityLevelData } from './complexityLevelsBlock';
-import { Input } from './input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './select';
-import { Textarea } from './textarea';
-import { Button } from './button';
+import { Input } from '../input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../select';
+import { Textarea } from '../textarea';
+import { Button } from '../button';
 import { ChevronUp, ChevronDown, Plus } from 'lucide-react';
 import { moveOrderedElementDown, moveOrderedElementUp } from '@/lib/array';
 import { v4 } from 'uuid';
-import { EditButtons } from './editButtons';
+import { EditButtons } from '../editButtons';
 
 interface EditableComplexityLevel extends ComplexityLevelData {
     onRemove: React.MouseEventHandler<HTMLButtonElement>

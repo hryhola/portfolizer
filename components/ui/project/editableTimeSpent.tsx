@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react'
 import { TimeData } from './timeSpentChart';
-import { Input } from './input';
-import { Textarea } from './textarea';
-import { Button } from './button';
+import { Input } from '../input';
+import { Textarea } from '../textarea';
+import { Button } from '../button';
 import { Plus } from 'lucide-react';
 import { v4 } from 'uuid';
 

@@ -1,14 +1,14 @@
 import Image from 'next/image'
-import { TimeSpentChart } from '@/components/ui/timeSpentChart';
-import { TimeSpentChartDetails } from '@/components/ui/timeSpentChartDetails';
-import { ComplexityLevelsBlock } from '@/components/ui/complexityLevelsBlock';
+import { TimeSpentChart } from '@/components/ui/project/timeSpentChart';
+import { TimeSpentChartDetails } from '@/components/ui/project/timeSpentChartDetails';
+import { ComplexityLevelsBlock } from '@/components/ui/project/complexityLevelsBlock';
 import { ProjectName } from '@/components/ui/project/projectName';
 import { ProjectTimeTotal } from '@/components/ui/project/projectTimeTotal';
 import { ProjectSign } from '@/components/ui/project/projectSign';
-import { StackBlock } from '@/components/ui/stackBlock';
+import { StackBlock } from '@/components/ui/project/stackBlock';
 import { ProjectDescription } from '@/components/ui/project/projectDescription';
-import { LinksBlock } from '@/components/ui/linksBlock';
-import { EditableTimeSpent } from '@/components/ui/editableTimeSpent';
+import { LinksBlock } from '@/components/ui/project/linksBlock';
+import { EditableTimeSpent } from '@/components/ui/project/editableTimeSpent';
 
 type Page = {
   searchParams: { mode: string },

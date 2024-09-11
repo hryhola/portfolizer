@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import ComplexityLevel from './complexityLevel'
 import { cn } from '@/lib/utils'
-import { EditableComponentProps } from './types'
+import { EditableComponentProps } from '../types'
 import { EditableComplexityLevels } from './editableComplexityLevels'
 
 export interface ComplexityLevelData {

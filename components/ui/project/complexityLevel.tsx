@@ -2,7 +2,7 @@ import React from 'react'
 import { MdSignalCellular1Bar, MdSignalCellular2Bar , MdSignalCellular4Bar  } from "react-icons/md";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { cn } from '@/lib/utils';
-import { Tip } from './tip';
+import { Tip } from '../tip';
 
 type Props = {
     className?: string
