@@ -10,7 +10,6 @@ import { moveOrderedElementUp, moveOrderedElementDown } from '@/lib/array';
 import { useProjectContext } from './projectFormWrapper';
 
 interface EditableLinksBlockProps {
-    data: LinkData[]
 }
 
 export const EditableLinksBlock: React.FC<EditableLinksBlockProps> = (props) => {

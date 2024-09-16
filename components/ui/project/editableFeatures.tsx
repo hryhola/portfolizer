@@ -8,13 +8,14 @@ import { moveOrderedElementUp, moveOrderedElementDown } from '@/lib/array';
 import { Plus } from 'lucide-react';
 import { v4 } from 'uuid';
 import { Button } from '../button';
+import { useProjectContext } from './projectFormWrapper';
 
 interface EditableFeaturesProps {
     data: FeatureData[]
 }
 
 export const EditableFeatures: React.FC<EditableFeaturesProps> = (props) => {
-    const [features, setFeatures] = useState([...props.data].sort((a,b) => a.order - b.order))
+    const { features, setFeatures } = useProjectContext()
 
     const handleRemove: React.MouseEventHandler<HTMLButtonElement> = (e) => {
         const id = (e.currentTarget as HTMLButtonElement).dataset.id
