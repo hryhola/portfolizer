@@ -7,7 +7,6 @@ import { EditableStackBlock } from './editableStackBlock';
 export type StackData = {
     id: string,
     order: number,
-    field: string
     value: string
 }
 
@@ -25,11 +24,11 @@ export const StackBlock: React.FC<StackBlockProps> = (props) => {
             <h4 className='font-mono mb-1'>Stack</h4>
             {props.mode === 'view' ?
                 <ul className="whitespace-nowrap">
-                    {top5.map(s => <li key={s.id}>{s.field}: <b>{s.value}</b></li>)}
+                    {top5.map(s => <li key={s.id}>{s.id}: <b>{s.value}</b></li>)}
                     <StateBlockRest data={rest} />
                 </ul>
                 : <></>}
-            {props.mode === 'edit' ? <EditableStackBlock data={props.data} /> : <></>}
+            {props.mode === 'edit' ? <EditableStackBlock /> : <></>}
         </div>
     )
 }

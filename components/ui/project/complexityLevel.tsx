@@ -4,9 +4,11 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import { cn } from '@/lib/utils';
 import { Tip } from '../tip';
 
+export type ComplexityLevelValue = 'Low' | 'Medium' | 'High'
+
 type Props = {
     className?: string
-    level: 'Low' | 'Medium' | 'High'
+    level: ComplexityLevelValue
     explanation?: string
 }
 

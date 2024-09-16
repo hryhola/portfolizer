@@ -16,7 +16,7 @@ export const StateBlockRest: React.FC<{ data: StackData[] }> = (props) => {
             className={cn({ block: isExpanded, hidden: !isExpanded})}
             key={r.order}
             >
-            {r.field}: <b>{r.value}</b>
+            {r.id}: <b>{r.value}</b>
         </li>)}
     </>
 }

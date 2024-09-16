@@ -3,7 +3,6 @@ import { cn } from '@/lib/utils';
 
 export type TimeData = {
   id: string
-  label: string
   description?: string
   minutesSpent: number
   percentOfMinutesSpent?: number // Calculated on frontend
@@ -51,7 +50,7 @@ export const TimeSpentChart = (props: Props) => {
       key={b.id}
       style={{ width: b.percentOfMinutesSpent + '%' }}
       className={cn(bgColors[i], `p-2 text-white font-semibold flex justify-center items-center min-w-16`)}>
-      {(b.minutesSpent / 60).toFixed(2) + 'h ' + b.label}
+      {(b.minutesSpent / 60).toFixed(2) + 'h ' + b.id}
     </div>)}
   </div>
 }

@@ -64,7 +64,7 @@ export function TimeSpentChartDetails(props: Props) {
                             <h4 className="text-2xl font-semibold">Time</h4>
                             <ul className="space-y-2 max-w-[500px]">
                                 {processedData.map(r => <li className="" key={r.id}>
-                                    <p className="flex gap-4 items-center text-xl"><span className="size-3" style={{ background: r.fill }} ></span> {r.label}: {r.minutesSpent} min</p>
+                                    <p className="flex gap-4 items-center text-xl"><span className="size-3" style={{ background: r.fill }} ></span> {r.id}: {r.minutesSpent} min</p>
                                     {r.description ? <p className="text-gray-500">{r.description}</p> : <></>}
                                 </li>)}
                             </ul>

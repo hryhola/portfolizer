@@ -1,16 +1,13 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
-import { EditableComponentProps } from '../types';
-import { cn } from '@/lib/utils';
+import React, { useRef } from 'react'
 import { LinkData } from './linksBlock';
 import { Button } from '../button';
 import { Plus } from 'lucide-react';
 import { Input } from '../input';
 import { EditButtons } from '../editButtons';
 import { moveOrderedElementUp, moveOrderedElementDown } from '@/lib/array';
-import { v4 } from 'uuid';
-import { url } from 'inspector';
+import { useProjectContext } from './projectFormWrapper';
 
 interface EditableLinksBlockProps {
     data: LinkData[]
@@ -19,12 +16,12 @@ interface EditableLinksBlockProps {
 export const EditableLinksBlock: React.FC<EditableLinksBlockProps> = (props) => {
     const nameInput = useRef<HTMLInputElement>(null);
     const urlInput = useRef<HTMLInputElement>(null);
-    const [links, setLink] = useState([...props.data.sort((a,b) => a.order - b.order)]);
+    const { links, setLinks } = useProjectContext()
 
     const handleRemove: React.MouseEventHandler<HTMLButtonElement> = (e) => {
         const id = (e.currentTarget as HTMLButtonElement).dataset.id
 
-        setLink((prev) => prev.filter(p => p.id !== id))
+        setLinks((prev) => prev.filter(p => p.id !== id))
     }
 
     const handleUp: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -32,7 +29,7 @@ export const EditableLinksBlock: React.FC<EditableLinksBlockProps> = (props) => 
     
         if (!id) return
     
-        setLink(prev => moveOrderedElementUp(prev, id))
+        setLinks(prev => moveOrderedElementUp(prev, id))
     }
 
     const handleDown: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -40,7 +37,7 @@ export const EditableLinksBlock: React.FC<EditableLinksBlockProps> = (props) => 
     
         if (!id) return
     
-        setLink(prev => moveOrderedElementDown(prev, id))
+        setLinks(prev => moveOrderedElementDown(prev, id))
     }
 
     const handleAdd = () => {
@@ -50,11 +47,10 @@ export const EditableLinksBlock: React.FC<EditableLinksBlockProps> = (props) => 
         if (typeof name !== 'string' || !name.length) return;
         if (typeof url !== 'string' || !url.length) return;
 
-        setLink(prev => [
+        setLinks(prev => [
             ...prev,
             {
-                id: v4(),
-                label: name,
+                id: name,
                 url,
                 order: prev.length
             }
@@ -65,13 +61,15 @@ export const EditableLinksBlock: React.FC<EditableLinksBlockProps> = (props) => 
         {links.map(l => <li key={l.id} className='py-3 flex justify-center items-center'>
             <EditButtons id={l.id} onRemove={handleRemove} onUp={handleUp} onDown={handleDown} />
             <span>
-                {l.label} <a className='underline' target='_blank' href={l.url}>{l.url}</a>
+                {l.id} <a className='underline' target='_blank' href={l.url}>{l.url}</a>
             </span>
         </li>)}
-        <li className='flex items-center pt-3'>
-            <Input className='rounded-r-none border-r-0' placeholder='Link Name' ref={nameInput} />
-            <Input className='rounded-none' placeholder='URL' ref={urlInput}/>
-            <Button className='rounded-l-none' type='button' onClick={handleAdd}><Plus /></Button>
+        <li className='pt-3'>
+            <div className='flex max-w-[550px] mx-auto '>
+                <Input className='rounded-r-none border-r-0' placeholder='Link Name' ref={nameInput} />
+                <Input className='rounded-none' placeholder='URL' ref={urlInput}/>
+                <Button className='rounded-l-none' type='button' onClick={handleAdd}><Plus /></Button>
+            </div>
         </li>
     </>
 }

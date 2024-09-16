@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { ComplexityLevelsBlock } from '@/components/ui/project/complexityLevelsBlock';
 import { ProjectName } from '@/components/ui/project/projectName';
 import { ProjectTimeTotal } from '@/components/ui/project/projectTimeTotal';
@@ -8,6 +7,11 @@ import { ProjectDescription } from '@/components/ui/project/projectDescription';
 import { LinksBlock } from '@/components/ui/project/linksBlock';
 import { ProjectFeatures } from '@/components/ui/project/features';
 import { ProjectTimeSpent } from '@/components/ui/project/projectTimeSpent';
+import { HeaderImage } from '@/components/ui/project/headerImage';
+import { ProjectPhotos } from '@/components/ui/project/projectPhotos';
+import { EditApproveButtons } from '@/components/ui/project/editApproveButtons';
+import { FC } from 'react';
+import { ProjectFormWrapper } from '@/components/ui/project/projectFormWrapper';
 
 type Page = {
   searchParams: { mode: string },
@@ -28,19 +32,19 @@ export default async function Page(page: Page) {
   ];
 
   const stack = [
-    { id: 'id-6', order: 5, field: 'State', value: 'Redux' },
-    { id: 'id-3', order: 2, field: 'Frontend', value: 'React' },
-    { id: 'id-4', order: 3, field: 'UI', value: 'Flat' },
-    { id: 'id-2', order: 1, field: 'Database', value: 'MongoDB' },
-    { id: 'id-1', order: 0, field: 'Backend', value: 'Node' },
-    { id: 'id-5', order: 4, field: 'Styling', value: 'Tailwind' },
+    { order: 5, id: 'State', value: 'Redux' },
+    { order: 2, id: 'Frontend', value: 'React' },
+    { order: 3, id: 'UI', value: 'Flat' },
+    { order: 1, id: 'Database', value: 'MongoDB' },
+    { order: 0, id: 'Backend', value: 'Node' },
+    { order: 4, id: 'Styling', value: 'Tailwind' },
   ];
 
   const complexity = [
-    { id: 'id-1', order: 0, label: 'Backend logic', level: 'High' as const, levelsExplanation: 'Explanation' },
-    { id: 'id-2', order: 1, label: 'Frontend logic', level: 'Low' as const },
-    { id: 'id-3', order: 2, label: 'Database design', level: 'High' as const, levelsExplanation: 'Explanation' },
-    { id: 'id-4', order: 3, label: 'Styling', level: 'Medium' as const }
+    { order: 0, id: 'Backend logic', level: 'High' as const, levelsExplanation: 'Explanation' },
+    { order: 1, id: 'Frontend logic', level: 'Low' as const },
+    { order: 2, id: 'Database design', level: 'High' as const, levelsExplanation: 'Explanation' },
+    { order: 3, id: 'Styling', level: 'Medium' as const }
   ];
 
   const features = [
@@ -62,13 +66,67 @@ export default async function Page(page: Page) {
   ];
 
   const links = [
-    { id: 'id-1', order: 1, label: 'See live:', url: 'https://www.google.com/' },
-    { id: 'id-2', order: 2, label: 'Figma Design:', url: 'https://www.google.com/' },
-    { id: 'id-3', order: 3, label: 'Source Code:', url: 'https://www.google.com/' }
+    { order: 1, id: 'See live:', url: 'https://www.google.com/' },
+    { order: 2, id: 'Figma Design:', url: 'https://www.google.com/' },
+    { order: 3, id: 'Source Code:', url: 'https://www.google.com/' }
   ]
 
-  return (<form>
-    <Image className="w-full h-80 object-cover" src='/images/image_25.png' alt={'alt'} width={1400} height={300} />
+  const projectImages = [
+    {
+      src:
+        "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    },
+    {
+      src:
+        "https://images.unsplash.com/photo-1432462770865-65b70566d673?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+    },
+    {
+      src:
+        "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80",
+    },
+    {
+      src:
+        "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80",
+    },
+    {
+      src:
+        "https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80",
+    },
+    {
+      src:
+        "https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80",
+    },
+    {
+      src:
+        "https://demos.creative-tim.com/material-kit-pro/assets/img/examples/blog5.jpg",
+    },
+    {
+      src:
+        "https://material-taillwind-pro-ct-tailwind-team.vercel.app/img/content2.jpg",
+    },
+    {
+      src:
+        "https://images.unsplash.com/photo-1620064916958-605375619af8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1493&q=80",
+    },
+  ];
+
+  let Wrapper: FC<{ children: JSX.Element | JSX.Element[] }> = (props) => <div>{props.children}</div>
+
+  if (mode === 'edit') {
+    Wrapper = (props) => <ProjectFormWrapper complexity={complexity}
+        features={features}
+        links={links}
+        photos={projectImages}
+        stack={stack}
+        time={timeSpent}
+      >
+        {props.children}
+      </ProjectFormWrapper>;
+  }
+
+  return (<Wrapper>
+    {mode === 'edit' ? <EditApproveButtons /> : <></>}
+    <HeaderImage value='/images/image_25.png' mode={mode} />
     <div className="container mx-auto px-5">
       <div className="my-5 gap-5 sm:gap-x-10 grid items-start grid-cols-[1fr_min-content]">
         <ProjectName className='align-text-bottom col-span-2 sm:col-span-1 order-1' mode={mode} value='Project Name' />
@@ -79,9 +137,9 @@ export default async function Page(page: Page) {
         <ComplexityLevelsBlock className='order-last col-span-2 sm:text-center' data={complexity} mode={mode} />
       </div>
       <LinksBlock className='my-5' data={links} mode={mode} />
-      <ProjectTimeSpent data={timeSpent} mode={mode}/>
+      <ProjectTimeSpent data={timeSpent} mode={mode} />
       <ProjectFeatures data={features} mode={mode} />
     </div>
-    <Image className="w-full h-80 object-cover my-5" src='/images/image_25.png' alt={'alt'} width={1400} height={300} />
-  </form>);
+    <ProjectPhotos data={projectImages} mode={mode} />
+  </Wrapper>);
 }

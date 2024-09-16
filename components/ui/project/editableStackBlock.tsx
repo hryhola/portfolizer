@@ -1,21 +1,21 @@
 'use client'
 
 import React, { useRef, useState } from 'react'
-import { StackData } from './stackBlock';
 import { Button } from '../button';
 import { Separator } from '../separator';
 import { Plus } from 'lucide-react';
 import { moveOrderedElementDown, moveOrderedElementUp } from '@/lib/array';
 import { Input } from '../input';
-import { v4 } from 'uuid';
 import { EditButtons } from '../editButtons';
+import { useProjectContext } from './projectFormWrapper';
 
 interface EditableStackBlockProps {
-    data: StackData[]
 }
 
 export const EditableStackBlock: React.FC<EditableStackBlockProps> = (props) => {
-    const [stack, setStack] = useState([...props.data].sort((a, b) => a.order - b.order));
+    const [message, setMessage] = useState('')
+    const { stack, setStack } = useProjectContext();
+
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const handleRemove: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -43,19 +43,32 @@ export const EditableStackBlock: React.FC<EditableStackBlockProps> = (props) => 
     const handleAdd = () => {
         const value = inputRef.current?.value;
 
-        if (typeof value !== 'string' || !value.includes(':')) return;
+        if (!value) {
+            setMessage('Empty value is not acceptable')
+            return
+        }
 
-        const separator = value.indexOf(':');
+        const separatorIndex = value.indexOf(':');
 
-        const field = value.substring(0, separator)
-        const fieldValue = value.substring(separator + 1, value.length)
+        console.log(separatorIndex)
 
+        const field = value.substring(0, separatorIndex)
+        const fieldValue = value.substring(separatorIndex + 1, value.length)
+
+        if (stack.some(s => s.id.toLowerCase() === field.toLowerCase())) {
+            setMessage('Stack value should be unique')
+            return
+        } else if (separatorIndex === -1) {
+            setMessage('The column symbols is missing')
+            return
+        } else {
+            setMessage('')
+        }
 
         setStack(prev => [
             ...prev,
             {
-                id: v4(),
-                field,
+                id: field,
                 value: fieldValue,
                 order: prev.length
             }
@@ -70,7 +83,7 @@ export const EditableStackBlock: React.FC<EditableStackBlockProps> = (props) => 
                 onDown={handleDown}
                 onRemove={handleRemove}
                 onUp={handleUp}
-                removeButtonContent={<>{d.field}:&nbsp;<b>{d.value}</b>&nbsp;❌</>}
+                removeButtonContent={<>{d.id}:&nbsp;<b>{d.value}</b>&nbsp;❌</>}
             />
         </li>{i === 4 && <Separator className='bg-gray-300 mt-2' />}</React.Fragment>)}
         <li className='mt-2 flex'>
@@ -79,11 +92,11 @@ export const EditableStackBlock: React.FC<EditableStackBlockProps> = (props) => 
                 maxLength={50}
                 type='text'
                 placeholder='Colon (:) separated strings'
-                name='newStackValue'
             />
             <Button className='rounded-l-none' type='button' onClick={handleAdd}>
                 <Plus />
             </Button>
         </li>
+        {message && <li>{message}</li>}
     </ul>;
 }
