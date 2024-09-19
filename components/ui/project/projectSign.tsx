@@ -10,7 +10,7 @@ type ProjectSignProps = EditableComponentProps & {
 }
 
 export const ProjectSign: React.FC<ProjectSignProps> = (props) => {
-    const textClasses = 'text-xl'
+    const textClasses = 'text-xl self-center'
     const className = cn('gap-2 flex flex-wrap', textClasses, props.className)
 
     return <h3 className={className}>
