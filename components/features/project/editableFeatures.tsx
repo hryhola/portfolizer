@@ -1,14 +1,14 @@
 'use client';
 
-import React, { useState } from 'react'
+import React from 'react'
 import { FeatureData } from './features';
-import { EditButtons } from '../editButtons';
-import { Textarea } from '../textarea';
 import { moveOrderedElementUp, moveOrderedElementDown } from '@/lib/array';
 import { Plus } from 'lucide-react';
 import { v4 } from 'uuid';
-import { Button } from '../button';
 import { useProjectContext } from './projectFormWrapper';
+import { Button } from '@/components/ui/button';
+import { EditButtons } from '@/components/ui/editButtons';
+import { Textarea } from '@/components/ui/textarea';
 
 interface EditableFeaturesProps {
     data: FeatureData[]

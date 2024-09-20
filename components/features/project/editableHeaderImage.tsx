@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react'
-import { EditableComponentProps } from '../types';
+import { EditableComponentProps } from '../../ui/types';
 import { ImageUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Input } from '../input';
 import Image from 'next/image'
+import { Input } from '@/components/ui/input';
 
 interface EditableHeaderImageProps extends EditableComponentProps {
     value: string

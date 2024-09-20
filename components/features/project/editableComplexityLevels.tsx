@@ -2,16 +2,16 @@
 
 import React, { useRef, useState } from 'react'
 import { ComplexityLevelData } from './complexityLevelsBlock';
-import { Input } from '../input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../select';
-import { Textarea } from '../textarea';
-import { Button } from '../button';
 import { Plus } from 'lucide-react';
 import { moveOrderedElementDown, moveOrderedElementUp } from '@/lib/array';
-import { EditButtons } from '../editButtons';
 import { useProjectContext } from './projectFormWrapper';
 import { cn } from '@/lib/utils';
 import { ComplexityLevelValue } from './complexityLevel';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { EditButtons } from '@/components/ui/editButtons';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 
 const LevelSelect = (props: {
         className?: string,

@@ -1,13 +1,12 @@
 'use client'
 
 import React, { useRef } from 'react'
-import { LinkData } from './linksBlock';
-import { Button } from '../button';
 import { Plus } from 'lucide-react';
-import { Input } from '../input';
-import { EditButtons } from '../editButtons';
 import { moveOrderedElementUp, moveOrderedElementDown } from '@/lib/array';
 import { useProjectContext } from './projectFormWrapper';
+import { Button } from '@/components/ui/button';
+import { EditButtons } from '@/components/ui/editButtons';
+import { Input } from '@/components/ui/input';
 
 interface EditableLinksBlockProps {
 }

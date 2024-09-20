@@ -8,7 +8,7 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 import { TimeData } from "./timeSpentChart"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../accordion"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 export const description = "A donut chart"
 

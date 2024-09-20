@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import React from 'react'
-import { Input } from '../input'
+import { Input } from '@/components/ui/input'
 
 type Props = {
     className?: string

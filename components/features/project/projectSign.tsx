@@ -1,8 +1,8 @@
 import React from 'react'
-import { EditableComponentProps } from '../types';
+import { EditableComponentProps } from '../../ui/types';
 import { cn } from '@/lib/utils';
-import { Avatar, AvatarFallback, AvatarImage } from '../avatar';
-import { Input } from '../input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Input } from '@/components/ui/input';
 
 type ProjectSignProps = EditableComponentProps & {
     authorPictureSrc?: string

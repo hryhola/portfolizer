@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditableComponentProps } from '../types';
+import { EditableComponentProps } from '../../ui/types';
 import { TimeData, TimeSpentChart } from './timeSpentChart';
 import { EditableTimeSpent } from './editableTimeSpent';
 import { TimeSpentChartDetails } from './timeSpentChartDetails';

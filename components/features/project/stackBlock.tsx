@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { StateBlockRest } from './stateBlockRest';
-import { EditableComponentProps } from '../types';
+import { EditableComponentProps } from '../../ui/types';
 import { EditableStackBlock } from './editableStackBlock';
 
 export type StackData = {

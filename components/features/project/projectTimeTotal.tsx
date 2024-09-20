@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils';
 import React from 'react'
-import { EditableComponentProps } from '../types'
+import { EditableComponentProps } from '@/components/ui/types'
 import { MdAccessTime } from 'react-icons/md';
-import { Input } from '../input';
+import { Input } from '@/components/ui/input';
 
 type ProjectTimeTotalProps = EditableComponentProps;
 

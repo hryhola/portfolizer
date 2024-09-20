@@ -1,17 +1,17 @@
-import { ComplexityLevelsBlock } from '@/components/ui/project/complexityLevelsBlock';
-import { ProjectName } from '@/components/ui/project/projectName';
-import { ProjectTimeTotal } from '@/components/ui/project/projectTimeTotal';
-import { ProjectSign } from '@/components/ui/project/projectSign';
-import { StackBlock } from '@/components/ui/project/stackBlock';
-import { ProjectDescription } from '@/components/ui/project/projectDescription';
-import { LinksBlock } from '@/components/ui/project/linksBlock';
-import { ProjectFeatures } from '@/components/ui/project/features';
-import { ProjectTimeSpent } from '@/components/ui/project/projectTimeSpent';
-import { HeaderImage } from '@/components/ui/project/headerImage';
-import { ProjectPhotos } from '@/components/ui/project/projectPhotos';
-import { EditApproveButtons } from '@/components/ui/project/editApproveButtons';
+import { ComplexityLevelsBlock } from '@/components/features/project/complexityLevelsBlock';
+import { EditApproveButtons } from '@/components/features/project/editApproveButtons';
+import { ProjectFeatures } from '@/components/features/project/features';
+import { HeaderImage } from '@/components/features/project/headerImage';
+import { LinksBlock } from '@/components/features/project/linksBlock';
+import { ProjectDescription } from '@/components/features/project/projectDescription';
+import { ProjectFormWrapper } from '@/components/features/project/projectFormWrapper';
+import { ProjectName } from '@/components/features/project/projectName';
+import { ProjectPhotos } from '@/components/features/project/projectPhotos';
+import { ProjectSign } from '@/components/features/project/projectSign';
+import { ProjectTimeSpent } from '@/components/features/project/projectTimeSpent';
+import { ProjectTimeTotal } from '@/components/features/project/projectTimeTotal';
+import { StackBlock } from '@/components/features/project/stackBlock';
 import { FC } from 'react';
-import { ProjectFormWrapper } from '@/components/ui/project/projectFormWrapper';
 
 type Page = {
   searchParams: { mode: string },

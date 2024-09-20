@@ -65,4 +65,8 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .font-italic {
+    @apply font-[family-name:var(--font-isocpeur-italic)];
+  }
 }

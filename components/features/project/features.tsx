@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditableComponentProps } from '../types';
+import { EditableComponentProps } from '../../ui/types';
 import { EditableFeatures } from './editableFeatures';
 
 export interface FeatureData {

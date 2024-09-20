@@ -1,13 +1,13 @@
 'use client'
 
 import React, { useRef, useState } from 'react'
-import { Button } from '../button';
-import { Separator } from '../separator';
 import { Plus } from 'lucide-react';
 import { moveOrderedElementDown, moveOrderedElementUp } from '@/lib/array';
-import { Input } from '../input';
-import { EditButtons } from '../editButtons';
 import { useProjectContext } from './projectFormWrapper';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { EditButtons } from '@/components/ui/editButtons';
+import { Separator } from '@radix-ui/react-select';
 
 interface EditableStackBlockProps {
 }

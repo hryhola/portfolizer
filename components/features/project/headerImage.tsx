@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { EditableComponentProps } from '../types';
+import { EditableComponentProps } from '../../ui/types';
 import { EditableHeaderImage } from './editableHeaderImage';
 
 interface HeaderImageProps extends EditableComponentProps {

@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react'
-import { EditableComponentProps } from '../types';
+import { EditableComponentProps } from '../../ui/types';
 import { cn } from '@/lib/utils';
-import { Button } from '../button';
-import { Input } from '../input';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export interface PhotosData {
     src: string

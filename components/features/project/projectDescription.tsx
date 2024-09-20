@@ -1,7 +1,7 @@
 import React from 'react'
-import { EditableComponentProps } from '../types';
+import { EditableComponentProps } from '../../ui/types';
 import { cn } from '@/lib/utils';
-import { Textarea } from '../textarea';
+import { Textarea } from '@/components/ui/textarea';
 
 interface ProjectDescriptionProps extends EditableComponentProps {
     
