@@ -33,6 +33,7 @@ export default function RootLayout({
       <body className={`${isocpeur.variable} ${isocp.variable} ${isocpeurItalic.variable} font-[family-name:var(--font-isocpeur)]`}>
         <Header />
         {children}
+        <footer className="grid place-items-center border-t h-12">Created by Vladyslav Hryhola</footer>
       </body>
     </html>
   );

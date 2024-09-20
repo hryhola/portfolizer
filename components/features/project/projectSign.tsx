@@ -3,6 +3,7 @@ import { EditableComponentProps } from '../../ui/types';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
+import Link from 'next/link';
 
 type ProjectSignProps = EditableComponentProps & {
     authorPictureSrc?: string
@@ -19,7 +20,7 @@ export const ProjectSign: React.FC<ProjectSignProps> = (props) => {
                 <AvatarImage src={props.authorPictureSrc} />
                 <AvatarFallback>{props.value}</AvatarFallback>
             </Avatar>
-            <span>{props.value}</span>
+            <Link className='hover:underline' href='/dude12'>{props.value}</Link>
         </div>
         <div className={cn({ 'flex gap-2 items-start': props.mode === 'edit' })}>& {props.mode === 'edit'
             ? <Input className={cn('relative top-[-6px]', textClasses)}
