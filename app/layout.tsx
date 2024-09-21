@@ -30,10 +30,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${isocpeur.variable} ${isocp.variable} ${isocpeurItalic.variable} font-[family-name:var(--font-isocpeur)]`}>
+      <body className={`${isocpeur.variable} ${isocp.variable} ${isocpeurItalic.variable} font-[family-name:var(--font-isocpeur)] flex flex-col min-h-[99vh]`}>
         <Header />
         {children}
-        <footer className="grid place-items-center border-gray-300 border-t h-12 mt-5">Created by Vladyslav Hryhola</footer>
+        <footer className="grid place-items-center border-gray-500 border-t h-12 mt-auto">Created by Vladyslav Hryhola</footer>
       </body>
     </html>
   );
