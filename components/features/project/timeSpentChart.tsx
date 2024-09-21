@@ -45,11 +45,19 @@ export const TimeSpentChart = (props: Props) => {
     'bg-chart-5'
   ]
 
-  return <div className='flex flex-wrap justify-start w-full'>
+  return <div className='flex flex-col md:flex-row flex-wrap items-center md:items-stretch justify-start w-full md:border border-black rounded'>
     {cleanedData.map((b, i) => <div
       key={b.id}
       style={{ width: b.percentOfMinutesSpent + '%' }}
-      className={cn(bgColors[i], `p-2 text-white font-semibold flex justify-center items-center min-w-16`)}>
+      className={cn(
+        bgColors[i],
+        `p-2 text-white font-semibold flex justify-center items-center min-w-16 border-black`,
+        {
+          'rounded-l rounded-r md:rounded-r-none border md:border-none': i === 0,
+          'rounded-r rounded-l md:rounded-l-none border md:border-none': i === cleanedData.length - 1,
+          'rounded md:rounded-none border md:border-none my-px md:my-0 text-center': i !== 0 && i !== cleanedData.length - 1
+        }
+        )}>
       {(b.minutesSpent / 60).toFixed(2) + 'h ' + b.id}
     </div>)}
   </div>

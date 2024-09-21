@@ -14,6 +14,6 @@ export const ProjectTimeSpent: React.FC<ProjectTimeSpentProps> = (props) => {
             <TimeSpentChart data={props.data} />
             <TimeSpentChartDetails data={props.data} />
         </>}
-        {props.mode === 'edit' && <EditableTimeSpent data={props.data} />}
+        {props.mode === 'edit' && <EditableTimeSpent />}
     </>;
 }

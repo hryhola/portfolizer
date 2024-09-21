@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="h-dvh">
-      <div className="h-1/3 flex flex-col justify-center items-center gap-10 border-b px-5">
+      <div className="h-1/3 flex flex-col justify-center items-center gap-10 border-gray-300 border-b px-5">
         <h1 className="text-5xl text-center">Show Your Portfolio Everyone</h1>
         <div className="flex gap-5">
           <Link href='/register'>
@@ -21,8 +21,8 @@ export default function Home() {
       </div>
       <div className="flex flex-wrap justify-center items-center gap-5 p-5">
         <div className="border border-black rounded">
-          <Image className='w-full sm:w-auto' src='/images/Dude.webp' width={272} height={272} alt='Profile Picture' />
-          <p className="px-2 flex flex-wrap justify-between items-center">
+          <Image className='w-full sm:w-auto rounded-t' src='/images/Dude.webp' width={272} height={272} alt='Profile Picture' />
+          <p className="px-2 flex flex-wrap justify-between items-center border-t border-black">
             <Link className="hover:underline text-2xl " href='/dude12'>
               Some Dude
             </Link> 
@@ -35,7 +35,7 @@ export default function Home() {
               Project Name
             </Link>
           </h3>
-          <p className="px-2 flex justify-between">
+          <p className="px-2 flex justify-between border-b border-black">
             <span>
               by <Link className="hover:underline" href='/someuser'>Some User</Link>
             </span>

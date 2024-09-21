@@ -18,9 +18,9 @@ export interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
     
     return <div style={{ backgroundImage: "url('/images/image_25.png')" }}
-        className='bg-cover bg-center flex justify-between border min-h-32'
+        className='bg-cover bg-center flex justify-between min-h-32 border border-black rounded'
     >
-        <div className='bg-white min-w-44 p-5'>
+        <div className='bg-white min-w-44 p-5 rounded-l'>
             <h3 className='text-2xl'>
                 <Link className='hover:underline' href={props.authorId + '/' + props.id}>
                     {props.name}
@@ -37,7 +37,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
             </p>}
             <p>{props.client}</p>
         </div>
-        <div className='bg-gradient-to-l w-1/2 md:w-1/4 from-white grid justify-end text-right p-5'>
+        <div className='bg-gradient-to-l w-1/2 md:w-1/4 from-white grid justify-end text-right p-5 rounded'>
             {props.frameworks.length ? <ul className=''>
                 {props.frameworks.map(f => <li key={f}>{f}</li>)}
             </ul> : <></>}

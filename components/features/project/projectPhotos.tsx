@@ -28,7 +28,7 @@ export const ProjectPhotos: React.FC<ProjectPhotosProps> = (props) => {
                         type='button'
                     >❌</Button>
                 </>}
-                <img className={cn('h-auto max-w-full rounded-lg', { 'opacity-50': props.mode === 'edit' })}
+                <img className={cn('h-auto max-w-full rounded-lg border border-black', { 'opacity-50': props.mode === 'edit' })}
                     src={i.src}
                     alt=''
                 />

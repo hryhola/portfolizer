@@ -16,7 +16,7 @@ export const ProjectSign: React.FC<ProjectSignProps> = (props) => {
 
     return <h3 className={className}>
         <div className='flex items-top'>
-            <Avatar className="w-7 h-7 mr-2 inline-block">
+            <Avatar className="w-7 h-7 mr-2 inline-block border border-black">
                 <AvatarImage src={props.authorPictureSrc} />
                 <AvatarFallback>{props.value}</AvatarFallback>
             </Avatar>
