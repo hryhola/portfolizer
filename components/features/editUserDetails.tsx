@@ -96,7 +96,7 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                             <FormItem>
                                 <FormLabel>Picture</FormLabel>
                                 <FormControl>
-                                    <Input onBlur={field.onBlur} onChange={(e) => field.onChange(e.target.files[0])} type="file" accept="image/*" className="border-black" />
+                                    <Input onBlur={field.onBlur} onChange={(e) => e.target.files && field.onChange(e.target.files[0])} type="file" accept="image/*" className="border-black" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
