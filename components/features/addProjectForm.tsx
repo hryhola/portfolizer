@@ -38,7 +38,7 @@ export const AddProjectForm: React.FC<AddProjectFormProps> = (props) => {
                     control={form.control}
                     name="id"
                     render={({ field }) => (
-                        <FormItem className='w-full xl:w-auto'>
+                        <FormItem className='w-full flex-grow'>
                             <FormControl>
                                 <Input className="border-gray-500 rounded-r-none w-full" placeholder="New Project ID" {...field} />
                             </FormControl>

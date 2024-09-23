@@ -3,6 +3,7 @@ import { FaTelegramPlane, FaGithub, FaLinkedin } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaXTwitter } from "react-icons/fa6";
 import { AddProjectForm } from './addProjectForm';
+import { EditUserDetails } from './editUserDetails';
 
 interface UserBlockProps {
     name: string
@@ -33,7 +34,7 @@ export const UserBlock: React.FC<UserBlockProps> = (props) => {
     return <>
         <h1 className='text-5xl font-bold'>{props.name}</h1>
         <div className='flex flex-wrap sm:flex-nowrap gap-5'>
-            {props.imageSrc && <Image className='w-full sm:w-auto border border-black rounded' src={props.imageSrc} width={272} height={272} alt='Profile Picture' />}
+            {props.imageSrc && <Image className='w-full sm:w-auto border border-black rounded object-cover' src={props.imageSrc} width={272} height={272} alt='Profile Picture' />}
             <div className='grid gap-5'>
                 {props.bio && <p>{props.bio}</p>}
                 <ul className='flex flex-wrap gap-5 justify-around'>
@@ -43,7 +44,11 @@ export const UserBlock: React.FC<UserBlockProps> = (props) => {
                     <UserLink id={props.linkedInId} href={`https://www.linkedin.com/in/${props.linkedInId}/`} icon={<FaLinkedin size={14} />} />
                     <UserLink id={props.telegramId} href={`https://t.me/${props.telegramId}/`} icon={<FaTelegramPlane size={14} />} />
                 </ul>
-                <AddProjectForm className='self-end' />
+                <div className='self-end flex flex-col-reverse md:flex-row gap-5 justify-between'>
+                    <AddProjectForm />
+                    <EditUserDetails />
+                    {/* */}
+                </div>
             </div>
         </div>
     </>;

@@ -16,12 +16,12 @@ export const HeroBanner: React.FC<HeroBannerProps> = (props) => {
             <Link href='/register'>
                 <Button>Register</Button>
             </Link>
-            <Link href='/users'>
+            {/* <Link href='/users'>
                 <Button variant='outline'>View Users</Button>
             </Link>
             <Link href='/projects'>
                 <Button variant='outline'>View Projects</Button>
-            </Link>
+            </Link> */}
         </div>
     </div>;
 }

@@ -135,7 +135,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
                     placeholder="Filter by frameworks"
                     variant="inverted"
                     maxCount={3}
-                    noSelectAll
+                    noselectall="true"
                 />
             </div>
         </div>

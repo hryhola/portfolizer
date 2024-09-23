@@ -110,7 +110,7 @@ interface MultiSelectProps
    */
   className?: string;
 
-  noSelectAll?: boolean
+  noselectall?: "true"
 }
 
 export const MultiSelect = React.forwardRef<
@@ -281,7 +281,7 @@ export const MultiSelect = React.forwardRef<
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
-                {props.noSelectAll ? <></> : <CommandItem
+                {props.noselectall ? <></> : <CommandItem
                   key="all"
                   onSelect={toggleAll}
                   className="cursor-pointer"
