@@ -1,5 +1,5 @@
 'use client';
-
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { signInWithGoogle } from "@/lib/firebase/client/auth";
 
 const formSchema = z.object({
     username: z.string().min(1).max(50),
@@ -27,6 +28,7 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = (props) => {
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
@@ -35,6 +37,12 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values)
+    }
+
+    const handleGoogleSignIn = async () => {
+        const isOk = await signInWithGoogle();
+
+        if (isOk) router.push("/");
     }
 
     return <Form {...form}>
@@ -68,7 +76,7 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
             />
             <div className="flex items-stretch gap-2">
                 <Button type="submit">Login</Button>
-                <Button type="button" variant='outline'>
+                <Button type="button" variant='outline' onClick={handleGoogleSignIn}>
                     <FcGoogle size={30} />
                 </Button>
                 <Button type="button" variant='outline'>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Header } from '../components/ui/header'
+import { Header } from '../components/features/header'
 import "./globals.css";
 
 const isocpeur = localFont({

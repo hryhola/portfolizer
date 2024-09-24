@@ -20,6 +20,7 @@ import { FaGithub } from "react-icons/fa";
 const formSchema = z.object({
     id: z.string().min(1).max(50),
     name: z.string().min(1).max(50),
+    email: z.string().email().min(1).max(50),
     password: z.string().min(5).max(50),
     passwordConfirm: z.string().min(5).max(50)
 })
@@ -49,9 +50,22 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
                 name="id"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>User ID</FormLabel>
+                        <FormLabel>User ID <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
                             <Input className="border-black" placeholder="id" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
+            <FormField
+                control={form.control}
+                name="id"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Email <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                            <Input className="border-black" type='email' placeholder="your@email.example" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -62,7 +76,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
                 name="name"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>Name <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
                             <Input className="border-black" placeholder="name" {...field} />
                         </FormControl>
@@ -76,7 +90,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
                 name="password"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>Password <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
                             <Input className="border-black" type='password' placeholder="password" {...field} />
                         </FormControl>
@@ -89,7 +103,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
                 name="passwordConfirm"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Confirm Password</FormLabel>
+                        <FormLabel>Confirm Password <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
                             <Input className="border-black" type='password' placeholder="password" {...field} />
                         </FormControl>

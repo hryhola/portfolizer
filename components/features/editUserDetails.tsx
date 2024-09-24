@@ -1,3 +1,5 @@
+'use client'
+
 import { BiSolidPencil } from "react-icons/bi"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -15,10 +17,13 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Textarea } from "../ui/textarea"
-
+import type { UserData } from "@/lib/firebase/admin/db"
+import { useState } from "react"
+import Image from 'next/image'
+import { updateUser } from "@/lib/firebase/client/db"
+import { useRouter } from "next/navigation"
 
 const MAX_FILE_SIZE = 5000000;
 
@@ -34,23 +39,38 @@ const formSchema = z.object({
     image: z.any().refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 5MB.`).optional()
 })
 
-interface EditUserDetailsProps { }
+type EditUserDetailsProps = { uid: string } & UserData
 
 export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
+    const { imageSrc, uid, ...userDataWithoutImage } = props;
+
+    const [open, setOpen] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const [imagePreviewSrc, setImagePreviewSrc] = useState(imageSrc)
+
+    const router = useRouter()
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
-            id: 'someuserId12',
-        }
+        defaultValues: userDataWithoutImage
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        setErrorMessage('')
+
+        const { image, ...updatedFields } = values;
+
+        const result = await updateUser(props.uid, updatedFields);
+
+        if (result.success) {
+            setOpen(false)
+            router.refresh();
+        } else {
+            setErrorMessage(result.error || 'Something went wrong');
+        }
     }
 
-    return <Dialog>
+    return <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
             <Button className='border-gray-500' variant='outline'>
                 <BiSolidPencil className='mr-2' />
@@ -63,6 +83,7 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
             </DialogHeader>
             <Form {...form}>
                 <form className="space-y-2 px-6 max-h-[80vh] overflow-y-scroll" onSubmit={form.handleSubmit(onSubmit)}>
+                    
                     <FormField
                         control={form.control}
                         name="id"
@@ -70,7 +91,7 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                             <FormItem>
                                 <FormLabel>User ID <span className="text-red-500">*</span></FormLabel>
                                 <FormControl>
-                                    <Input disabled className="" placeholder="id" {...field} />
+                                    <Input className="border-black" placeholder="id" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -95,8 +116,20 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Picture</FormLabel>
+                                {imagePreviewSrc && <Image className="object-fit border border-black rounded" src={imagePreviewSrc} width={128} height={128} alt="Profile Picture Preview"/>}
                                 <FormControl>
-                                    <Input onBlur={field.onBlur} onChange={(e) => e.target.files && field.onChange(e.target.files[0])} type="file" accept="image/*" className="border-black" />
+                                    <Input
+                                        onBlur={field.onBlur}
+                                        onChange={(e) => {
+                                            if (e.target.files) {
+                                                field.onChange(e.target.files[0]);
+                                                setImagePreviewSrc(URL.createObjectURL(e.target.files[0]))
+                                            }
+                                        }}
+                                        type="file"
+                                        accept="image/*"
+                                        className="border-black"
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -182,11 +215,12 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                             </FormItem>
                         )}
                     />
+                    {errorMessage && <FormMessage>{errorMessage}</FormMessage>}
+                    <DialogFooter>
+                        <Button type="submit">Save changes</Button>
+                    </DialogFooter>
                 </form>
             </Form>
-            <DialogFooter className="px-6">
-                <Button type="submit">Save changes</Button>
-            </DialogFooter>
         </DialogContent>
     </Dialog>;
 }

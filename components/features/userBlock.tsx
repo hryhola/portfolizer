@@ -4,8 +4,10 @@ import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaXTwitter } from "react-icons/fa6";
 import { AddProjectForm } from './addProjectForm';
 import { EditUserDetails } from './editUserDetails';
+import { getCurrentUser } from '@/lib/firebase/admin/session';
 
 interface UserBlockProps {
+    id: string
     name: string
     bio?: string
     imageSrc?: string
@@ -30,26 +32,40 @@ const UserLink: React.FC<{ href: string, icon: JSX.Element, id?: string }> = (pr
     </li>
 }
 
-export const UserBlock: React.FC<UserBlockProps> = (props) => {
+export const UserBlock: React.FC<UserBlockProps> = async (props) => {
+    const currentUser = await getCurrentUser()
+
+    const hasAnyLink = props.phoneNumber ||
+        props.githubId ||
+        props.twitterId ||
+        props.linkedInId ||
+        props.telegramId
+
+    const hasAnyDetails = hasAnyLink ||
+        props.bio ||
+        props.imageSrc
+
+    const isCurrentUserPage = currentUser && currentUser.id === props.id
+
     return <>
         <h1 className='text-5xl font-bold'>{props.name}</h1>
+        {(isCurrentUserPage || hasAnyDetails) && (
         <div className='flex flex-wrap sm:flex-nowrap gap-5'>
             {props.imageSrc && <Image className='w-full sm:w-auto border border-black rounded object-cover' src={props.imageSrc} width={272} height={272} alt='Profile Picture' />}
             <div className='grid gap-5'>
                 {props.bio && <p>{props.bio}</p>}
-                <ul className='flex flex-wrap gap-5 justify-around'>
+                {hasAnyLink && <ul className='flex flex-wrap gap-5 justify-between'>
                     <UserLink id={props.phoneNumber} href={`tel:${props.phoneNumber}`} icon={<BsFillTelephoneFill size={14} />} />
                     <UserLink id={props.githubId} href={`https://github.com/${props.githubId}/`} icon={<FaGithub size={14} />} />
                     <UserLink id={props.twitterId} href={`https://x.com/${props.twitterId}/`} icon={<FaXTwitter size={14} />} />
                     <UserLink id={props.linkedInId} href={`https://www.linkedin.com/in/${props.linkedInId}/`} icon={<FaLinkedin size={14} />} />
                     <UserLink id={props.telegramId} href={`https://t.me/${props.telegramId}/`} icon={<FaTelegramPlane size={14} />} />
-                </ul>
-                <div className='self-end flex flex-col-reverse md:flex-row gap-5 justify-between'>
+                </ul>}
+                {isCurrentUserPage && <div className='self-end flex flex-col-reverse md:flex-row gap-5 justify-between'>
                     <AddProjectForm />
-                    <EditUserDetails />
-                    {/* */}
-                </div>
+                    <EditUserDetails uid={currentUser.uid} {...props} />
+                </div>}
             </div>
-        </div>
+        </div>)}
     </>;
 }
