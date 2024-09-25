@@ -67,7 +67,7 @@ export const UserBlock: React.FC<UserBlockProps> = async (props) => {
                 </ul>}
                 {isCurrentUserPage && <div className='self-end flex flex-col-reverse md:flex-row gap-5 justify-between'>
                     <AddProjectForm />
-                    <EditUserDetails uid={currentUser.uid} {...props} />
+                    <EditUserDetails providers={currentUser.providers} uid={currentUser.uid} {...props} />
                 </div>}
             </div>
         </div>)}

@@ -24,6 +24,8 @@ import { useState } from "react"
 import Image from 'next/image'
 import { updateUser } from "@/lib/firebase/client/db"
 import { useRouter } from "next/navigation"
+import type { UserInfo } from 'firebase-admin/auth'
+import { LinkProvidersButton } from "./user/linkProvidersButton"
 
 const MAX_FILE_SIZE = 5000000;
 
@@ -39,7 +41,13 @@ const formSchema = z.object({
     image: z.any().refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 5MB.`).optional()
 })
 
-type EditUserDetailsProps = { uid: string } & UserData
+type EditUserDetailsProps = {
+        uid: string
+        providers: {
+            github?: UserInfo
+            google?: UserInfo
+        }
+    } & UserData
 
 export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
     const { imageSrc, uid, ...userDataWithoutImage } = props;
@@ -88,7 +96,7 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
             </DialogHeader>
             <Form {...form}>
                 <form className="space-y-2 px-6 max-h-[80vh] overflow-y-scroll" onSubmit={form.handleSubmit(onSubmit)}>
-                    
+                    <LinkProvidersButton providers={props.providers} />
                     <FormField
                         control={form.control}
                         name="id"

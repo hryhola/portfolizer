@@ -1,11 +1,13 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, linkWithPopup } from "firebase/auth";
 
 import type { APIResponse } from "@/types";
 import { auth } from './index'
 import { createUserIfNotExist } from "./db";
 
-export const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
+export const signInWithProvider = async (providerId: 'google' | 'github') => {
+    const provider = providerId === 'google'
+        ? new GoogleAuthProvider()
+        : new GithubAuthProvider();
 
     try {
         const userCredential = await signInWithPopup(auth, provider);
@@ -41,9 +43,56 @@ export const signInWithGoogle = async () => {
 
         return { success: true }
     } catch (error) {
-        console.error("Error signing in with Google", error)
+        console.error("Error signing in with " + providerId, error)
+
+        if (error instanceof Error && error.message.includes('auth/account-exists-with-different-credential')) {
+            return {
+                success: false,
+                error: 'The account with this email is already registered with different OAuth provider. You should log in with preexisting provider and then link a new one.'
+            }
+        }
 
         return { success: false, error: 'Something went wrong' }
+    }
+}
+
+export const linkProvider  = async (providerId: 'google' | 'github') => {
+    const provider = providerId === 'google'
+        ? new GoogleAuthProvider()
+        : new GithubAuthProvider();
+
+    try {
+        const userCredential = await linkWithPopup(auth.currentUser!, provider);
+
+        const idToken = await userCredential.user.getIdToken();
+
+        const response = await fetch("/api/auth/sign-in", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ idToken }),
+        });
+
+        if (!response.ok) {
+            return { success: false, error: 'Something went wrong' };
+        }
+
+        const resBody = (await response.json()) as APIResponse<string>;
+
+        if (!resBody.success) {
+            return { success: false, error: resBody.error || 'Something went wrong' };
+        }
+
+        return { success: true }
+    } catch (error) {
+        console.error('Error when linking ' + providerId, error);
+
+        if (error instanceof Error && error.message.includes('auth/credential-already-in-use')) {
+            return { success: false, error: 'This profile is already linked to a different account.' };
+        }
+
+        return { success: false, error: 'Something went wrong' };
     }
 }
 

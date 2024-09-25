@@ -1,6 +1,6 @@
 import "server-only";
 
-import { SessionCookieOptions } from "firebase-admin/auth";
+import { SessionCookieOptions, UserInfo } from "firebase-admin/auth";
 import { cookies } from "next/headers";
 
 import { auth } from './auth'
@@ -34,6 +34,11 @@ export const getCurrentUser = async () => {
     const userDocumentRef = adminDb.collection('users').doc(userRecord.uid)
     const userDocument = await userDocumentRef.get()
 
+    const authData = {
+        google: userRecord.providerData.find(p => p.providerId === 'google.com')?.toJSON() as UserInfo,
+        github: userRecord.providerData.find(p => p.providerId === 'github.com')?.toJSON() as UserInfo
+    }
+
     if (!userDocument.exists) {
         console.log(`User with UID ${userRecord.uid} has no corresponding user object! Creating.`)
 
@@ -43,6 +48,7 @@ export const getCurrentUser = async () => {
         })
 
         return {
+            providers: authData,
             uid: userRecord.uid,
             email: userRecord.email,
             id: userRecord.uid,
@@ -51,6 +57,7 @@ export const getCurrentUser = async () => {
     }
 
     return {
+        providers: authData,
         uid: userRecord.uid,
         email: userRecord.email,
         id: userDocument.get('id') as string,

@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { signInWithGoogle } from "@/lib/firebase/client/auth";
+import { signInWithProvider } from "@/lib/firebase/client/auth";
 
 const formSchema = z.object({
     username: z.string().min(1).max(50),
@@ -40,7 +40,7 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
     }
 
     const handleGoogleSignIn = async () => {
-        const isOk = await signInWithGoogle();
+        const isOk = await signInWithProvider('google');
 
         if (isOk) {
             router.refresh()

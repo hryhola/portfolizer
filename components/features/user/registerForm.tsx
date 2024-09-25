@@ -20,7 +20,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { isUserIdAvailable } from "@/lib/firebase/client/db";
 import { debounce } from "@/lib/function";
-import { registerWithEmail } from "@/lib/firebase/client/auth";
+import { registerWithEmail, signInWithProvider } from "@/lib/firebase/client/auth";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
@@ -75,8 +75,18 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
         }
     }, 250)
 
+    const createProviderSignInHandler = (provider: 'google' | 'github') => async () => {
+        const result = await signInWithProvider(provider);
+
+        if (result.success) {
+            router.refresh()
+        } else {
+            setFormError(result.error || 'Something went wrong')
+        }
+    }
+
     return <Form {...form}>
-        <form className="space-y-4 border border-gray-500 rounded-xl p-5" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="space-y-4 border border-gray-500 rounded-xl p-5 max-w-96" onSubmit={form.handleSubmit(onSubmit)}>
             <h1 className="text-5xl">
                 Register
             </h1>
@@ -167,10 +177,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
             {formError && <p className="text-sm text-destructive">{formError}</p>}
             <div className="flex items-stretch gap-2">
                 <Button type="submit">Register</Button>
-                <Button type="button" variant='outline'>
+                <Button type="button" variant='outline' onClick={createProviderSignInHandler('google')}>
                     <FcGoogle size={30} />
                 </Button>
-                <Button type="button" variant='outline'>
+                <Button type="button" variant='outline' onClick={createProviderSignInHandler('github')}>
                     <FaGithub size={30} />
                 </Button>
             </div>
