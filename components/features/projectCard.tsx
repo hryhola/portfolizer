@@ -11,7 +11,7 @@ export interface ProjectCardProps {
     client: string
     totalHours?: number
     totalComplexity?: ComplexityLevelValue
-    dateCreated: Date
+    dateCreated?: Date
     frameworks: string[]
 }
 
@@ -43,7 +43,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
             {props.frameworks.length ? <ul className=''>
                 {props.frameworks.map(f => <li key={f}>{f}</li>)}
             </ul> : <></>}
-            <p className={cn({ 'self-end': props.frameworks.length }, 'font-italic tracking-[-4px] opacity-60')}>{props.dateCreated.getFullYear()}</p>
+            <p className={cn({ 'self-end': props.frameworks.length }, 'font-italic tracking-[-4px] opacity-60')}>{props.dateCreated && props.dateCreated.getFullYear()}</p>
         </div>
     </div>;
 }

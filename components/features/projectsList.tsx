@@ -13,7 +13,7 @@ type SortByType = 'date-created' | 'work-hours' | 'complexity'
 type SortDirection = 'ascending' | 'descending'
 
 interface ProjectsListProps {
-    author: string
+    projects: ProjectCardProps[]
 }
 
 export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
@@ -22,17 +22,9 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
     const [sortBy, setSortBy] = useState<SortByType>('date-created')
     const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([]);
 
-    const projects: ProjectCardProps[] = [
-        { id: 'project-1', dateCreated: new Date(), authorId: 'username', client: 'Pet Project', name: 'Project X', totalComplexity: 'Low', totalHours: 12, frameworks: ['NodeJS', 'React', 'MongoDB'] },
-        { id: 'project-11', dateCreated: new Date('12-11-2011'), authorId: 'username', client: 'Pet Project', name: 'Jasero', totalComplexity: 'High', totalHours: 13, frameworks: ['NodeJS', 'React', 'MongoDB'] },
-        { id: 'project-2', dateCreated: new Date('12-11-2003'), authorId: 'username', client: 'Pet Project', name: 'Bibarass', totalComplexity: 'High', totalHours: 14, frameworks: ['Rhino', 'Angular', 'Firebase'] },
-        { id: 'project-3', dateCreated: new Date('12-11-2002'), authorId: 'username', client: 'Pet Project', name: 'Bobba', totalComplexity: 'Medium', totalHours: 999, frameworks: ['Something', 'Something2', 'Something3'] },
-        { id: 'project-4', dateCreated: new Date('12-11-2001'), authorId: 'username', client: 'Pet Project', name: 'Booba', frameworks: []}
-    ]
+    const [list, setList] = useState(props.projects)
 
-    const [list, setList] = useState(projects)
-
-    const frameworks = projects.reduce((acc, curr) => {
+    const frameworks = props.projects.reduce((acc, curr) => {
         curr.frameworks.forEach(f =>{
             if (!acc.includes(f)) acc.push(f)
         })
@@ -53,7 +45,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
     
             switch (by) {
                 case 'date-created':
-                    comparison = a.dateCreated.getTime() - b.dateCreated.getTime();
+                    comparison = a.dateCreated ? a.dateCreated.getTime() : 0  - (b.dateCreated ? b.dateCreated.getTime() : 0);
                     break;
                 case 'work-hours':
                     // Handle cases where totalHours is undefined (treat undefined as 0 or set your own logic)
@@ -81,14 +73,14 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
     }
 
     useEffect(() => {
-        let filtered = projects;
+        let filtered = props.projects;
 
         if (selectedFrameworks.length) {
-            filtered = projects.filter(p => p.frameworks.some(f => selectedFrameworks?.includes(f)))
+            filtered = props.projects.filter(p => p.frameworks.some(f => selectedFrameworks?.includes(f)))
         }
         
         if (searchText.length) {
-            filtered = projects.filter(p => p.name.toLowerCase().includes(searchText.toLowerCase().trim()))
+            filtered = props.projects.filter(p => p.name.toLowerCase().includes(searchText.toLowerCase().trim()))
         }
 
         setList(sortList(filtered, sortBy, sortDirection));
