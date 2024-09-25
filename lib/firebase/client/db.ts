@@ -1,19 +1,29 @@
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where } from "firebase/firestore";
 import { firebaseApp } from "./index";
-import type { UserData } from "../admin/db";
 import { removeUndefined } from "@/lib/object";
+import type { UserData } from "../admin/db";
 
 export const db = getFirestore(firebaseApp);
 
-export const updateUser = async (uid: string, data: UserData) => {
+export const updateUser = async (uid: string, data: UserData, options?: { existCheck?: 'errorIfNot' | 'errorIfDo' }) => {
     const docRef = doc(db, 'users', uid);
 
-    const documentExists = (await getDoc(docRef)).exists()
+    if (options && options.existCheck) {
+        const documentExists = (await getDoc(docRef)).exists()
+    
+        if (documentExists && options.existCheck === 'errorIfDo') {
+            return {
+                success: false,
+                error: `User with UID ${uid} already exists!`
+            }
+        }
 
-    if (!documentExists) {
-        return {
-            success: false,
-            error: `User with UID ${uid} does not exist!`
+        if (!documentExists && options.existCheck === 'errorIfNot') {
+            return {
+                success: false,
+                error: `User with UID ${uid} does not exists!`
+            }
+
         }
     }
 
@@ -31,4 +41,25 @@ export const updateUser = async (uid: string, data: UserData) => {
             error: 'Something went wrong'
         }
     }
+}
+
+export const createUserIfNotExist = async (uid: string, data: UserData) => {
+    const result = await updateUser(uid, data, { existCheck: 'errorIfDo' })
+
+    if (!result.success) {
+        if (result.error?.includes('already exists')) {
+            return { success: true } as const
+        }
+
+        return result
+    }
+
+    return { success: true } as const
+}
+
+export const isUserIdAvailable = async (id: string) => {
+    const users = collection(db, 'users')
+    const docs = await getDocs(query(users, where('id', '==', id)))
+
+    return docs.empty;
 }

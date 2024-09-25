@@ -60,11 +60,16 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
 
         const { image, ...updatedFields } = values;
 
-        const result = await updateUser(props.uid, updatedFields);
+        const result = await updateUser(props.uid, updatedFields, { existCheck: 'errorIfNot' });
 
         if (result.success) {
             setOpen(false)
-            router.refresh();
+
+            if (props.id !== updatedFields.id) {
+                router.push('/' + updatedFields.id)
+            } else {
+                router.refresh();
+            }
         } else {
             setErrorMessage(result.error || 'Something went wrong');
         }

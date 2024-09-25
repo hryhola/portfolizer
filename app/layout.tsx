@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Toaster } from "@/components/ui/toaster"
 import { Header } from '../components/features/header'
 import "./globals.css";
 
@@ -34,6 +35,7 @@ export default function RootLayout({
         <Header />
         {children}
         <footer className="grid place-items-center border-gray-500 border-t h-12 mt-auto">Created by Vladyslav Hryhola</footer>
+        <Toaster />
       </body>
     </html>
   );

@@ -42,7 +42,9 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
     const handleGoogleSignIn = async () => {
         const isOk = await signInWithGoogle();
 
-        if (isOk) router.push("/");
+        if (isOk) {
+            router.refresh()
+        }
     }
 
     return <Form {...form}>

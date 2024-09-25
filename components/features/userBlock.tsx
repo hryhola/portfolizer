@@ -5,6 +5,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { AddProjectForm } from './addProjectForm';
 import { EditUserDetails } from './editUserDetails';
 import { getCurrentUser } from '@/lib/firebase/admin/session';
+import { SignOutButton } from './signOutButton';
 
 interface UserBlockProps {
     id: string
@@ -48,7 +49,10 @@ export const UserBlock: React.FC<UserBlockProps> = async (props) => {
     const isCurrentUserPage = currentUser && currentUser.id === props.id
 
     return <>
-        <h1 className='text-5xl font-bold'>{props.name}</h1>
+        <div className='flex justify-between items-center'>
+            <h1 className='text-5xl font-bold'>{props.name}</h1>
+            {isCurrentUserPage && <SignOutButton />}
+        </div>
         {(isCurrentUserPage || hasAnyDetails) && (
         <div className='flex flex-wrap sm:flex-nowrap gap-5'>
             {props.imageSrc && <Image className='w-full sm:w-auto border border-black rounded object-cover' src={props.imageSrc} width={272} height={272} alt='Profile Picture' />}

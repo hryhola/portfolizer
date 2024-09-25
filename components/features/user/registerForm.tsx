@@ -16,29 +16,64 @@ import {
 import { Input } from "@/components/ui/input"
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { isUserIdAvailable } from "@/lib/firebase/client/db";
+import { debounce } from "@/lib/function";
+import { registerWithEmail } from "@/lib/firebase/client/auth";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-    id: z.string().min(1).max(50),
+    id: z.string().min(1).max(50).regex(/[a-zA-Z-_]+/),
     name: z.string().min(1).max(50),
     email: z.string().email().min(1).max(50),
     password: z.string().min(5).max(50),
     passwordConfirm: z.string().min(5).max(50)
 })
 
-interface RegisterFormProps {
-
-}
+interface RegisterFormProps {}
 
 export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
+    const router = useRouter()
+    const [formError, setFormError] = useState('')
+    const [userIdTaken, setUserIdTaken] = useState<null | boolean>(null)
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        if (values.password !== values.passwordConfirm) {
+            form.setError('passwordConfirm', { message: 'Passwords do not match!' })
+            return;
+        }
+
+        const result = await registerWithEmail(values.id, values.email, values.name, values.password)
+
+        if (result.success) {
+            router.refresh()
+            return
+        }
+
+        setFormError(result.error || 'Something went wrong')
     }
+
+    const handleUserIdChange = debounce(async () => {
+        const id = form.getValues('id')
+        const state = form.getFieldState('id');
+        const isError = state.error?.message
+
+        if (!id || !/[A-Za-z-_]+/.test(id) || isError || state.invalid) {
+            setUserIdTaken(null);
+            return
+        }
+
+        if (await isUserIdAvailable(id)) {
+            setUserIdTaken(false);
+        } else {
+            setUserIdTaken(true);
+        }
+    }, 250)
 
     return <Form {...form}>
         <form className="space-y-4 border border-gray-500 rounded-xl p-5" onSubmit={form.handleSubmit(onSubmit)}>
@@ -52,20 +87,38 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
                     <FormItem>
                         <FormLabel>User ID <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
-                            <Input className="border-black" placeholder="id" {...field} />
+                            <Input className="border-black"
+                                {...field}
+                                placeholder="id"
+                                autoComplete="username"
+                                value={field.value}
+                                onChange={(e) => {
+                                    field.onChange(e)
+                                    handleUserIdChange()
+                                }}
+                                onBlur={() => {
+                                    field.onBlur()
+                                    handleUserIdChange()
+                                }}
+                            />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage>
+                            <span className={cn(userIdTaken === false ? 'text-lime-500' : '')}>
+                                {userIdTaken === true && 'User ID taken'}
+                                {userIdTaken === false && 'User ID available'}
+                            </span>
+                        </FormMessage>
                     </FormItem>
                 )}
             />
             <FormField
                 control={form.control}
-                name="id"
+                name="email"
                 render={({ field }) => (
                     <FormItem>
                         <FormLabel>Email <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
-                            <Input className="border-black" type='email' placeholder="your@email.example" {...field} />
+                            <Input className="border-black" type='email' placeholder="your@email.example" autoComplete="email" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -78,7 +131,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
                     <FormItem>
                         <FormLabel>Name <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
-                            <Input className="border-black" placeholder="name" {...field} />
+                            <Input className="border-black" placeholder="name" autoComplete="name" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -92,7 +145,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
                     <FormItem>
                         <FormLabel>Password <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
-                            <Input className="border-black" type='password' placeholder="password" {...field} />
+                            <Input className="border-black" type='password' placeholder="password" autoComplete="new-password" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -105,12 +158,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
                     <FormItem>
                         <FormLabel>Confirm Password <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
-                            <Input className="border-black" type='password' placeholder="password" {...field} />
+                            <Input className="border-black" type='password' placeholder="password" autoComplete="new-password" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
                 )}
             />
+            {formError && <p className="text-sm text-destructive">{formError}</p>}
             <div className="flex items-stretch gap-2">
                 <Button type="submit">Register</Button>
                 <Button type="button" variant='outline'>
