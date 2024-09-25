@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, linkWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, linkWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 
 import type { APIResponse } from "@/types";
 import { auth } from './index'
@@ -134,6 +134,42 @@ export const registerWithEmail = async (id: string, email: string, name: string,
 
         if (error instanceof Error && error.message.includes('auth/email-already-in-use')) {
             return { success: false, error: 'This email is already in use' }
+        }
+
+        return { success: false, error: error instanceof Error ? error.message : 'Something went wrong' }
+    }
+}
+
+export const signInWithEmail = async (email: string, password: string) => {
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password)
+
+        const idToken = await userCredential.user.getIdToken();
+
+        const response = await fetch("/api/auth/sign-in", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ idToken }),
+        });
+
+        if (!response.ok) {
+            return { success: false, error: 'Something went wrong' };
+        }
+
+        const resBody = (await response.json()) as APIResponse<string>;
+
+        if (!resBody.success) {
+            return { success: false, error: resBody.error || 'Something went wrong' };
+        }
+
+        return { success: true }
+    } catch (error) {
+        console.error("Error login in with email and password", error)
+
+        if (error instanceof Error && error.message.includes('auth/invalid-credential')) {
+            return { success: false, error: 'Invalid email or password' }
         }
 
         return { success: false, error: error instanceof Error ? error.message : 'Something went wrong' }

@@ -16,34 +16,41 @@ import {
 import { Input } from "@/components/ui/input"
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { signInWithProvider } from "@/lib/firebase/client/auth";
+import { signInWithEmail, signInWithProvider } from "@/lib/firebase/client/auth";
+import { useState } from "react";
 
 const formSchema = z.object({
-    username: z.string().min(1).max(50),
+    email: z.string().email().min(1).max(50),
     password: z.string().min(5).max(50)
 })
 
-interface LoginFormProps {
-
-}
+interface LoginFormProps {}
 
 export const LoginForm: React.FC<LoginFormProps> = (props) => {
-    const router = useRouter();
+    const router = useRouter()
+    const [formError, setFormError] = useState('')
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        const result = await signInWithEmail(values.email, values.password);
+
+        if (result.success) {
+            router.refresh()
+            return;
+        }
+
+        setFormError(result.error || 'Something went wrong')
     }
 
-    const handleGoogleSignIn = async () => {
-        const isOk = await signInWithProvider('google');
+    const createProviderSignInHandler = (provider: 'google' | 'github') => async () => {
+        const result = await signInWithProvider(provider);
 
-        if (isOk) {
+        if (result.success) {
             router.refresh()
+        } else {
+            setFormError(result.error || 'Something went wrong')
         }
     }
 
@@ -52,12 +59,12 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
             <h1 className="text-5xl">Login</h1>
             <FormField
                 control={form.control}
-                name="username"
+                name="email"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Username</FormLabel>
+                        <FormLabel>Email</FormLabel>
                         <FormControl>
-                            <Input className="border-black" placeholder="username" {...field} />
+                            <Input className="border-black" type="email" placeholder="your@email.example" autoComplete="email" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -70,18 +77,19 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
                     <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                            <Input className="border-black" type='password' placeholder="password" {...field} />
+                            <Input className="border-black" type='password' placeholder="password" autoComplete="current-password" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
                 )}
             />
+            {formError && <p className="text-sm text-destructive">{formError}</p>}
             <div className="flex items-stretch gap-2">
                 <Button type="submit">Login</Button>
-                <Button type="button" variant='outline' onClick={handleGoogleSignIn}>
+                <Button type="button" variant='outline' onClick={createProviderSignInHandler('google')}>
                     <FcGoogle size={30} />
                 </Button>
-                <Button type="button" variant='outline'>
+                <Button type="button" variant='outline' onClick={createProviderSignInHandler('github')}>
                     <FaGithub size={30} />
                 </Button>
             </div>
