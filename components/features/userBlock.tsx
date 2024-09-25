@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { FaTelegramPlane, FaGithub, FaLinkedin } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaXTwitter } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 import { AddProjectForm } from './addProjectForm';
 import { EditUserDetails } from './editUserDetails';
 import { getCurrentUser } from '@/lib/firebase/admin/session';
@@ -12,6 +13,7 @@ interface UserBlockProps {
     name: string
     bio?: string
     imageSrc?: string
+    email?: string
     phoneNumber?: string
     twitterId?: string
     telegramId?: string
@@ -37,6 +39,7 @@ export const UserBlock: React.FC<UserBlockProps> = async (props) => {
     const currentUser = await getCurrentUser()
 
     const hasAnyLink = props.phoneNumber ||
+        props.email ||
         props.githubId ||
         props.twitterId ||
         props.linkedInId ||
@@ -59,6 +62,7 @@ export const UserBlock: React.FC<UserBlockProps> = async (props) => {
             <div className='grid gap-5'>
                 {props.bio && <p>{props.bio}</p>}
                 {hasAnyLink && <ul className='flex flex-wrap gap-5 justify-between'>
+                    <UserLink id={props.email} href={`mailto:${props.email}`} icon={<MdEmail className='relative top-px' size={14} />} />
                     <UserLink id={props.phoneNumber} href={`tel:${props.phoneNumber}`} icon={<BsFillTelephoneFill size={14} />} />
                     <UserLink id={props.githubId} href={`https://github.com/${props.githubId}/`} icon={<FaGithub size={14} />} />
                     <UserLink id={props.twitterId} href={`https://x.com/${props.twitterId}/`} icon={<FaXTwitter size={14} />} />

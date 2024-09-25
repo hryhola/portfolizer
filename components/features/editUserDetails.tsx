@@ -26,6 +26,9 @@ import { updateUser } from "@/lib/firebase/client/db"
 import { useRouter } from "next/navigation"
 import type { UserInfo } from 'firebase-admin/auth'
 import { LinkProvidersButton } from "./user/linkProvidersButton"
+import { MdEmail } from "react-icons/md";
+import { uploadProfilePicture } from "@/lib/firebase/client/storage"
+
 
 const MAX_FILE_SIZE = 5000000;
 
@@ -33,6 +36,7 @@ const formSchema = z.object({
     id: z.string().min(1).max(50),
     name: z.string().min(1).max(50),
     bio: z.string().max(300).optional(),
+    email: z.string().email().optional(),
     phoneNumber: z.string().max(20).optional(),
     twitterId: z.string().max(100).optional(),
     telegramId: z.string().max(100).optional(),
@@ -68,7 +72,22 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
 
         const { image, ...updatedFields } = values;
 
-        const result = await updateUser(props.uid, updatedFields, { existCheck: 'errorIfNot' });
+        let imageSrc;
+
+        if (image) {
+            const uploadResult = await uploadProfilePicture(props.uid, image);
+
+            if (uploadResult.success) {
+                imageSrc = uploadResult.downloadURL
+            } else {
+                setErrorMessage(uploadResult.error || 'Something went wrong');
+            }
+        }
+
+        const result = await updateUser(props.uid, {
+            ...updatedFields,
+            imageSrc
+        }, { existCheck: 'errorIfNot' });
 
         if (result.success) {
             setOpen(false)
@@ -156,6 +175,21 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                                 <FormLabel>Bio</FormLabel>
                                 <FormControl>
                                     <Textarea className="border-black" placeholder="Tell about yourself" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>
+                                    <MdEmail className="inline relative bottom-px" size={16} /> Email
+                                </FormLabel>
+                                <FormControl>
+                                    <Input className="border-black" type="email" placeholder="contact@email.example" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
