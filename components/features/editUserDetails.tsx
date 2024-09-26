@@ -51,7 +51,7 @@ type EditUserDetailsProps = {
             github?: UserInfo
             google?: UserInfo
         }
-    } & UserData
+    } & Omit<UserData, 'projectIds'>
 
 export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
     const { imageSrc, uid, ...userDataWithoutImage } = props;

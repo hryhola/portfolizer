@@ -5,7 +5,7 @@ import type { UserData } from "../admin/db";
 
 export const db = getFirestore(firebaseApp);
 
-export const updateUser = async (uid: string, data: UserData, options?: { existCheck?: 'errorIfNot' | 'errorIfDo' }) => {
+export const updateUser = async (uid: string, data: Partial<UserData>, options?: { existCheck?: 'errorIfNot' | 'errorIfDo' }) => {
     const docRef = doc(db, 'users', uid);
 
     if (options && options.existCheck) {
@@ -43,7 +43,7 @@ export const updateUser = async (uid: string, data: UserData, options?: { existC
     }
 }
 
-export const createUserIfNotExist = async (uid: string, data: UserData) => {
+export const createUserIfNotExist = async (uid: string, data: Omit<UserData, 'uid'>) => {
     const result = await updateUser(uid, data, { existCheck: 'errorIfDo' })
 
     if (!result.success) {

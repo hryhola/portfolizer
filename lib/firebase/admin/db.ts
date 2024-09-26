@@ -18,7 +18,7 @@ export type UserData = {
     telegramId?: string
     linkedInId?: string
     githubId?: string
-    projectIds: string[]
+    projectIds?: string[]
 }
 
 export const getUser = async (params: { id: string } | { uid: string }) => {
