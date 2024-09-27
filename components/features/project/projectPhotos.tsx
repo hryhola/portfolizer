@@ -9,6 +9,7 @@ import { useProjectContext } from './projectFormWrapper';
 
 export interface PhotosData {
     src: string
+    file?: File // For uploading new photos, client side only attribute
 }
 
 interface ProjectPhotosProps extends EditableComponentProps {
@@ -46,9 +47,9 @@ export const ProjectPhotos: React.FC<ProjectPhotosProps> = (props) => {
                     onChange={(event) => {
                         if (!event.target.files || !event.target.files.length) return
 
-                        const newFiles: { src: string, file?: File }[] = []
+                        const newFiles: PhotosData[] = []
 
-                        for (let i = 0; i < event.target.files.length; i++) {
+                        for (let i = 0; i < Math.min(event.target.files.length, 50); i++) {
                             newFiles.push({ src: URL.createObjectURL(event.target.files[i]), file: event.target.files[i] });
                         }
 

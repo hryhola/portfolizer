@@ -28,9 +28,7 @@ import type { UserInfo } from 'firebase-admin/auth'
 import { LinkProvidersButton } from "./user/linkProvidersButton"
 import { MdEmail } from "react-icons/md";
 import { uploadProfilePicture } from "@/lib/firebase/client/storage"
-
-
-const MAX_FILE_SIZE = 5000000;
+import { MAX_IMAGE_SIZE } from "@/lib/const"
 
 const formSchema = z.object({
     id: z.string().regex(/^[0-9a-zA-Z-_]+$/).min(1).max(50),
@@ -42,7 +40,7 @@ const formSchema = z.object({
     telegramId: z.string().max(100).optional(),
     linkedInId: z.string().max(100).optional(),
     githubId: z.string().max(100).optional(),
-    image: z.any().refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 5MB.`).optional()
+    image: z.any().refine((file) => file?.size <= MAX_IMAGE_SIZE, `Max image size is 5MB.`).optional()
 })
 
 type EditUserDetailsProps = {

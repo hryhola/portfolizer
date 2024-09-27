@@ -12,6 +12,8 @@ import { packRecords } from '@/lib/object';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { updateProject } from '@/lib/firebase/client/db';
+import { MAX_IMAGE_SIZE } from '@/lib/const';
+import { uploadProjectPicture } from '@/lib/firebase/client/storage';
 
 const FormContext = createContext<{
     stack: StackData[]
@@ -56,10 +58,77 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
     const router = useRouter();
     const searchParams = useSearchParams();
 
+    const uploadPictures = async (formData: FormData) => {
+        const files = photos
+            .slice(0, 50)
+            .filter(p => p.file && p.file.size) as Array<Required<PhotosData>>
+
+        const localHeaderImageFile = formData.get('headerPicture') as File
+
+        if (localHeaderImageFile && localHeaderImageFile.size) {
+            files.push({ src: '', file: localHeaderImageFile })
+        }
+
+        if (files.some(f => f.file.size > MAX_IMAGE_SIZE)) {
+            toast.toast({
+                title: 'Image too big',
+                description: 'Max file size is 5 mb'
+            })
+
+            return false;
+        }
+
+        const uploadTasks = await Promise.all(files.map(async f => {
+            const result = await uploadProjectPicture(props.uid, f.file);
+
+            if (!result.success) {
+                toast.toast({
+                    variant: 'destructive',
+                    title: 'Error while uploading ' + f.file.name,
+                    description: result.error || 'Something went wrong'
+                })
+            }
+
+            return {
+                localFile: f.file,
+                downloadUrl: result.success ? result.downloadURL : null
+            }
+        }))
+
+        const photosResult = photos.slice(0, 50).map((photo) => {
+            if (photo.file) {
+                const uploadResult = uploadTasks.find(t => t.localFile === photo.file)
+
+                if (uploadResult && uploadResult.downloadUrl) {
+                    return {
+                        src: uploadResult.downloadUrl
+                    }
+                }
+            }
+
+            return photo;
+        })
+
+        const headerResult = uploadTasks.find(t => t.localFile === localHeaderImageFile)
+
+        return [
+            headerResult && headerResult.downloadUrl ? headerResult.downloadUrl : undefined,
+            photosResult
+        ] as const
+    }
+
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
 
         const formData = new FormData(formRef.current!);
+
+        const imageUploadResult = await uploadPictures(formData)
+
+        if (!imageUploadResult) {
+            return;
+        }
+
+        const [newHeaderSrc, newPhotos] = imageUploadResult
 
         const name = formData.get('name');
 
@@ -84,9 +153,9 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
                 details: formData.get(`time-${t.id}-details`) as string | null || ''
             }))),
             links: links,
-            published: formData.get('published') === 'on'
-            // headerPicture: formData.get('headerPicture'),
-            // photos,
+            published: formData.get('published') === 'on',
+            headerImageSrc: newHeaderSrc,
+            photos: newPhotos
         }
 
 
