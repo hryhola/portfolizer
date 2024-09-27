@@ -27,7 +27,7 @@ import { useRouter } from "next/navigation"
 import type { UserInfo } from 'firebase-admin/auth'
 import { LinkProvidersButton } from "./user/linkProvidersButton"
 import { MdEmail } from "react-icons/md";
-import { uploadProfilePicture } from "@/lib/firebase/client/storage"
+import { cleanUpStorage, uploadProfilePicture } from "@/lib/firebase/client/storage"
 import { MAX_IMAGE_SIZE } from "@/lib/const"
 
 const formSchema = z.object({
@@ -76,7 +76,9 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
             const uploadResult = await uploadProfilePicture(props.uid, image);
 
             if (uploadResult.success) {
-                imageSrc = uploadResult.downloadURL
+                imageSrc = uploadResult.downloadURL;
+
+                cleanUpStorage('users/' + props.uid, [uploadResult.downloadURL]).catch(e => console.error(e))
             } else {
                 setErrorMessage(uploadResult.error || 'Something went wrong');
             }

@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { updateProject } from '@/lib/firebase/client/db';
 import { MAX_IMAGE_SIZE } from '@/lib/const';
-import { uploadProjectPicture } from '@/lib/firebase/client/storage';
+import { cleanUpStorage, uploadProjectPicture } from '@/lib/firebase/client/storage';
 
 const FormContext = createContext<{
     stack: StackData[]
@@ -129,6 +129,11 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
         }
 
         const [newHeaderSrc, newPhotos] = imageUploadResult
+
+        cleanUpStorage(
+            'projects/' + props.uid,
+            [newHeaderSrc, ...newPhotos.map(p => p.src)].filter(p => typeof p === 'string')
+        ).catch(e => console.error(e))
 
         const name = formData.get('name');
 
