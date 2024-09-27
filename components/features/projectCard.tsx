@@ -8,11 +8,12 @@ export interface ProjectCardProps {
     authorId: string
     id: string
     name: string
-    client: string
+    client?: string
     totalHours?: number
     totalComplexity?: ComplexityLevelValue
     dateCreated?: Date
     frameworks: string[]
+    published: boolean
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
@@ -21,6 +22,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
         className='bg-cover bg-center flex justify-between min-h-32 border border-black rounded overflow-hidden'
     >
         <div className='bg-white min-w-44 p-5'>
+            {!props.published && <p className='uppercase font-italic tracking-[-2px] font-bold text-sm'>unpublished</p>}
             <h3 className='text-2xl'>
                 <Link className='hover:underline' href={props.authorId + '/' + props.id}>
                     {props.name}

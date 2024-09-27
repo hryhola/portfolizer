@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { Input } from '@/components/ui/input';
 
 interface EditableHeaderImageProps extends EditableComponentProps {
-    value: string
+    value?: string
     width: number
     height: number
     alt: string
@@ -32,6 +32,6 @@ export const EditableHeaderImage: React.FC<EditableHeaderImageProps> = (props) =
             }}
         />
     </div>
-    <Image className={cn(props.className, { 'opacity-50': props.mode === 'edit' })} src={src} alt={props.alt} width={props.width} height={props.height} />;
+    <Image className={cn(props.className, { 'opacity-50': props.mode === 'edit' })} src={src!} alt={props.alt} width={props.width} height={props.height} />;
 </div>;
 }

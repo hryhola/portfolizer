@@ -11,9 +11,9 @@ export const StateBlockRest: React.FC<{ data: StackData[] }> = (props) => {
     if (!props.data.length) return <></>
 
     return <>
-        <li data-set='1' className={cn({ hidden: isExpanded, block: !isExpanded})}><Button type="button" className='p-0 m-0 h-4' onClick={() => setIsExpanded(true)} variant='link'>expand rest</Button></li>
-        {props.data.map(r => <li
-            className={cn({ block: isExpanded, hidden: !isExpanded})}
+        <li className={cn({ hidden: isExpanded, block: !isExpanded})}><Button type="button" className='p-0 m-0 h-4' onClick={() => setIsExpanded(true)} variant='link'>expand rest</Button></li>
+        {props.data.map((r, i) => <li
+            className={cn({ block: isExpanded, hidden: !isExpanded })}
             key={r.id}
             >
             {r.id}: <b>{r.value}</b>

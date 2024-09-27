@@ -4,7 +4,7 @@ import { EditableComponentProps } from '../../ui/types';
 import { EditableHeaderImage } from './editableHeaderImage';
 
 interface HeaderImageProps extends EditableComponentProps {
-    value: string
+    value?: string
 }
 
 export const HeaderImage: React.FC<HeaderImageProps> = (props) => {
@@ -13,7 +13,13 @@ export const HeaderImage: React.FC<HeaderImageProps> = (props) => {
     const className = 'w-full h-80 object-cover border-b border-black';
     const alt='Project Header Image';
 
-    return props.mode === 'edit'
-        ? <EditableHeaderImage mode='edit' className={className} value={props.value} alt={alt}  width={width} height={height}  />
-        : <Image className={className} src={props.value} alt={alt}  width={width} height={height} />;
+    if (props.mode === 'edit') {
+        return <EditableHeaderImage mode='edit' className={className} value={props.value} alt={alt}  width={width} height={height}  />
+    }
+
+    if (!props.value) {
+        return <></>
+    }
+
+    return <Image className={className} src={props.value} alt={alt}  width={width} height={height} />;
 }

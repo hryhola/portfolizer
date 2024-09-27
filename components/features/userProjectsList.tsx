@@ -2,13 +2,15 @@ import { getUserProjects, UserData } from '@/lib/firebase/admin/db';
 import { ProjectCardProps } from './projectCard';
 import { ProjectsList } from './projectsList';
 import { getAverageComplexity } from '@/lib/utils';
+import { getCurrentUser } from '@/lib/firebase/admin/session';
 
 interface UserProjectsListProps {
     user: UserData
 }
 
 export const UserProjectsList: React.FC<UserProjectsListProps> = async (props) => {
-    const userProjects = await getUserProjects(props.user)
+    const currentUser = await getCurrentUser();
+    const userProjects = await getUserProjects(props.user, props.user.uid === currentUser?.uid)
 
     const projectCardsData: ProjectCardProps[] = userProjects.map(p => ({
         id: p.id,
@@ -25,7 +27,8 @@ export const UserProjectsList: React.FC<UserProjectsListProps> = async (props) =
                     (acc, curr) => acc.includes(curr.value) ? acc : [...acc, curr.value],
                     [] as string[]
                 )
-            : []
+            : [],
+        published: p.published
     }))
 
     return <ProjectsList projects={projectCardsData} />

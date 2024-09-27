@@ -22,20 +22,7 @@ const TimeSpentRow: React.FC<TimeData> = (props) => {
             if (p.id === props.id) {
                 return {
                     ...p,
-                    minutesSpent: +e.target.value
-                }
-            }
-
-            return p
-        }))
-    }
-
-    const handleDetailsChange: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-        setTime((prev) => prev.map(p => {
-            if (p.id === props.id) {
-                return {
-                    ...p,
-                    description: e.target.value
+                    minutes: +e.target.value
                 }
             }
 
@@ -52,11 +39,11 @@ const TimeSpentRow: React.FC<TimeData> = (props) => {
         <Input disabled defaultValue={props.id} placeholder='Name' />
         <Input className='max-w-32'
             type='number'
-            value={props.minutesSpent}
+            value={props.minutes}
             onChange={handleMinutesChange}
             placeholder='Minutes'
         />
-        <Textarea placeholder='Details' value={props.description} onChange={handleDetailsChange} />
+        <Textarea placeholder='Details' defaultValue={props.details} name={`time-${props.id}-details`} />
     </li>
 }
 
@@ -71,7 +58,7 @@ export const EditableTimeSpent: React.FC<EditableTimeSpentProps> = (props) => {
 
     const handleAdd = () => {
         if (!newTimeNameRef.current?.value) {
-            setMessage('Empty time name')
+            setMessage('Invalid time name')
             return
         } else if (!newTimeValueRef.current?.value) {
             console.log(newTimeValueRef.current?.value || !/[0-9]+/.test(newTimeValueRef.current!.value))
@@ -79,18 +66,19 @@ export const EditableTimeSpent: React.FC<EditableTimeSpentProps> = (props) => {
             return
         } else {
             setMessage('')
-            newTimeNameRef.current.value = ''
-            newTimeValueRef.current.value = ''
         }
 
         setTime(prev => [
             ...prev,
             {
                 id: newTimeNameRef.current!.value,
-                minutesSpent: +newTimeValueRef.current!.value,
-                description: ''
+                minutes: +newTimeValueRef.current!.value,
+                details: ''
             }
         ])
+
+        newTimeNameRef.current.value = ''
+        newTimeValueRef.current.value = ''
     }
 
     return <div className='mt-10 text-center'>
@@ -110,7 +98,7 @@ export const EditableTimeSpent: React.FC<EditableTimeSpentProps> = (props) => {
                 />
                 <Button className='rounded-l-none' onClick={handleAdd} type='button'><Plus /></Button>
             </li>
-            {message && <li>{message}</li>}
+            {message && <li className='text-sm text-destructive'>{message}</li>}
         </ul>
     </div>;
 }

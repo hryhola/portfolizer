@@ -16,12 +16,14 @@ export type StackBlockProps = EditableComponentProps & {
 }
 
 export const StackBlock: React.FC<StackBlockProps> = (props) => {
-    const top5 = props.data.slice(0, 5)
-    const rest = props.data.slice(5, props.data.length)
+    const stack = [...props.data].sort((a,b) => a.order - b.order)
+
+    const top5 = stack.slice(0, 5)
+    const rest = stack.slice(5, props.data.length)
 
     return (
         <div className={cn('', props.className)}>
-            <h4 className='font-mono mb-1'>Stack</h4>
+            {(stack.length > 0 || props.mode === 'edit') && <h4 className='font-mono mb-1'>Stack</h4>}
             {props.mode === 'view' ?
                 <ul className="whitespace-nowrap">
                     {top5.map(s => <li key={s.id}>{s.id}: <b>{s.value}</b></li>)}

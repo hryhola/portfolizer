@@ -17,7 +17,7 @@ const LevelSelect = (props: {
         className?: string,
         level?: ComplexityLevelValue,
         onValueChange?: (value: ComplexityLevelValue) => void
-    }) => <Select value={props.level} onValueChange={props.onValueChange} required>
+    }) => <Select value={props.level} onValueChange={props.onValueChange}>
     <SelectTrigger className={cn("w-[180px]", props.className)}>
         <SelectValue placeholder="Level" />
     </SelectTrigger>
@@ -60,7 +60,7 @@ export const EditableComplexityLevel: React.FC<EditableComplexityLevel> = (props
             if (p.id === props.id) {
                 return {
                     ...p,
-                    level
+                    value: level
                 }
             }
         
@@ -73,7 +73,7 @@ export const EditableComplexityLevel: React.FC<EditableComplexityLevel> = (props
             if (p.id === props.id) {
                 return {
                     ...p,
-                    levelsExplanation: e.currentTarget?.value
+                    explanation: e.currentTarget?.value
                 }
             }
         
@@ -84,8 +84,8 @@ export const EditableComplexityLevel: React.FC<EditableComplexityLevel> = (props
     return <li className='flex gap-2'>
         <EditButtons id={props.id} onDown={handleDown} onRemove={handleRemove} onUp={handleUp} />
         <Input disabled required defaultValue={props.id} />
-        <LevelSelect level={props.level} onValueChange={handleLevelUpdate} />
-        <Textarea value={props.levelsExplanation} onChange={handleExplanationUpdate} placeholder='Explanation' />
+        <LevelSelect level={props.value} onValueChange={handleLevelUpdate} />
+        <Textarea value={props.explanation} onChange={handleExplanationUpdate} placeholder='Explanation' />
     </li>
 }
 
@@ -119,8 +119,8 @@ export const EditableComplexityLevels: React.FC<EditableComplexityLevelsProps> =
             ...prev,
             {
                 id,
-                level: newComplexityLevelValue,
-                levelsExplanation: '',
+                value: newComplexityLevelValue,
+                explanation: '',
                 order: prev.length
             }
         ])
@@ -137,6 +137,6 @@ export const EditableComplexityLevels: React.FC<EditableComplexityLevelsProps> =
             <LevelSelect className='rounded-none' onValueChange={(value) => setNewComplexityLevelValue(value)} />
             <Button className='rounded-l-none' onClick={handleAdd} type='button'><Plus /></Button>
         </li>
-        {message && <li>{message}</li>}
+        {message && <li className='text-sm text-destructive'>{message}</li>}
     </ul>;
 }

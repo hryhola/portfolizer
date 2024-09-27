@@ -55,7 +55,7 @@ export const EditableFeatures: React.FC<EditableFeaturesProps> = (props) => {
             <div className='flex mb-1'>
                 <EditButtons id={f.id} onDown={handleDown} onRemove={handleRemove} onUp={handleUp} />
             </div>
-            <Textarea defaultValue={f.text} />
+            <Textarea id={`feature-${f.id}-text`} name={`feature-${f.id}-text`} defaultValue={f.text} />
         </li>)}
         <li><Button type='button' onClick={handleAdd}><Plus /></Button></li>
     </>;

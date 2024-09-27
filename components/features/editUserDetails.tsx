@@ -33,7 +33,7 @@ import { uploadProfilePicture } from "@/lib/firebase/client/storage"
 const MAX_FILE_SIZE = 5000000;
 
 const formSchema = z.object({
-    id: z.string().min(1).max(50),
+    id: z.string().regex(/^[0-9a-zA-Z-_]+$/).min(1).max(50),
     name: z.string().min(1).max(50),
     bio: z.string().max(300).optional(),
     email: z.string().email().optional(),

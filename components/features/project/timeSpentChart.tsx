@@ -3,8 +3,8 @@ import { cn } from '@/lib/utils';
 
 export type TimeData = {
   id: string
-  description?: string
-  minutesSpent: number
+  details?: string
+  minutes: number
   percentOfMinutesSpent?: number // Calculated on frontend
 }
 
@@ -15,7 +15,7 @@ type Props = {
 export const TimeSpentChart = (props: Props) => {
   let cleanedData = props.data
 
-  let sortedData = [...props.data].sort((a, b) => b.minutesSpent - a.minutesSpent);
+  let sortedData = [...props.data].sort((a, b) => b.minutes - a.minutes);
 
   if (sortedData.length > 5) {
     const first4bars = sortedData.slice(0, 4);
@@ -24,17 +24,17 @@ export const TimeSpentChart = (props: Props) => {
       ...curr,
       id: 'other',
       label: 'Other',
-      minutesSpent: curr.minutesSpent + acc.minutesSpent
-    }), { id: 'other', label: 'Other', minutesSpent: 0 });
+      minutesSpent: curr.minutes + acc.minutes
+    }), { id: 'other', details: 'Other', minutes: 0 });
 
     cleanedData = [...first4bars, other]
   }
 
-  const totalMinutes = cleanedData.reduce((sum, data) => sum + data.minutesSpent, 0);
+  const totalMinutes = cleanedData.reduce((sum, data) => sum + data.minutes, 0);
 
 
   cleanedData.forEach(bar => {
-    bar.percentOfMinutesSpent = totalMinutes > 0 ? (bar.minutesSpent / totalMinutes) * 100 : 0
+    bar.percentOfMinutesSpent = totalMinutes > 0 ? (bar.minutes / totalMinutes) * 100 : 0
   })
 
   const bgColors = [
@@ -58,7 +58,7 @@ export const TimeSpentChart = (props: Props) => {
           'rounded md:rounded-none border md:border-none my-px md:my-0 text-center': i !== 0 && i !== cleanedData.length - 1
         }
         )}>
-      {(b.minutesSpent / 60).toFixed(2) + 'h ' + b.id}
+      {(b.minutes / 60).toFixed(2) + 'h ' + b.id}
     </div>)}
   </div>
 }

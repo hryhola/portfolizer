@@ -15,11 +15,7 @@ export function moveOrderedElementUp<T extends { id: string, order: number }>(el
     updatedElements[index - 1] = updatedElement;
     updatedElements[index] = previousElement;
 
-    // Update the order property for the affected elements
-    updatedElement.order += 1;
-    previousElement.order -= 1;
-
-    return updatedElements;
+    return updatedElements.map((e, i) => ({...e, order: i }));
 }
 
 export function moveOrderedElementDown<T extends { id: string, order: number }>(elements: T[], id: string): T[] {
@@ -39,9 +35,5 @@ export function moveOrderedElementDown<T extends { id: string, order: number }>(
     updatedElements[index + 1] = updatedElement;
     updatedElements[index] = nextElement;
 
-    // Update the order property for the affected elements
-    updatedElement.order -= 1;
-    nextElement.order += 1;
-
-    return updatedElements;
+    return updatedElements.map((e, i) => ({...e, order: i }));
 }

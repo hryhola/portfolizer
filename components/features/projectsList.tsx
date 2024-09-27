@@ -45,7 +45,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
     
             switch (by) {
                 case 'date-created':
-                    comparison = a.dateCreated ? a.dateCreated.getTime() : 0  - (b.dateCreated ? b.dateCreated.getTime() : 0);
+                    comparison = (a.dateCreated?.getTime() || 0)  - (b.dateCreated?.getTime() || 0);
                     break;
                 case 'work-hours':
                     // Handle cases where totalHours is undefined (treat undefined as 0 or set your own logic)

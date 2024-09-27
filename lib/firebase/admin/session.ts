@@ -52,7 +52,7 @@ export const getCurrentUser = async () => {
             uid: userRecord.uid,
             email: userRecord.email,
             id: userRecord.uid,
-            name:userRecord.uid,
+            name: userRecord.uid,
         }
     }
 

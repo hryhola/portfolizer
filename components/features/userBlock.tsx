@@ -3,7 +3,7 @@ import { FaTelegramPlane, FaGithub, FaLinkedin } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-import { AddProjectForm } from './addProjectForm';
+import { AddProject } from './addProject';
 import { EditUserDetails } from './editUserDetails';
 import { getCurrentUser } from '@/lib/firebase/admin/session';
 import { SignOutButton } from './signOutButton';
@@ -70,7 +70,7 @@ export const UserBlock: React.FC<UserBlockProps> = async (props) => {
                     <UserLink id={props.telegramId} href={`https://t.me/${props.telegramId}/`} icon={<FaTelegramPlane size={14} />} />
                 </ul>}
                 {isCurrentUserPage && <div className='self-end flex flex-col-reverse md:flex-row gap-5 justify-between'>
-                    <AddProjectForm />
+                    <AddProject authorUid={currentUser.uid} authorId={currentUser.id} />
                     <EditUserDetails providers={currentUser.providers} uid={currentUser.uid} {...props} />
                 </div>}
             </div>

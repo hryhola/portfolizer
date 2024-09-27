@@ -24,7 +24,7 @@ import { registerWithEmail, signInWithProvider } from "@/lib/firebase/client/aut
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-    id: z.string().min(1).max(50).regex(/[a-zA-Z-_]+/),
+    id: z.string().min(1).max(50).regex(/^[0-9a-zA-Z-_]+$/),
     name: z.string().min(1).max(50),
     email: z.string().email().min(1).max(50),
     password: z.string().min(5).max(50),

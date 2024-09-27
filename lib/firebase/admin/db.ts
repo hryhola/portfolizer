@@ -18,7 +18,6 @@ export type UserData = {
     telegramId?: string
     linkedInId?: string
     githubId?: string
-    projectIds?: string[]
 }
 
 export const getUser = async (params: { id: string } | { uid: string }) => {
@@ -48,25 +47,65 @@ export type ComplexityRecord = { value: ComplexityLevelValue, explanation?: stri
 export type ProjectData = {
     uid: string
     id: string
-    client: string
     name: string
+    published: boolean
+    authorUid: string
+    client?: string
     date?: Date
     description?: string
     timeTotal?: number
     headerPictureSrc?: string
     stack?: Record<string, { value: string, order: number }>
     complexity?: Record<string, ComplexityRecord>
-    links: Array<{ label: string, url: string, order: number }>
+    links: Array<{ id: string, url: string, order: number }>
     time?: Record<string, { minutes: number, details?: string }>
-    features?:  Array<{ text: string, order: number }>
-    photos?: Array<string>
+    features?:  Array<{ id: string, text: string, order: number }>
+    headerImageSrc?: string
+    photos?: Array<{ src: string }>
 }
 
-export const getUserProjects = async (user: UserData) => {
-    const q = await adminDb.collection('projects').where('authorUid', '==', user.uid).orderBy('date', 'asc').get()
+export const getUserProjects = async (user: UserData, includeUnpublished = false) => {
+    let q = adminDb.collection('projects')
+        .where('authorUid', '==', user.uid)
 
-    return q.docs.map(d => ({
-        ... d.data(),
-        date: d.get('date').toDate()
-    })) as ProjectData[]
+    if (!includeUnpublished) {
+        q = q.where('published', '==', true)
+    }
+
+    return (await q.get()).docs
+        .map(d => ({
+            ... d.data(),
+            date: d.get('date')?.toDate()
+        } as ProjectData))
+        .sort((a,b) => (b.date?.getTime()|| 0) - (a.date?.getTime() || 0)) 
+}
+
+export const getProject = async (authorId: string, projectId: string) => {
+    const user = await getUser({ id: authorId })
+
+    if (!user) {
+        return null;
+    }
+
+    let q = await adminDb.collection('projects')
+        .where('authorUid', '==', user.uid)
+        .where('id', '==', projectId)
+        .get()
+
+    if (q.empty) {
+        return null
+    }
+
+    const projectData = {
+        ...q.docs[0].data(),
+        date: q.docs[0].get('date')?.toDate(),
+        uid: q.docs[0].id
+    } as ProjectData
+
+    return {
+        ...projectData,
+        authorName: user.name,
+        authorId: user.id,
+        authorImageSrc: user.imageSrc
+    }
 }

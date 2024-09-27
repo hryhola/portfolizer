@@ -7,7 +7,8 @@ import { useProjectContext } from './projectFormWrapper';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { EditButtons } from '@/components/ui/editButtons';
-import { Separator } from '@radix-ui/react-select';
+import { Separator } from '@/components/ui/separator';
+
 
 interface EditableStackBlockProps {
 }
@@ -50,18 +51,24 @@ export const EditableStackBlock: React.FC<EditableStackBlockProps> = (props) => 
 
         const separatorIndex = value.indexOf(':');
 
-        console.log(separatorIndex)
+        if (separatorIndex === -1) {
+            setMessage('The column symbols is missing')
+            return
+        }
 
-        const field = value.substring(0, separatorIndex)
-        const fieldValue = value.substring(separatorIndex + 1, value.length)
+        const field = value.substring(0, separatorIndex).trim()
+        const fieldValue = value.substring(separatorIndex + 1, value.length).trim()
 
         if (stack.some(s => s.id.toLowerCase() === field.toLowerCase())) {
             setMessage('Stack value should be unique')
             return
-        } else if (separatorIndex === -1) {
-            setMessage('The column symbols is missing')
+        } else if (!fieldValue.length) {
+            setMessage('Empty value is not acceptable')
             return
-        } else {
+        } else if (!/[ a-zA-Z0-9_-]+/.test(field)) {
+            setMessage('Invalid characters')
+            return  
+        }else {
             setMessage('')
         }
 
@@ -77,26 +84,28 @@ export const EditableStackBlock: React.FC<EditableStackBlockProps> = (props) => 
         inputRef.current!.value = ''
     }
 
-    return <ul>
+    return <ul className='min-w-64'>
         {stack.map((d, i) => <React.Fragment key={d.id}><li className='mb-px flex justify-end'>
-            <EditButtons id={d.id}
-                onDown={handleDown}
-                onRemove={handleRemove}
-                onUp={handleUp}
-                removeButtonContent={<>{d.id}:&nbsp;<b>{d.value}</b>&nbsp;❌</>}
-            />
-        </li>{i === 4 && <Separator className='bg-gray-300 mt-2' />}</React.Fragment>)}
+                <EditButtons id={d.id}
+                    onDown={handleDown}
+                    onRemove={handleRemove}
+                    onUp={handleUp}
+                    removeButtonContent={<>{d.id}:&nbsp;<b>{d.value}</b>&nbsp;❌</>}
+                />
+            </li>{i === 4 && <Separator className='my-1' />}
+        </React.Fragment>)}
         <li className='mt-2 flex'>
             <Input className='rounded-r-none'
                 ref={inputRef}
                 maxLength={50}
                 type='text'
                 placeholder='Colon (:) separated strings'
+                onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAdd() } }}
             />
             <Button className='rounded-l-none' type='button' onClick={handleAdd}>
                 <Plus />
             </Button>
         </li>
-        {message && <li>{message}</li>}
+        {message && <li className='text-sm text-destructive'>{message}</li>}
     </ul>;
 }
