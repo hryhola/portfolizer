@@ -18,6 +18,10 @@ export type UserData = {
     telegramId?: string
     linkedInId?: string
     githubId?: string
+    projects?: Array<string>
+    publishedProjectsCount?: number
+    createdAt: Date
+    updatedAt: Date
 }
 
 export const getUser = async (params: { id: string } | { uid: string }) => {
@@ -37,7 +41,9 @@ export const getUser = async (params: { id: string } | { uid: string }) => {
     }
 
     return {
-        ...document.data() ,
+        ...document.data(),
+        createdAt: document.get('createdAt').toDate(),
+        updatedAt: document.get('updatedAt').toDate(),
         uid: document.id
     } as UserData
 }
@@ -54,14 +60,15 @@ export type ProjectData = {
     date?: Date
     description?: string
     timeTotal?: number
-    headerPictureSrc?: string
+    headerImageSrc?: string
     stack?: Record<string, { value: string, order: number }>
     complexity?: Record<string, ComplexityRecord>
     links: Array<{ id: string, url: string, order: number }>
     time?: Record<string, { minutes: number, details?: string }>
     features?:  Array<{ id: string, text: string, order: number }>
-    headerImageSrc?: string
     photos?: Array<{ src: string }>
+    createdAt: Date
+    updatedAt: Date
 }
 
 export const getUserProjects = async (user: UserData, includeUnpublished = false) => {
@@ -99,6 +106,8 @@ export const getProject = async (authorId: string, projectId: string) => {
     const projectData = {
         ...q.docs[0].data(),
         date: q.docs[0].get('date')?.toDate(),
+        createdAt: q.docs[0].get('createdAt').toDate(),
+        updatedAt: q.docs[0].get('updatedAt').toDate(),
         uid: q.docs[0].id
     } as ProjectData
 
@@ -108,4 +117,31 @@ export const getProject = async (authorId: string, projectId: string) => {
         authorId: user.id,
         authorImageSrc: user.imageSrc
     }
+}
+
+export const getTopUsers = async () => {
+    const users = await adminDb.collection('users').orderBy('publishedProjectsCount').limit(15).get()
+
+    return users.docs.map(u => ({
+        ...u.data(),
+        uid: u.id,
+        createdAt: u.get('createdAt').toDate(),
+        updatedAt: u.get('updatedAt').toDate(),
+    })) as UserData[]
+}
+
+export const getTopProjects = async () => {
+    const projects = await adminDb
+        .collection('projects')
+        .where('published', '==', true)
+        .orderBy('createdAt')
+        .limit(15)
+        .get()
+
+    return projects.docs.map(p => ({
+        ...p.data(),
+        createdAt: p.get('createdAt').toDate(),
+        updatedAt: p.get('updatedAt').toDate(),
+        uid: p.id
+    })) as ProjectData[]
 }

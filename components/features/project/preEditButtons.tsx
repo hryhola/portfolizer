@@ -46,7 +46,8 @@ export const PreEditButtons: React.FC<PreEditButtonsProps> = (props) => {
             description: 'Deleted project ' + props.projectId
         })
 
-        router.push('/' + props.authorId)
+        router.push('/' + props.authorId);
+        router.refresh()
     }
 
     return <div className='flex justify-between mt-5'>

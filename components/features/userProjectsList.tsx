@@ -28,7 +28,8 @@ export const UserProjectsList: React.FC<UserProjectsListProps> = async (props) =
                     [] as string[]
                 )
             : [],
-        published: p.published
+        published: p.published,
+        headerImageSrc: p.headerImageSrc
     }))
 
     return <ProjectsList projects={projectCardsData} />

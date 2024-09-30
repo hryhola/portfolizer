@@ -14,11 +14,12 @@ export interface ProjectCardProps {
     dateCreated?: Date
     frameworks: string[]
     published: boolean
+    headerImageSrc?: string
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
     
-    return <div style={{ backgroundImage: "url('/images/image_25.png')" }}
+    return <div style={{ backgroundImage: props.headerImageSrc ? `url(${props.headerImageSrc})` : 'none' }}
         className='bg-cover bg-center flex justify-between min-h-32 border border-black rounded overflow-hidden'
     >
         <div className='bg-white min-w-44 p-5'>
