@@ -24,9 +24,7 @@ const formSchema = z.object({
     password: z.string().min(5).max(50)
 })
 
-interface LoginFormProps {}
-
-export const LoginForm: React.FC<LoginFormProps> = (props) => {
+export const LoginForm: React.FC = () => {
     const router = useRouter()
     const [formError, setFormError] = useState('')
     const form = useForm<z.infer<typeof formSchema>>({

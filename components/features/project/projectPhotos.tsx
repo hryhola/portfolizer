@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react'
+import React from 'react'
 import { EditableComponentProps } from '../../ui/types';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useProjectContext } from './projectFormWrapper';
+import Image from 'next/image';
 
 export interface PhotosData {
     src: string
@@ -32,7 +33,7 @@ export const ProjectPhotos: React.FC<ProjectPhotosProps> = (props) => {
                         type='button'
                     >❌</Button>
                 </>}
-                <img className={cn('h-auto max-w-full rounded-lg border border-black', { 'opacity-50': props.mode === 'edit' })}
+                <Image className={cn('h-auto max-w-full rounded-lg border border-black', { 'opacity-50': props.mode === 'edit' })}
                     src={i.src}
                     alt=''
                 />

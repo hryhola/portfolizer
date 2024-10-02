@@ -203,5 +203,3 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
         <form onSubmit={handleSubmit} ref={formRef}>{props.children}</form>
     </FormContext.Provider>;
 }
-
-ProjectFormWrapper.displayName = 'ProjectFormWrapper';

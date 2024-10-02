@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, getFirestore, query, runTransaction, setDoc, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore, query, runTransaction, setDoc, where } from "firebase/firestore";
 import { firebaseApp } from "./index";
 import { removeUndefined } from "@/lib/object";
 import type { ProjectData, UserData } from "../admin/db";

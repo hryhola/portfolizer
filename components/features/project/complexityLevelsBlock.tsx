@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import ComplexityLevel from './complexityLevel'
 import { cn } from '@/lib/utils'
 import { EditableComponentProps } from '../../ui/types'

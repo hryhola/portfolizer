@@ -9,11 +9,7 @@ import { Input } from '@/components/ui/input';
 import { EditButtons } from '@/components/ui/editButtons';
 import { Separator } from '@/components/ui/separator';
 
-
-interface EditableStackBlockProps {
-}
-
-export const EditableStackBlock: React.FC<EditableStackBlockProps> = (props) => {
+export const EditableStackBlock: React.FC = () => {
     const [message, setMessage] = useState('')
     const { stack, setStack } = useProjectContext();
 

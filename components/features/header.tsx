@@ -2,9 +2,7 @@ import { getCurrentUser } from '@/lib/firebase/admin/session';
 import Link from 'next/link';
 import React from 'react'
 
-interface HeaderProps {}
-
-export const Header: React.FC<HeaderProps> = async (props) => {
+export const Header: React.FC = async () => {
     const currentUser = await getCurrentUser()
 
     return <div className='border-b border-black'>

@@ -31,9 +31,8 @@ const formSchema = z.object({
     passwordConfirm: z.string().min(5).max(50)
 })
 
-interface RegisterFormProps {}
 
-export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
+export const RegisterForm: React.FC = () => {
     const router = useRouter()
     const [formError, setFormError] = useState('')
     const [userIdTaken, setUserIdTaken] = useState<null | boolean>(null)

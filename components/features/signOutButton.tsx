@@ -5,9 +5,7 @@ import { signOut } from '@/lib/firebase/client/auth';
 import { Button } from '../ui/button';
 import { useToast } from '@/hooks/use-toast';
 
-interface SignOutButtonProps { }
-
-export const SignOutButton: React.FC<SignOutButtonProps> = (props) => {
+export const SignOutButton: React.FC = () => {
     const router = useRouter()
     const { toast } = useToast()
 

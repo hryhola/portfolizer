@@ -5,7 +5,6 @@ import {
   XCircle,
   ChevronDown,
   XIcon,
-  WandSparkles,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -126,6 +125,7 @@ export const MultiSelect = React.forwardRef<
       placeholder = "Select options",
       maxCount = 3,
       modalPopover = false,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       asChild = false,
       className,
       ...props

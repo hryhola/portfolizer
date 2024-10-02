@@ -52,18 +52,20 @@ export default async function Page(page: Page) {
     let Wrapper: FC<{ children: JSX.Element | JSX.Element[] }> = (props) => <div>{props.children}</div>
 
     if (mode === 'edit') {
-        Wrapper = (props) => <ProjectFormWrapper id={project.id}
-            uid={project.uid}
-            complexity={complexity}
-            features={features}
-            links={links}
-            stack={stack}
-            time={timeSpent}
-            photos={photos}
-            headerImageSrc={project.headerImageSrc}
-        >
-            {props.children}
-        </ProjectFormWrapper>;
+        Wrapper = function ProjectWrapper (props) {
+            return <ProjectFormWrapper id={project.id}
+                uid={project.uid}
+                complexity={complexity}
+                features={features}
+                links={links}
+                stack={stack}
+                time={timeSpent}
+                photos={photos}
+                headerImageSrc={project.headerImageSrc}
+            >
+                {props.children}
+            </ProjectFormWrapper>;
+        }
     }
 
     return (<Wrapper>

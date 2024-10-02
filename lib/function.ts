@@ -10,8 +10,10 @@ export const throttle = (fn: Function, wait: number = 300) => {
     let inThrottle = false;
 
     return function (this: any) {
-        const context = this,
-            args = arguments;
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const context = this;
+        // eslint-disable-next-line prefer-rest-params
+        const args = arguments;
 
         if (!inThrottle) {
             fn.apply(context, args);

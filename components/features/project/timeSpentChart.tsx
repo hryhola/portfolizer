@@ -15,7 +15,7 @@ type Props = {
 export const TimeSpentChart = (props: Props) => {
   let cleanedData = props.data
 
-  let sortedData = [...props.data].sort((a, b) => b.minutes - a.minutes);
+  const sortedData = [...props.data].sort((a, b) => b.minutes - a.minutes);
 
   if (sortedData.length > 5) {
     const first4bars = sortedData.slice(0, 4);

@@ -8,9 +8,7 @@ import { Button } from '@/components/ui/button';
 import { EditButtons } from '@/components/ui/editButtons';
 import { Input } from '@/components/ui/input';
 
-interface EditableLinksBlockProps {}
-
-export const EditableLinksBlock: React.FC<EditableLinksBlockProps> = (props) => {
+export const EditableLinksBlock: React.FC = () => {
     const nameInput = useRef<HTMLInputElement>(null);
     const urlInput = useRef<HTMLInputElement>(null);
     const { links, setLinks } = useProjectContext()

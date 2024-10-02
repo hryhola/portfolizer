@@ -94,7 +94,7 @@ export const getProject = async (authorId: string, projectId: string) => {
         return null;
     }
 
-    let q = await adminDb.collection('projects')
+    const q = await adminDb.collection('projects')
         .where('authorUid', '==', user.uid)
         .where('id', '==', projectId)
         .get()

@@ -28,7 +28,7 @@ const LevelSelect = (props: {
     </SelectContent>
 </Select>
 
-interface EditableComplexityLevel extends ComplexityLevelData {}
+type EditableComplexityLevel = ComplexityLevelData
 
 export const EditableComplexityLevel: React.FC<EditableComplexityLevel> = (props) => {
     const { setComplexity } = useProjectContext()
@@ -89,10 +89,7 @@ export const EditableComplexityLevel: React.FC<EditableComplexityLevel> = (props
     </li>
 }
 
-interface EditableComplexityLevelsProps {
-}
-
-export const EditableComplexityLevels: React.FC<EditableComplexityLevelsProps> = (props) => {
+export const EditableComplexityLevels: React.FC = () => {
     const newComplexityNameRef = useRef<HTMLInputElement>(null)
     const [newComplexityLevelValue, setNewComplexityLevelValue] = useState<ComplexityLevelValue|null>(null)
     const [message, setMessage] = useState('')

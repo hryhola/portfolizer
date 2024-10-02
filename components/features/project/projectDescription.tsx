@@ -3,9 +3,7 @@ import { EditableComponentProps } from '../../ui/types';
 import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
 
-interface ProjectDescriptionProps extends EditableComponentProps {
-    
-}
+type ProjectDescriptionProps = EditableComponentProps
 
 export const ProjectDescription: React.FC<ProjectDescriptionProps> = (props) => {
     const className = cn('whitespace-pre-wrap', props.className);

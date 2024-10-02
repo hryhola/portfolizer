@@ -25,7 +25,7 @@ export const Tip = ({
               onTouchStart={() => setOpen(!open)}
               onKeyDown={(e) => {
                 e.preventDefault();
-                e.key === 'Enter' && setOpen(!open);
+                if (e.key === 'Enter') setOpen(!open);
               }}
             >
               {children}

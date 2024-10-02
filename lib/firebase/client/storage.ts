@@ -14,7 +14,7 @@ export async function uploadProfilePicture(userUid: string, file: File): Promise
         // Start the upload task
         const uploadTask = uploadBytesResumable(storageRef, file);
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             uploadTask.on(
                 'state_changed',
                 (snapshot) => {

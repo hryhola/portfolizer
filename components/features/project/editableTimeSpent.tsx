@@ -47,10 +47,7 @@ const TimeSpentRow: React.FC<TimeData> = (props) => {
     </li>
 }
 
-interface EditableTimeSpentProps {
-}
-
-export const EditableTimeSpent: React.FC<EditableTimeSpentProps> = (props) => {
+export const EditableTimeSpent: React.FC = () => {
     const { time, setTime } = useProjectContext()
     const newTimeNameRef = useRef<HTMLInputElement>(null)
     const newTimeValueRef = useRef<HTMLInputElement>(null)

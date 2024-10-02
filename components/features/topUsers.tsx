@@ -1,10 +1,8 @@
 import { getTopUsers } from '@/lib/firebase/admin/db';
 import { SimpleUserCard } from './simpleUserCard';
 
-interface TopUsersProps {}
-
-export const TopUsers: React.FC<TopUsersProps> = async (props) => {
+export const TopUsers: React.FC = async () => {
     const users = await getTopUsers();
 
-    return users.map(u => <SimpleUserCard {...u} />);
+    return users.map(u => <SimpleUserCard key={u.uid} {...u} />);
 }
