@@ -22,7 +22,7 @@ export const SimpleProjectCard: React.FC<SimpleProjectCardProps> = async (props)
                 : <></>}
         </p>
         {props.headerImageSrc
-            ? <Image className="w-full" src={props.headerImageSrc} width={272} height={272} alt='Project Picture' />
+            ? <Image className="w-full max-w-[500px] min-h-52 object-center object-cover" src={props.headerImageSrc} width={500} height={272} alt='Project Picture' />
             : <div className='text-6xl flex-grow grid place-items-center'>📝</div>}
     </div>;
 }

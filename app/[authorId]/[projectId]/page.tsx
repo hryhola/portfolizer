@@ -60,6 +60,7 @@ export default async function Page(page: Page) {
             stack={stack}
             time={timeSpent}
             photos={photos}
+            headerImageSrc={project.headerImageSrc}
         >
             {props.children}
         </ProjectFormWrapper>;

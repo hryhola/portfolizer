@@ -8,7 +8,7 @@ interface ProjectDescriptionProps extends EditableComponentProps {
 }
 
 export const ProjectDescription: React.FC<ProjectDescriptionProps> = (props) => {
-    const className = cn(props.className);
+    const className = cn('whitespace-pre-wrap', props.className);
 
     return props.mode === 'edit' ? <Textarea className={cn('min-h-64', className)}
         name="description"

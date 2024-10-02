@@ -39,10 +39,10 @@ export const ProjectSign: React.FC<ProjectSignProps> = (props) => {
             />
             : props.projectClient}
         </div>
-        {props.date && <div className={cn('font-italic text-gray-500 tracking-[-4px]', { 'flex gap-2 items-start': props.mode === 'edit' })}>
+        {(props.date || props.mode === 'edit') && <div className={cn('font-italic text-gray-500 tracking-[-4px]', { 'flex gap-2 items-start': props.mode === 'edit' })}>
             {props.mode === 'edit'
             ? <Input className='relative top-[-6px]' variant='slim' type='date' name="date" placeholder='Date' {...defaultInputValue} />
-            : props.date.getFullYear()}
+            : props.date!.getFullYear()}
         </div>}
     </h3>;
 }

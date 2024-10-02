@@ -50,7 +50,7 @@ export const updateUser = async (uid: string, data: Partial<UserData>, options?:
     }
 }
 
-export const createUserIfNotExist = async (uid: string, data: Omit<UserData, 'uid'>) => {
+export const createUserIfNotExist = async (uid: string, data: Omit<UserData, 'uid' | 'createdAt' | 'updatedAt'>) => {
     const result = await updateUser(uid, data, { existCheck: 'errorIfDo' })
 
     if (!result.success) {

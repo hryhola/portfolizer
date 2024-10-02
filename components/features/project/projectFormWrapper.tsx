@@ -42,6 +42,7 @@ interface ProjectFormWrapperProps {
     time: TimeData[]
     features: FeatureData[]
     photos: PhotosData[]
+    headerImageSrc?: string
 }
 
 export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => {
@@ -132,7 +133,7 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
 
         cleanUpStorage(
             'projects/' + props.uid,
-            [newHeaderSrc, ...newPhotos.map(p => p.src)].filter(p => typeof p === 'string')
+            [newHeaderSrc ? newHeaderSrc : props.headerImageSrc, ...newPhotos.map(p => p.src)].filter(p => typeof p === 'string')
         ).catch(e => console.error(e))
 
         const name = formData.get('name');
@@ -202,3 +203,5 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
         <form onSubmit={handleSubmit} ref={formRef}>{props.children}</form>
     </FormContext.Provider>;
 }
+
+ProjectFormWrapper.displayName = 'ProjectFormWrapper';

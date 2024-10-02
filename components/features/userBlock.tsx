@@ -60,7 +60,7 @@ export const UserBlock: React.FC<UserBlockProps> = async (props) => {
         <div className='flex flex-wrap sm:flex-nowrap gap-5'>
             {props.imageSrc && <Image className='w-full sm:w-auto border border-black rounded object-cover' src={props.imageSrc} width={272} height={272} alt='Profile Picture' />}
             <div className='grid gap-5'>
-                {props.bio && <p>{props.bio}</p>}
+                {props.bio && <p className='whitespace-pre-wrap'>{props.bio}</p>}
                 {hasAnyLink && <ul className='flex flex-wrap gap-5 justify-between'>
                     <UserLink id={props.email} href={`mailto:${props.email}`} icon={<MdEmail className='relative top-px' size={14} />} />
                     <UserLink id={props.phoneNumber} href={`tel:${props.phoneNumber}`} icon={<BsFillTelephoneFill size={14} />} />

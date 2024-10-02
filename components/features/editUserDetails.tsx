@@ -33,7 +33,7 @@ import { MAX_IMAGE_SIZE } from "@/lib/const"
 const formSchema = z.object({
     id: z.string().regex(/^[0-9a-zA-Z-_]+$/).min(1).max(50),
     name: z.string().min(1).max(50),
-    bio: z.string().max(300).optional(),
+    bio: z.string().max(500).optional(),
     email: z.string().email().optional(),
     phoneNumber: z.string().max(20).optional(),
     twitterId: z.string().max(100).optional(),
@@ -49,10 +49,10 @@ type EditUserDetailsProps = {
             github?: UserInfo
             google?: UserInfo
         }
-    } & Omit<UserData, 'projectIds'>
+    } & Omit<UserData, 'projectIds' | 'createdAt' | 'updatedAt'>
 
 export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
-    const { imageSrc, uid, ...userDataWithoutImage } = props;
+    const { imageSrc, uid: _uid, ...userDataWithoutImage } = props;
 
     const [open, setOpen] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')

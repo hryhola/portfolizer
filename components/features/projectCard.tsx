@@ -44,7 +44,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
         </div>
         <div className='bg-gradient-to-l w-1/2 md:w-1/4 from-white grid justify-end text-right p-5'>
             {props.frameworks.length ? <ul className=''>
-                {props.frameworks.map(f => <li key={f}>{f}</li>)}
+                {props.frameworks.slice(0, 5).map(f => <li key={f}>{f}</li>)}
             </ul> : <></>}
             <p className={cn({ 'self-end': props.frameworks.length }, 'font-italic tracking-[-4px] opacity-60')}>{props.dateCreated && props.dateCreated.getFullYear()}</p>
         </div>
