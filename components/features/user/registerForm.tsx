@@ -108,7 +108,7 @@ export const RegisterForm: React.FC = () => {
     }
 
     return <Form {...form}>
-        <form className='space-y-4 border border-gray-500 rounded-xl p-5 max-w-96' onSubmit={form.handleSubmit(onSubmit)}>
+        <form className='space-y-4 border border-gray-500 rounded-xl p-5 max-w-96 shadow-lg' onSubmit={form.handleSubmit(onSubmit)}>
             <h1 className='text-5xl'>
                 Register
             </h1>
@@ -199,11 +199,11 @@ export const RegisterForm: React.FC = () => {
             />
             {formError && <p className='text-sm text-destructive'>{formError}</p>}
             <div className='flex items-stretch gap-2'>
-                <Button disabled={isLoading} type='submit'>Register</Button>
-                <Button disabled={isLoading} type='button' variant='outline' onClick={createProviderSignInHandler('google')}>
+                <Button className='shadow-md shadow-gray-500' disabled={isLoading} type='submit'>Register</Button>
+                <Button className='shadow-md' disabled={isLoading} type='button' variant='outline' onClick={createProviderSignInHandler('google')}>
                     <FcGoogle size={30} />
                 </Button>
-                <Button disabled={isLoading} type='button' variant='outline' onClick={createProviderSignInHandler('github')}>
+                <Button className='shadow-md' disabled={isLoading} type='button' variant='outline' onClick={createProviderSignInHandler('github')}>
                     <FaGithub size={30} />
                 </Button>
             </div>

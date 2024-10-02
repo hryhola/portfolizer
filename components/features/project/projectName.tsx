@@ -17,6 +17,6 @@ export const ProjectName = (props: Props) => {
         variant='slim'
         defaultValue={props.value}
         placeholder='Project Name'
-    /> : <h1 className={className}>{props.value}</h1>
+    /> : <h1 className={cn('drop-shadow-lg', className)}>{props.value}</h1>
 }
 

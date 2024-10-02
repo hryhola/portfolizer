@@ -88,7 +88,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
 
     return <>
         <div className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols-[3fr_1fr_2fr] gap-2'>
-            <Input className='sm:col-span-2 md:col-span-1 border-gray-500'
+            <Input className='sm:col-span-2 md:col-span-1 border-gray-500 drop-shadow-lg'
                 placeholder='Search'
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
@@ -98,14 +98,14 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
                 <Button className='px-1 space-x-2' variant='ghost'
                     onClick={() => setSortDirection((prev) => prev === 'ascending' ? 'descending' : 'ascending')}
                 >
-                    <Label className='whitespace-nowrap cursor-pointer' htmlFor='sort-projects-by'>Sort by</Label>
+                    <Label className='whitespace-nowrap cursor-pointer drop-shadow-sm' htmlFor='sort-projects-by'>Sort by</Label>
                     {sortDirection === 'ascending'
                         ? <ArrowUpWideNarrow />
                         : <ArrowDownWideNarrow />}
                 </Button>
                 
                 <Select name='sort-projects-by' value={sortBy} onValueChange={(value: SortByType) => setSortBy(value)}>
-                    <SelectTrigger className='border-gray-500'>
+                    <SelectTrigger className='border-gray-500 drop-shadow-lg'>
                         <SelectValue placeholder='Sort value' />
                     </SelectTrigger>
                     <SelectContent>
@@ -120,7 +120,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
             <div className='xl:ml-4 sm:col-span-3 md:col-span-1 flex items-center gap-2'>
                 <Label htmlFor='filter-projects-by' className='whitespace-nowrap'>Filter by</Label>
                 <MultiSelect
-                    className='flex-grow border-gray-500'
+                    className='flex-grow border-gray-500 shadow-lg'
                     name='filter-projects-by'
                     options={frameworks.map(f => ({ value: f, label: f }))}
                     onValueChange={setSelectedFrameworks}

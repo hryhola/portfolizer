@@ -17,7 +17,7 @@ export const LinksBlock: React.FC<LinksBlockProps> = (props) => {
     return <>
         {props.mode === 'edit' && <div className='font-mono mt-10 text-center'>Links</div>}
         <ul className={cn('text-center divide-y divide-gray-500', props.className)}>
-            {props.mode === 'view' && props.data.map(l => <li key={l.id} className='py-3'>{l.id} <a className='underline' href={l.url}>{l.url}</a></li>)}
+            {props.mode === 'view' && props.data.map(l => <li key={l.id} className='py-3'>{l.id} <a className='underline' target='_blank' href={l.url}>{l.url}</a></li>)}
             {props.mode === 'edit' && <EditableLinksBlock />}
         </ul>
     </>;

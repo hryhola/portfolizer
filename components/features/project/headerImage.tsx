@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { EditableComponentProps } from '../../ui/types';
 import { EditableHeaderImage } from './editableHeaderImage';
+import { cn } from '@/lib/utils';
 
 interface HeaderImageProps extends EditableComponentProps {
     value?: string
@@ -21,5 +22,5 @@ export const HeaderImage: React.FC<HeaderImageProps> = (props) => {
         return <></>
     }
 
-    return <Image className={className} src={props.value} alt={alt}  width={width} height={height} />;
+    return <Image className={cn('shadow-md', className)} src={props.value} alt={alt}  width={width} height={height} />;
 }

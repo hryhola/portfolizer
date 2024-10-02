@@ -20,9 +20,9 @@ export interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
     
     return <div style={{ backgroundImage: props.headerImageSrc ? `url(${props.headerImageSrc})` : 'none' }}
-        className='bg-cover bg-center flex justify-between min-h-32 border border-black rounded overflow-hidden'
+        className='bg-cover bg-center flex justify-between min-h-32 border border-black rounded overflow-hidden drop-shadow-lg'
     >
-        <div className='bg-white min-w-44 p-5'>
+        <div className='bg-white min-w-44 p-5 border-r border-black'>
             {!props.published && <p className='uppercase font-italic tracking-[-2px] font-bold text-sm'>unpublished</p>}
             <h3 className='text-2xl'>
                 <Link className='hover:underline' href={props.authorId + '/' + props.id}>
@@ -46,7 +46,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
             {props.frameworks.length ? <ul className=''>
                 {props.frameworks.slice(0, 5).map(f => <li key={f}>{f}</li>)}
             </ul> : <></>}
-            <p className={cn({ 'self-end': props.frameworks.length }, 'font-italic tracking-[-4px] opacity-60')}>{props.dateCreated && props.dateCreated.getFullYear()}</p>
+            <p className={cn({ 'self-end': props.frameworks.length }, 'font-italic tracking-[-4px]')}>{props.dateCreated && props.dateCreated.getFullYear()}</p>
         </div>
     </div>;
 }

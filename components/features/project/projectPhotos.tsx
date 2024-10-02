@@ -24,8 +24,8 @@ export const ProjectPhotos: React.FC<ProjectPhotosProps> = (props) => {
 
     return <>
         {props.mode === 'edit' && <h4 className='font-mono mt-5 text-center'>Images</h4>}
-        <div className='flex flex-wrap justify-center gap-5 m-5 '>
-            {photos && photos.map((i) => <div key={i.src} className='relative max-w-[500px] '>
+        <div className='flex flex-wrap justify-center gap-5 m-5'>
+            {photos && photos.map((i) => <div key={i.src} className='relative max-w-[487px] '>
                 {props.mode === 'edit' && <>
                     <Button className='z-10 absolute'
                         variant='ghost'
@@ -33,7 +33,9 @@ export const ProjectPhotos: React.FC<ProjectPhotosProps> = (props) => {
                         type='button'
                     >❌</Button>
                 </>}
-                <Image className={cn('h-auto max-w-full rounded-lg border border-black', { 'opacity-50': props.mode === 'edit' })}
+                <Image className={cn('h-auto max-w-full rounded-lg border border-black drop-shadow-md shadow-xl', { 'opacity-50': props.mode === 'edit' })}
+                    width={1500}
+                    height={1500}
                     src={i.src}
                     alt=''
                 />

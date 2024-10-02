@@ -7,7 +7,7 @@ type SimpleProjectCardProps = ProjectData
 export const SimpleProjectCard: React.FC<SimpleProjectCardProps> = async (props) => {
     const author = (await getUser({ uid: props.authorUid }))!
 
-    return <div className='border border-black rounded overflow-hidden min-w-96 min-h-52 flex flex-col'>
+    return <div className='border border-black rounded overflow-hidden min-w-96 min-h-52 flex flex-col shadow-lg'>
         <h3 className='text-2xl p-2 border-b border-gray-600'>
             <Link className='hover:underline' href={`/${author.id}/${props.id}`}>
                 {props.name}

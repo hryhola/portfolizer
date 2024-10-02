@@ -12,6 +12,6 @@ export const ProjectDescription: React.FC<ProjectDescriptionProps> = (props) => 
         name='description'
         placeholder='Description'
         defaultValue={props.value}
-    /> : <p className={className}>{props.value}</p>;
+    /> : <p className={cn('p', className)}>{props.value}</p>;
 
 }

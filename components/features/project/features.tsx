@@ -13,11 +13,11 @@ interface FeaturesProps extends EditableComponentProps {
 }
 
 export const ProjectFeatures: React.FC<FeaturesProps> = (props) => {
-    return <>
-        {(props.mode === 'edit' || props.data.length > 0) && <h3 className='text-3xl pb-3'>Features</h3>}
+    return <div className='border border-black rounded-md shadow-xl p-5'>
+        {(props.mode === 'edit' || props.data.length > 0) && <h3 className='text-3xl pb-3'>Features I worked on</h3>}
         <ul className='space-y-3'>
             {props.mode === 'view' && props.data.map(f => <li key={f.order}>{f.text}</li>)}
             {props.mode === 'edit' && <EditableFeatures />}
         </ul>
-    </>;
+    </div>;
 }
