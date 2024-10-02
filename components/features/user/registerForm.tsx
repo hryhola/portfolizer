@@ -22,6 +22,7 @@ import { isUserIdAvailable } from '@/lib/firebase/client/db';
 import { debounce } from '@/lib/function';
 import { registerWithEmail, signInWithProvider } from '@/lib/firebase/client/auth';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
     id: z.string().min(1).max(50).regex(/^[0-9a-zA-Z-_]+$/),
@@ -34,7 +35,9 @@ const formSchema = z.object({
 
 export const RegisterForm: React.FC = () => {
     const router = useRouter()
+    const toast = useToast()
     const [formError, setFormError] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
     const [userIdTaken, setUserIdTaken] = useState<null | boolean>(null)
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -47,9 +50,18 @@ export const RegisterForm: React.FC = () => {
             return;
         }
 
+        setIsLoading(true)
+
         const result = await registerWithEmail(values.id, values.email, values.name, values.password)
 
+        setIsLoading(false)
+
         if (result.success) {
+            toast.toast({
+                title: `Registered as ${values.id}`,
+                description: 'Redirecting...'
+            })
+
             router.refresh()
             return
         }
@@ -75,9 +87,20 @@ export const RegisterForm: React.FC = () => {
     }, 250)
 
     const createProviderSignInHandler = (provider: 'google' | 'github') => async () => {
+        setIsLoading(true)
+    
         const result = await signInWithProvider(provider);
+        
+        setIsLoading(false)
 
         if (result.success) {
+            toast.toast({
+                title: `Logged in${'email' in result && result.email ?
+                    ' as ' + result.email
+                    : ''}`,
+                description: 'Redirecting...'
+            })
+
             router.refresh()
         } else {
             setFormError(result.error || 'Something went wrong')
@@ -109,6 +132,7 @@ export const RegisterForm: React.FC = () => {
                                     field.onBlur()
                                     handleUserIdChange()
                                 }}
+                                disabled={isLoading}
                             />
                         </FormControl>
                         <FormMessage>
@@ -127,7 +151,7 @@ export const RegisterForm: React.FC = () => {
                     <FormItem>
                         <FormLabel>Email <span className='text-red-500'>*</span></FormLabel>
                         <FormControl>
-                            <Input className='border-black' type='email' placeholder='your@email.example' autoComplete='email' {...field} />
+                            <Input className='border-black' type='email' placeholder='your@email.example' autoComplete='email' disabled={isLoading} {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -140,7 +164,7 @@ export const RegisterForm: React.FC = () => {
                     <FormItem>
                         <FormLabel>Name <span className='text-red-500'>*</span></FormLabel>
                         <FormControl>
-                            <Input className='border-black' placeholder='name' autoComplete='name' {...field} />
+                            <Input className='border-black' placeholder='name' autoComplete='name' disabled={isLoading} {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -154,7 +178,7 @@ export const RegisterForm: React.FC = () => {
                     <FormItem>
                         <FormLabel>Password <span className='text-red-500'>*</span></FormLabel>
                         <FormControl>
-                            <Input className='border-black' type='password' placeholder='password' autoComplete='new-password' {...field} />
+                            <Input className='border-black' type='password' placeholder='password' autoComplete='new-password' disabled={isLoading} {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -167,7 +191,7 @@ export const RegisterForm: React.FC = () => {
                     <FormItem>
                         <FormLabel>Confirm Password <span className='text-red-500'>*</span></FormLabel>
                         <FormControl>
-                            <Input className='border-black' type='password' placeholder='password' autoComplete='new-password' {...field} />
+                            <Input className='border-black' type='password' placeholder='password' autoComplete='new-password' disabled={isLoading} {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -175,11 +199,11 @@ export const RegisterForm: React.FC = () => {
             />
             {formError && <p className='text-sm text-destructive'>{formError}</p>}
             <div className='flex items-stretch gap-2'>
-                <Button type='submit'>Register</Button>
-                <Button type='button' variant='outline' onClick={createProviderSignInHandler('google')}>
+                <Button disabled={isLoading} type='submit'>Register</Button>
+                <Button disabled={isLoading} type='button' variant='outline' onClick={createProviderSignInHandler('google')}>
                     <FcGoogle size={30} />
                 </Button>
-                <Button type='button' variant='outline' onClick={createProviderSignInHandler('github')}>
+                <Button disabled={isLoading} type='button' variant='outline' onClick={createProviderSignInHandler('github')}>
                     <FaGithub size={30} />
                 </Button>
             </div>

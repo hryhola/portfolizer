@@ -29,6 +29,7 @@ import { LinkProvidersButton } from './user/linkProvidersButton'
 import { MdEmail } from 'react-icons/md';
 import { cleanUpStorage, uploadProfilePicture } from '@/lib/firebase/client/storage'
 import { MAX_IMAGE_SIZE } from '@/lib/const'
+import { useToast } from '@/hooks/use-toast'
 
 const formSchema = z.object({
     id: z.string().regex(/^[0-9a-zA-Z-_]+$/).min(1).max(50),
@@ -54,6 +55,8 @@ type EditUserDetailsProps = {
 export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
     const { imageSrc, uid: _uid, ...userDataWithoutImage } = props;
 
+    const toast = useToast()
+    const [isLoading, setIsLoading] = useState(false)
     const [open, setOpen] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [imagePreviewSrc, setImagePreviewSrc] = useState(imageSrc)
@@ -67,6 +70,7 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setErrorMessage('')
+        setIsLoading(true)
 
         const { image, ...updatedFields } = values;
 
@@ -80,6 +84,7 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
 
                 cleanUpStorage('users/' + props.uid, [uploadResult.downloadURL]).catch(e => console.error(e))
             } else {
+                setIsLoading(false)
                 setErrorMessage(uploadResult.error || 'Something went wrong');
             }
         }
@@ -89,8 +94,15 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
             imageSrc
         }, { existCheck: 'errorIfNot' });
 
+        setIsLoading(false)
+
         if (result.success) {
             setOpen(false)
+
+            toast.toast({
+                title: `Updated user ${updatedFields.id} details`,
+                description: 'Refreshing...'
+            })
 
             if (props.id !== updatedFields.id) {
                 router.push('/' + updatedFields.id)
@@ -123,7 +135,11 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                             <FormItem>
                                 <FormLabel>User ID <span className='text-red-500'>*</span></FormLabel>
                                 <FormControl>
-                                    <Input className='border-black' placeholder='id' {...field} />
+                                    <Input className='border-black'
+                                        placeholder='id'
+                                        disabled={isLoading}
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -136,7 +152,11 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                             <FormItem>
                                 <FormLabel>Name <span className='text-red-500'>*</span></FormLabel>
                                 <FormControl>
-                                    <Input className='border-black' placeholder='name' {...field} />
+                                    <Input className='border-black'
+                                        placeholder='name'
+                                        disabled={isLoading}
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -158,6 +178,7 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                                                 setImagePreviewSrc(URL.createObjectURL(e.target.files[0]))
                                             }
                                         }}
+                                        disabled={isLoading}
                                         type='file'
                                         accept='image/*'
                                         className='border-black'
@@ -174,7 +195,11 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                             <FormItem>
                                 <FormLabel>Bio</FormLabel>
                                 <FormControl>
-                                    <Textarea className='border-black' placeholder='Tell about yourself' {...field} />
+                                    <Textarea className='border-black'
+                                        placeholder='Tell about yourself'
+                                        disabled={isLoading}
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -189,7 +214,12 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                                     <MdEmail className='inline relative bottom-px' size={16} /> Email
                                 </FormLabel>
                                 <FormControl>
-                                    <Input className='border-black' type='email' placeholder='contact@email.example' {...field} />
+                                    <Input className='border-black'
+                                        type='email'
+                                        placeholder='contact@email.example'
+                                        disabled={isLoading}
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -204,7 +234,11 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                                     <BsFillTelephoneFill className='inline relative bottom-0.5' size={16} /> Phone Number
                                 </FormLabel>
                                 <FormControl>
-                                    <Input className='border-black' placeholder='(555) 255-8475' {...field} />
+                                    <Input className='border-black'
+                                        placeholder='(555) 255-8475'
+                                        disabled={isLoading}
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -217,7 +251,11 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                             <FormItem>
                                 <FormLabel><FaGithub className='inline relative bottom-0.5' size={16} /> GitHub ID</FormLabel>
                                 <FormControl>
-                                    <Input className='border-black' placeholder='githubId' {...field} />
+                                    <Input className='border-black'
+                                        placeholder='githubId'
+                                        disabled={isLoading}
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -230,7 +268,11 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                             <FormItem>
                                 <FormLabel><FaLinkedin className='inline relative bottom-0.5' size={16} /> LinkedIn ID</FormLabel>
                                 <FormControl>
-                                    <Input className='border-black' placeholder='linkedInId' {...field} />
+                                    <Input className='border-black'
+                                        placeholder='linkedInId'
+                                        disabled={isLoading}
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -243,7 +285,11 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                             <FormItem>
                                 <FormLabel><FaTelegramPlane className='inline relative bottom-0.5' size={16} /> Telegram ID</FormLabel>
                                 <FormControl>
-                                    <Input className='border-black' placeholder='telegramId' {...field} />
+                                    <Input className='border-black'
+                                        placeholder='telegramId'
+                                        disabled={isLoading}
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -256,7 +302,11 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                             <FormItem>
                                 <FormLabel><FaXTwitter className='inline relative bottom-0.5' size={16} /> ID</FormLabel>
                                 <FormControl>
-                                    <Input className='border-black' placeholder='xId' {...field} />
+                                    <Input className='border-black'
+                                        disabled={isLoading}
+                                        placeholder='xId'
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -264,7 +314,7 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                     />
                     {errorMessage && <FormMessage>{errorMessage}</FormMessage>}
                     <DialogFooter>
-                        <Button type='submit'>Save changes</Button>
+                        <Button disabled={isLoading} type='submit'>Save changes</Button>
                     </DialogFooter>
                 </form>
             </Form>

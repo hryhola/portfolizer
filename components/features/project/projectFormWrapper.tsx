@@ -14,6 +14,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { updateProject } from '@/lib/firebase/client/db';
 import { MAX_IMAGE_SIZE } from '@/lib/const';
 import { cleanUpStorage, uploadProjectPicture } from '@/lib/firebase/client/storage';
+import { cn } from '@/lib/utils';
 
 const FormContext = createContext<{
     stack: StackData[]
@@ -52,6 +53,7 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
     const [time, setTime] = useState(props.time)
     const [features, setFeatures] = useState(props.features)
     const [photos, setPhotos] = useState(props.photos)
+    const [isLoading, setIsLoading] = useState(false)
 
     const formRef = useRef<HTMLFormElement>(null)
 
@@ -121,6 +123,8 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
 
+        setIsLoading(true);
+
         const formData = new FormData(formRef.current!);
 
         const imageUploadResult = await uploadPictures(formData)
@@ -139,6 +143,14 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
         const name = formData.get('name');
 
         if (typeof name !== 'string') {
+            setIsLoading(false)
+
+            toast.toast({
+                title: 'Cannot update the project without name',
+                variant: 'destructive',
+                description: 'Please enter the name of the project' 
+            })
+
             return
         }
 
@@ -167,16 +179,21 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
 
         const result = await updateProject(props.uid, project);
 
+        setIsLoading(false)
+    
         if (!result.success) {
             toast.toast({
-                title: 'Cannot update project',
+                title: 'Cannot update the project',
                 description: result.error || 'Something went wrong'
             })
         
             return
         }
 
-        toast.toast({ title: `Project ${props.id} updated` })
+        toast.toast({
+            title: `Project ${props.id} updated`,
+            description: 'Refreshing...'
+        })
     
         const query = new URLSearchParams(searchParams.toString())
         query.delete('mode')
@@ -200,6 +217,9 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
         photos,
         setPhotos
     }} >
-        <form onSubmit={handleSubmit} ref={formRef}>{props.children}</form>
+        <form className={cn(isLoading ? 'opacity-50 pointer-events-none': '')}
+            onSubmit={handleSubmit}
+            ref={formRef}
+        >{props.children}</form>
     </FormContext.Provider>;
 }

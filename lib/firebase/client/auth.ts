@@ -41,7 +41,10 @@ export const signInWithProvider = async (providerId: 'google' | 'github') => {
             return { success: false, error: resBody.error || 'Something went wrong' };
         }
 
-        return { success: true }
+        return {
+            success: true,
+            email: userCredential.user.email
+        } as const
     } catch (error) {
         console.error('Error signing in with ' + providerId, error)
 
