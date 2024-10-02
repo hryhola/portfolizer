@@ -120,7 +120,12 @@ export const getProject = async (authorId: string, projectId: string) => {
 }
 
 export const getTopUsers = async () => {
-    const users = await adminDb.collection('users').orderBy('publishedProjectsCount').limit(15).get()
+    const users = await adminDb
+        .collection('users')
+        .where('publishedProjectsCount', '>', 0)
+        .orderBy('publishedProjectsCount', 'desc')
+        .limit(15)
+        .get()
 
     return users.docs.map(u => ({
         ...u.data(),
@@ -134,7 +139,7 @@ export const getTopProjects = async () => {
     const projects = await adminDb
         .collection('projects')
         .where('published', '==', true)
-        .orderBy('createdAt')
+        .orderBy('createdAt', 'desc')
         .limit(15)
         .get()
 
