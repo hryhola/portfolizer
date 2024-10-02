@@ -22,7 +22,7 @@ export const ProjectSign: React.FC<ProjectSignProps> = (props) => {
 
     return <h3 className={className}>
         <div className='flex items-top'>
-            <Avatar className="w-7 h-7 mr-2 inline-block border border-black">
+            <Avatar className='w-7 h-7 mr-2 inline-block border border-black'>
                 <AvatarImage className='object-cover' src={props.authorImageSrc} />
                 <AvatarFallback>{String(props.value).slice(0,2)}</AvatarFallback>
             </Avatar>
@@ -31,18 +31,18 @@ export const ProjectSign: React.FC<ProjectSignProps> = (props) => {
         <div className={cn({ 'flex gap-2 items-start': props.mode === 'edit' })}>
             {props.projectClient || props.mode === 'edit' ? '& ' : ''}
             {props.mode === 'edit'
-            ? <Input className={cn('relative top-[-6px]', textClasses)}
-                name="client"
-                variant='slim'
-                defaultValue={props.projectClient}
-                placeholder='Project Client'
-            />
-            : props.projectClient}
+                ? <Input className={cn('relative top-[-6px]', textClasses)}
+                    name='client'
+                    variant='slim'
+                    defaultValue={props.projectClient}
+                    placeholder='Project Client'
+                />
+                : props.projectClient}
         </div>
         {(props.date || props.mode === 'edit') && <div className={cn('font-italic text-gray-500 tracking-[-4px]', { 'flex gap-2 items-start': props.mode === 'edit' })}>
             {props.mode === 'edit'
-            ? <Input className='relative top-[-6px]' variant='slim' type='date' name="date" placeholder='Date' {...defaultInputValue} />
-            : props.date!.getFullYear()}
+                ? <Input className='relative top-[-6px]' variant='slim' type='date' name='date' placeholder='Date' {...defaultInputValue} />
+                : props.date!.getFullYear()}
         </div>}
     </h3>;
 }

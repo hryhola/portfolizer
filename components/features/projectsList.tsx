@@ -44,23 +44,23 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
             };
     
             switch (by) {
-                case 'date-created':
-                    comparison = (a.dateCreated?.getTime() || 0)  - (b.dateCreated?.getTime() || 0);
-                    break;
-                case 'work-hours':
-                    // Handle cases where totalHours is undefined (treat undefined as 0 or set your own logic)
-                    const hoursA = a.totalHours ?? 0;
-                    const hoursB = b.totalHours ?? 0;
-                    comparison = hoursA - hoursB;
-                    break;
-                case 'complexity':
-                    // Convert the string values to numbers using the complexityMap
-                    const complexityA = complexityMap[a.totalComplexity || 'Low']; // Default to 'Low' if undefined
-                    const complexityB = complexityMap[b.totalComplexity || 'Low']; // Default to 'Low' if undefined
-                    comparison = complexityA - complexityB;
-                    break;
-                default:
-                    break;
+            case 'date-created':
+                comparison = (a.dateCreated?.getTime() || 0)  - (b.dateCreated?.getTime() || 0);
+                break;
+            case 'work-hours':
+                // Handle cases where totalHours is undefined (treat undefined as 0 or set your own logic)
+                const hoursA = a.totalHours ?? 0;
+                const hoursB = b.totalHours ?? 0;
+                comparison = hoursA - hoursB;
+                break;
+            case 'complexity':
+                // Convert the string values to numbers using the complexityMap
+                const complexityA = complexityMap[a.totalComplexity || 'Low']; // Default to 'Low' if undefined
+                const complexityB = complexityMap[b.totalComplexity || 'Low']; // Default to 'Low' if undefined
+                comparison = complexityA - complexityB;
+                break;
+            default:
+                break;
             }
     
             // If descending, reverse the comparison result
@@ -106,12 +106,12 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
                 
                 <Select name='sort-projects-by' value={sortBy} onValueChange={(value: SortByType) => setSortBy(value)}>
                     <SelectTrigger className='border-gray-500'>
-                        <SelectValue placeholder="Sort value" />
+                        <SelectValue placeholder='Sort value' />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="date-created">Date created</SelectItem>
-                        <SelectItem value="work-hours">Work hours</SelectItem>
-                        <SelectItem value="complexity">Complexity</SelectItem>
+                        <SelectItem value='date-created'>Date created</SelectItem>
+                        <SelectItem value='work-hours'>Work hours</SelectItem>
+                        <SelectItem value='complexity'>Complexity</SelectItem>
                     </SelectContent>
                 </Select>
                 
@@ -124,10 +124,10 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
                     name='filter-projects-by'
                     options={frameworks.map(f => ({ value: f, label: f }))}
                     onValueChange={setSelectedFrameworks}
-                    placeholder="Filter by frameworks"
-                    variant="inverted"
+                    placeholder='Filter by frameworks'
+                    variant='inverted'
                     maxCount={3}
-                    noselectall="true"
+                    noselectall='true'
                 />
             </div>
         </div>

@@ -1,5 +1,5 @@
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll, deleteObject } from "firebase/storage";
-import { firebaseApp } from "./index";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll, deleteObject } from 'firebase/storage';
+import { firebaseApp } from './index';
 
 const storage = getStorage(firebaseApp);
 
@@ -36,7 +36,7 @@ export async function uploadProfilePicture(userUid: string, file: File): Promise
             );
         });
     } catch (error) {
-        console.error("Error uploading profile picture:", error);
+        console.error('Error uploading profile picture:', error);
 
         return Promise.resolve({ success: false, error: 'Something went wrong' })
     }
@@ -68,7 +68,7 @@ export async function uploadProjectPicture(projectUid: string, file: File): Prom
             );
         });
     } catch (error) {
-        console.error("Error uploading project header:", error);
+        console.error('Error uploading project header:', error);
 
         return Promise.resolve({ success: false, error: 'Something went wrong' })
     }
@@ -86,8 +86,8 @@ export async function cleanUpStorage(folderPath: string, uploadedURLs: string[])
     const folderRef = ref(storage, folderPath);
 
     try {
-         // List all items in the folder
-         const folderContents = await listAll(folderRef);
+        // List all items in the folder
+        const folderContents = await listAll(folderRef);
     
         // List all items in the folder
         const uploadedFileNames = uploadedURLs.map(url => extractFileNameFromURL(url));
@@ -105,9 +105,9 @@ export async function cleanUpStorage(folderPath: string, uploadedURLs: string[])
         }
 
         if (filesToDelete.length === 0) {
-            console.log("No files to delete. All files are up to date.");
+            console.log('No files to delete. All files are up to date.');
         }
     } catch (error) {
-        console.error("Error cleaning up storage:", error);
+        console.error('Error cleaning up storage:', error);
     }
 }

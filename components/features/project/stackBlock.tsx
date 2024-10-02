@@ -25,7 +25,7 @@ export const StackBlock: React.FC<StackBlockProps> = (props) => {
         <div className={cn('', props.className)}>
             {(stack.length > 0 || props.mode === 'edit') && <h4 className='font-mono mb-1'>Stack</h4>}
             {props.mode === 'view' ?
-                <ul className="whitespace-nowrap">
+                <ul className='whitespace-nowrap'>
                     {top5.map(s => <li key={s.id}>{s.id}: <b>{s.value}</b></li>)}
                     <StateBlockRest data={rest} />
                 </ul>

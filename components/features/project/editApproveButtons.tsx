@@ -38,7 +38,7 @@ export const EditApproveButtons: React.FC<EditApproveButtonsProps> = (props) => 
         <Button className='pointer-events-auto' variant='outline' type='button' onClick={handleCancel}>Cancel</Button>
         {props.published && <Button className='pointer-events-auto' variant='outline' type='submit' onClick={handlePublish}>Save & Unpublish</Button>}
         <Button className='pointer-events-auto' type='submit' ref={submitButtonRef as any}>Save</Button>
-        {!props.published && <Button className='pointer-events-auto' onClick={handlePublish} type="button">Save & Publish</Button>}
+        {!props.published && <Button className='pointer-events-auto' onClick={handlePublish} type='button'>Save & Publish</Button>}
         <input className='hidden' type='checkbox' defaultChecked={props.published} name='published' ref={publishCheckboxRef} />
     </div>;
 }

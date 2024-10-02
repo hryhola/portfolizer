@@ -1,8 +1,8 @@
-import "server-only";
+import 'server-only';
 
-import { getFirestore } from "firebase-admin/firestore";
-import { adminApp } from "./index";
-import { ComplexityLevelValue } from "@/components/features/project/complexityLevel";
+import { getFirestore } from 'firebase-admin/firestore';
+import { adminApp } from './index';
+import { ComplexityLevelValue } from '@/components/features/project/complexityLevel';
 
 export const adminDb = getFirestore(adminApp)
 

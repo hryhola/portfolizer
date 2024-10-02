@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = async (props) => {
         redirect('/');
     }
 
-    return <div className="container mx-auto min-h-[90vh] grid place-items-center py-5">
+    return <div className='container mx-auto min-h-[90vh] grid place-items-center py-5'>
         {props.children}
     </div>;
 }

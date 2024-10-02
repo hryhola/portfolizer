@@ -1,8 +1,8 @@
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
 
-import { APIResponse } from "@/types";
-import { createSessionCookie } from "@/lib/firebase/admin/session";
+import { APIResponse } from '@/types';
+import { createSessionCookie } from '@/lib/firebase/admin/session';
 
 export async function POST(request: NextRequest) {
     const reqBody = (await request.json()) as { idToken: string };
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 
     const sessionCookie = await createSessionCookie(idToken, { expiresIn });
 
-    cookies().set("__session", sessionCookie, {
+    cookies().set('__session', sessionCookie, {
         maxAge: expiresIn,
         httpOnly: true,
         secure: true,
@@ -20,6 +20,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json<APIResponse<string>>({
         success: true,
-        data: "Signed in successfully.",
+        data: 'Signed in successfully.',
     });
 }

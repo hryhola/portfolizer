@@ -28,7 +28,7 @@ const FormContext = createContext<{
     setFeatures: React.Dispatch<React.SetStateAction<FeatureData[]>>
     photos: (PhotosData & { file?: File })[]
     setPhotos: React.Dispatch<React.SetStateAction<PhotosData[]>>
-}>(null!)
+        }>(null!)
 
 export const useProjectContext = () => useContext(FormContext)
 

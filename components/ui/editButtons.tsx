@@ -13,7 +13,7 @@ interface EditButtonsProps {
 export const EditButtons: React.FC<EditButtonsProps> = (props) => {
     return <>
         <Button variant='ghost'
-            type="button"
+            type='button'
             onClick={props.onRemove}
             data-id={props.id}
         >{ props.removeButtonContent ? props.removeButtonContent : '❌' }</Button>

@@ -16,7 +16,7 @@ export const SignOutButton: React.FC = () => {
             router.refresh()
         } else {
             toast({
-                title: "Sign Out Error",
+                title: 'Sign Out Error',
                 description: result.error || 'Something went wrong',
                 variant: 'destructive'
             })

@@ -71,9 +71,9 @@ export default async function Page(page: Page) {
     return (<Wrapper>
         {mode === 'edit' ? <EditApproveButtons published={project.published} /> : <></>}
         <HeaderImage value={project.headerImageSrc} mode={mode} />
-        <div className="container mx-auto px-5">
+        <div className='container mx-auto px-5'>
             {mode !== 'edit' && isCurrentUsersProject ? <PreEditButtons authorId={project.authorId} projectId={project.id} projectName={project.name} projectUid={project.uid} /> : <></>}
-            <div className="my-5 gap-5 sm:gap-x-10 grid items-start grid-cols-[1fr_min-content]">
+            <div className='my-5 gap-5 sm:gap-x-10 grid items-start grid-cols-[1fr_min-content]'>
                 <ProjectName className='align-text-bottom col-span-2 sm:col-span-1 order-1' mode={mode} value={project.name} />
                 <ProjectTimeTotal className='order-3 sm:order-2' mode={mode} value={project.timeTotal} />
                 <ProjectSign className='order-2 sm:order-3' date={project.date} value={project.authorName} authorId={project.authorId} projectClient={project.client} authorImageSrc={project.authorImageSrc} mode={mode} />

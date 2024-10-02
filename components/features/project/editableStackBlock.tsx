@@ -82,13 +82,13 @@ export const EditableStackBlock: React.FC = () => {
 
     return <ul className='min-w-64'>
         {stack.map((d, i) => <React.Fragment key={d.id}><li className='mb-px flex justify-end'>
-                <EditButtons id={d.id}
-                    onDown={handleDown}
-                    onRemove={handleRemove}
-                    onUp={handleUp}
-                    removeButtonContent={<>{d.id}:&nbsp;<b>{d.value}</b>&nbsp;❌</>}
-                />
-            </li>{i === 4 && <Separator className='my-1' />}
+            <EditButtons id={d.id}
+                onDown={handleDown}
+                onRemove={handleRemove}
+                onUp={handleUp}
+                removeButtonContent={<>{d.id}:&nbsp;<b>{d.value}</b>&nbsp;❌</>}
+            />
+        </li>{i === 4 && <Separator className='my-1' />}
         </React.Fragment>)}
         <li className='mt-2 flex'>
             <Input className='rounded-r-none'

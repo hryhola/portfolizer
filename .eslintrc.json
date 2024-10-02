@@ -1,4 +1,7 @@
 {
+  "plugins": [
+    "@stylistic/eslint-plugin-js"
+  ],
   "extends": [
     "next/core-web-vitals",
     "next/typescript"
@@ -13,6 +16,9 @@
       }
     ],
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-unsafe-function-type": "off"
+    "@typescript-eslint/no-unsafe-function-type": "off",
+    "@stylistic/js/quotes": ["error", "single"],
+    "@stylistic/js/jsx-quotes": ["error", "prefer-single"],
+    "@stylistic/js/indent": ["error", 4]
   }
 }

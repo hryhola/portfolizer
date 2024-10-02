@@ -3,26 +3,26 @@
 import React, { useState } from 'react'
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { z } from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
     Form,
     FormControl,
     FormField,
     FormItem,
     FormMessage,
-} from "@/components/ui/form"
+} from '@/components/ui/form'
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
+} from '@/components/ui/dialog'
 import { cn } from '@/lib/utils';
 import { createProject, isProjectIdAvailable } from '@/lib/firebase/client/db';
-import { IoAddOutline } from "react-icons/io5";
+import { IoAddOutline } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
@@ -74,17 +74,17 @@ export const AddProject: React.FC<AddProjectProps> = (props) => {
             <Form {...form}>
                 <form className={cn('flex', props.className)} onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
-                            control={form.control}
-                            name="id"
-                            render={({ field }) => (
-                                <FormItem className='w-full flex-grow'>
-                                    <FormControl>
-                                        <Input className="border-gray-500 rounded-r-none w-full" placeholder="New Project ID" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        control={form.control}
+                        name='id'
+                        render={({ field }) => (
+                            <FormItem className='w-full flex-grow'>
+                                <FormControl>
+                                    <Input className='border-gray-500 rounded-r-none w-full' placeholder='New Project ID' {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <Button type='submit' className='rounded-l-none'>Add</Button>
                 </form>
             </Form>

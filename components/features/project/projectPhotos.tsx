@@ -40,11 +40,11 @@ export const ProjectPhotos: React.FC<ProjectPhotosProps> = (props) => {
             </div>)}
             {props.mode === 'edit' && <>
                 <Input className='border-black max-w-[500px]'
-                    placeholder="Pictures"
-                    accept="image/*"
+                    placeholder='Pictures'
+                    accept='image/*'
                     type='file'
                     multiple
-                    name="photos"
+                    name='photos'
                     onChange={(event) => {
                         if (!event.target.files || !event.target.files.length) return
 

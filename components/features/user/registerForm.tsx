@@ -1,10 +1,10 @@
 'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
     Form,
     FormControl,
@@ -12,16 +12,16 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { isUserIdAvailable } from "@/lib/firebase/client/db";
-import { debounce } from "@/lib/function";
-import { registerWithEmail, signInWithProvider } from "@/lib/firebase/client/auth";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { isUserIdAvailable } from '@/lib/firebase/client/db';
+import { debounce } from '@/lib/function';
+import { registerWithEmail, signInWithProvider } from '@/lib/firebase/client/auth';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
     id: z.string().min(1).max(50).regex(/^[0-9a-zA-Z-_]+$/),
@@ -85,21 +85,21 @@ export const RegisterForm: React.FC = () => {
     }
 
     return <Form {...form}>
-        <form className="space-y-4 border border-gray-500 rounded-xl p-5 max-w-96" onSubmit={form.handleSubmit(onSubmit)}>
-            <h1 className="text-5xl">
+        <form className='space-y-4 border border-gray-500 rounded-xl p-5 max-w-96' onSubmit={form.handleSubmit(onSubmit)}>
+            <h1 className='text-5xl'>
                 Register
             </h1>
             <FormField
                 control={form.control}
-                name="id"
+                name='id'
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>User ID <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>User ID <span className='text-red-500'>*</span></FormLabel>
                         <FormControl>
-                            <Input className="border-black"
+                            <Input className='border-black'
                                 {...field}
-                                placeholder="id"
-                                autoComplete="username"
+                                placeholder='id'
+                                autoComplete='username'
                                 value={field.value}
                                 onChange={(e) => {
                                     field.onChange(e)
@@ -122,12 +122,12 @@ export const RegisterForm: React.FC = () => {
             />
             <FormField
                 control={form.control}
-                name="email"
+                name='email'
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Email <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>Email <span className='text-red-500'>*</span></FormLabel>
                         <FormControl>
-                            <Input className="border-black" type='email' placeholder="your@email.example" autoComplete="email" {...field} />
+                            <Input className='border-black' type='email' placeholder='your@email.example' autoComplete='email' {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -135,12 +135,12 @@ export const RegisterForm: React.FC = () => {
             />
             <FormField
                 control={form.control}
-                name="name"
+                name='name'
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Name <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>Name <span className='text-red-500'>*</span></FormLabel>
                         <FormControl>
-                            <Input className="border-black" placeholder="name" autoComplete="name" {...field} />
+                            <Input className='border-black' placeholder='name' autoComplete='name' {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -149,12 +149,12 @@ export const RegisterForm: React.FC = () => {
             {}
             <FormField
                 control={form.control}
-                name="password"
+                name='password'
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Password <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>Password <span className='text-red-500'>*</span></FormLabel>
                         <FormControl>
-                            <Input className="border-black" type='password' placeholder="password" autoComplete="new-password" {...field} />
+                            <Input className='border-black' type='password' placeholder='password' autoComplete='new-password' {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -162,24 +162,24 @@ export const RegisterForm: React.FC = () => {
             />
             <FormField
                 control={form.control}
-                name="passwordConfirm"
+                name='passwordConfirm'
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Confirm Password <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>Confirm Password <span className='text-red-500'>*</span></FormLabel>
                         <FormControl>
-                            <Input className="border-black" type='password' placeholder="password" autoComplete="new-password" {...field} />
+                            <Input className='border-black' type='password' placeholder='password' autoComplete='new-password' {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
                 )}
             />
-            {formError && <p className="text-sm text-destructive">{formError}</p>}
-            <div className="flex items-stretch gap-2">
-                <Button type="submit">Register</Button>
-                <Button type="button" variant='outline' onClick={createProviderSignInHandler('google')}>
+            {formError && <p className='text-sm text-destructive'>{formError}</p>}
+            <div className='flex items-stretch gap-2'>
+                <Button type='submit'>Register</Button>
+                <Button type='button' variant='outline' onClick={createProviderSignInHandler('google')}>
                     <FcGoogle size={30} />
                 </Button>
-                <Button type="button" variant='outline' onClick={createProviderSignInHandler('github')}>
+                <Button type='button' variant='outline' onClick={createProviderSignInHandler('github')}>
                     <FaGithub size={30} />
                 </Button>
             </div>

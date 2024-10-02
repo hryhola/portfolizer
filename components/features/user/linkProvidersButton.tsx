@@ -39,14 +39,14 @@ export const LinkProvidersButton: React.FC<LinkProvidersButtonProps> = (props) =
         })
     }
 
-    return <div className="space-x-2">
+    return <div className='space-x-2'>
         <Button variant='outline' onClick={createLinkHandler('google')} disabled={!!props.providers.google?.displayName}>
             <FcGoogle size={16} />
-            {props.providers.google?.displayName && <span className="ml-2">{props.providers.google?.displayName}</span>}
+            {props.providers.google?.displayName && <span className='ml-2'>{props.providers.google?.displayName}</span>}
         </Button>
         <Button variant='outline' onClick={createLinkHandler('github')} disabled={!!props.providers.github?.displayName}>
             <FaGithub size={16} />
-            {props.providers.github?.displayName && <span className="ml-2">{props.providers.github?.displayName}</span>}
+            {props.providers.github?.displayName && <span className='ml-2'>{props.providers.github?.displayName}</span>}
         </Button>
     </div>;
 }

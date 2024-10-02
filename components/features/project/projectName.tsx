@@ -9,7 +9,7 @@ type Props = {
 }
 
 export const ProjectName = (props: Props) => {
-    const className = cn("text-5xl font-extrabold", props.className)
+    const className = cn('text-5xl font-extrabold', props.className)
 
     return props.mode === 'edit' ? <Input className={cn(className, 'h-auto')}
         name='name'

@@ -1,7 +1,7 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { ProjectData } from "./firebase/admin/db"
-import { ComplexityLevelValue } from "@/components/features/project/complexityLevel"
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+import { ProjectData } from './firebase/admin/db'
+import { ComplexityLevelValue } from '@/components/features/project/complexityLevel'
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
@@ -21,9 +21,9 @@ export const getAverageComplexity = (project: ProjectData): ComplexityLevelValue
 
     // Mapping complexity levels to numerical values
     const complexityMapping = {
-        "Low": 1,
-        "Medium": 2,
-        "High": 3
+        'Low': 1,
+        'Medium': 2,
+        'High': 3
     };
 
     // Sum the complexity values
@@ -37,9 +37,9 @@ export const getAverageComplexity = (project: ProjectData): ComplexityLevelValue
 
     // Map the rounded value back to a complexity string
     const complexityReverseMapping = {
-        1: "Low" as const,
-        2: "Medium" as const,
-        3: "High" as const
+        1: 'Low' as const,
+        2: 'Medium' as const,
+        3: 'High' as const
     };
 
     return complexityReverseMapping[roundedAverage as 1 | 2 | 3];

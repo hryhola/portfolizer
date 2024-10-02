@@ -1,10 +1,10 @@
-import "server-only";
+import 'server-only';
 
-import { SessionCookieOptions, UserInfo } from "firebase-admin/auth";
-import { cookies } from "next/headers";
+import { SessionCookieOptions, UserInfo } from 'firebase-admin/auth';
+import { cookies } from 'next/headers';
 
 import { auth } from './auth'
-import { adminDb } from "./db";
+import { adminDb } from './db';
 
 export const isUserAuthenticated = async (session?: string) => {
     const _session = session ?? getSession();
@@ -65,7 +65,7 @@ export const getCurrentUser = async () => {
     }
 }
 
-const getSession = () => cookies().get("__session")?.value
+const getSession = () => cookies().get('__session')?.value
 
 export const createSessionCookie = async (
     idToken: string,

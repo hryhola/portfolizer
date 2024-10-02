@@ -32,7 +32,7 @@ const TimeSpentRow: React.FC<TimeData> = (props) => {
 
     return <li className='flex gap-2' >
         <Button variant='ghost'
-            type="button"
+            type='button'
             data-id={props.id}
             onClick={handleRemove}
         >❌ </Button>

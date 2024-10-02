@@ -1,8 +1,8 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, linkWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, linkWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 
-import type { APIResponse } from "@/types";
+import type { APIResponse } from '@/types';
 import { auth } from './index'
-import { createUserIfNotExist } from "./db";
+import { createUserIfNotExist } from './db';
 
 export const signInWithProvider = async (providerId: 'google' | 'github') => {
     const provider = providerId === 'google'
@@ -23,10 +23,10 @@ export const signInWithProvider = async (providerId: 'google' | 'github') => {
 
         const idToken = await userCredential.user.getIdToken();
 
-        const response = await fetch("/api/auth/sign-in", {
-            method: "POST",
+        const response = await fetch('/api/auth/sign-in', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({ idToken }),
         });
@@ -43,7 +43,7 @@ export const signInWithProvider = async (providerId: 'google' | 'github') => {
 
         return { success: true }
     } catch (error) {
-        console.error("Error signing in with " + providerId, error)
+        console.error('Error signing in with ' + providerId, error)
 
         if (error instanceof Error && error.message.includes('auth/account-exists-with-different-credential')) {
             return {
@@ -66,10 +66,10 @@ export const linkProvider  = async (providerId: 'google' | 'github') => {
 
         const idToken = await userCredential.user.getIdToken();
 
-        const response = await fetch("/api/auth/sign-in", {
-            method: "POST",
+        const response = await fetch('/api/auth/sign-in', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({ idToken }),
         });
@@ -110,10 +110,10 @@ export const registerWithEmail = async (id: string, email: string, name: string,
 
         const idToken = await userCredential.user.getIdToken();
 
-        const response = await fetch("/api/auth/sign-in", {
-            method: "POST",
+        const response = await fetch('/api/auth/sign-in', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({ idToken }),
         });
@@ -130,7 +130,7 @@ export const registerWithEmail = async (id: string, email: string, name: string,
 
         return { success: true }
     } catch (error) {
-        console.error("Error registering with email and password", error)
+        console.error('Error registering with email and password', error)
 
         if (error instanceof Error && error.message.includes('auth/email-already-in-use')) {
             return { success: false, error: 'This email is already in use' }
@@ -146,10 +146,10 @@ export const signInWithEmail = async (email: string, password: string) => {
 
         const idToken = await userCredential.user.getIdToken();
 
-        const response = await fetch("/api/auth/sign-in", {
-            method: "POST",
+        const response = await fetch('/api/auth/sign-in', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({ idToken }),
         });
@@ -166,7 +166,7 @@ export const signInWithEmail = async (email: string, password: string) => {
 
         return { success: true }
     } catch (error) {
-        console.error("Error login in with email and password", error)
+        console.error('Error login in with email and password', error)
 
         if (error instanceof Error && error.message.includes('auth/invalid-credential')) {
             return { success: false, error: 'Invalid email or password' }
@@ -180,9 +180,9 @@ export async function signOut() {
     try {
         await auth.signOut();
 
-        const response = await fetch("/api/auth/sign-out", {
+        const response = await fetch('/api/auth/sign-out', {
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
         });
 
@@ -198,7 +198,7 @@ export async function signOut() {
 
         return { success: true }
     } catch (error) {
-        console.error("Error signing out with Google", error);
+        console.error('Error signing out with Google', error);
     
         return { success: false, error: 'Something went wrong' }
     }

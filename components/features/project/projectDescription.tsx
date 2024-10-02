@@ -9,7 +9,7 @@ export const ProjectDescription: React.FC<ProjectDescriptionProps> = (props) => 
     const className = cn('whitespace-pre-wrap', props.className);
 
     return props.mode === 'edit' ? <Textarea className={cn('min-h-64', className)}
-        name="description"
+        name='description'
         placeholder='Description'
         defaultValue={props.value}
     /> : <p className={className}>{props.value}</p>;

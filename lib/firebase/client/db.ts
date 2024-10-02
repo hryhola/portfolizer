@@ -1,8 +1,8 @@
-import { collection, doc, getDoc, getDocs, getFirestore, query, runTransaction, setDoc, where } from "firebase/firestore";
-import { firebaseApp } from "./index";
-import { removeUndefined } from "@/lib/object";
-import type { ProjectData, UserData } from "../admin/db";
-import { v4 } from "uuid";
+import { collection, doc, getDoc, getDocs, getFirestore, query, runTransaction, setDoc, where } from 'firebase/firestore';
+import { firebaseApp } from './index';
+import { removeUndefined } from '@/lib/object';
+import type { ProjectData, UserData } from '../admin/db';
+import { v4 } from 'uuid';
 
 export const db = getFirestore(firebaseApp);
 
@@ -105,11 +105,11 @@ export const createProject = async (userUid: string, projectId: string) => {
                 updatedAt: now
             };
         
-            transaction.set(doc(db, "projects", documentId), projectDoc)
+            transaction.set(doc(db, 'projects', documentId), projectDoc)
             transaction.set(userRef, { projects: userProjects
                 ? [...userProjects, projectV4Id]
                 : [projectV4Id]
-             }, { merge: true })
+            }, { merge: true })
         })
 
         return { success: true }
@@ -141,7 +141,7 @@ export const deleteProject = async (projectUid: string) => {
                 publishedProjectsCount: isPublishedProject
                     ? userPublishedProjects - 1
                     : userPublishedProjects
-             }, { merge: true })
+            }, { merge: true })
         })
         
         return { success: true }

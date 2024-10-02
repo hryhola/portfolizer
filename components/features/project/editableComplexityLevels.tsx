@@ -18,13 +18,13 @@ const LevelSelect = (props: {
         level?: ComplexityLevelValue,
         onValueChange?: (value: ComplexityLevelValue) => void
     }) => <Select value={props.level} onValueChange={props.onValueChange}>
-    <SelectTrigger className={cn("w-[180px]", props.className)}>
-        <SelectValue placeholder="Level" />
+    <SelectTrigger className={cn('w-[180px]', props.className)}>
+        <SelectValue placeholder='Level' />
     </SelectTrigger>
     <SelectContent>
-        <SelectItem value="Low">Low</SelectItem>
-        <SelectItem value="Medium">Medium</SelectItem>
-        <SelectItem value="High">High</SelectItem>
+        <SelectItem value='Low'>Low</SelectItem>
+        <SelectItem value='Medium'>Medium</SelectItem>
+        <SelectItem value='High'>High</SelectItem>
     </SelectContent>
 </Select>
 
@@ -123,7 +123,7 @@ export const EditableComplexityLevels: React.FC = () => {
         ])
     }
 
-    return <ul className="space-y-4">
+    return <ul className='space-y-4'>
         {complexity.map((l) => <EditableComplexityLevel key={l.id} {...l} />)}
         <li className='flex max-w-[550px] mx-auto'>
             <Input className='rounded-r-none border-r-0'
