@@ -1,13 +1,13 @@
-import { collection, doc, getDoc, getDocs, getFirestore, query, runTransaction, setDoc, where } from 'firebase/firestore';
-import { firebaseApp } from './index';
-import { removeUndefined } from '@/lib/object';
-import type { ProjectData, UserData } from '../admin/db';
-import { v4 } from 'uuid';
+import { collection, doc, getDoc, getDocs, getFirestore, query, runTransaction, setDoc, where } from 'firebase/firestore'
+import { firebaseApp } from './index'
+import { removeUndefined } from '@/lib/object'
+import type { ProjectData, UserData } from '../admin/db'
+import { v4 } from 'uuid'
 
-export const db = getFirestore(firebaseApp);
+export const db = getFirestore(firebaseApp)
 
 export const updateUser = async (uid: string, data: Partial<UserData>, options?: { existCheck?: 'errorIfNot' | 'errorIfDo' }) => {
-    const userRef = doc(db, 'users', uid);
+    const userRef = doc(db, 'users', uid)
     const userDoc = await getDoc(userRef)
     const documentExists = userDoc.exists()
 
@@ -41,7 +41,7 @@ export const updateUser = async (uid: string, data: Partial<UserData>, options?:
             success: true
         }
     } catch (error) {
-        console.error(error);
+        console.error(error)
 
         return {
             success: false,
@@ -68,7 +68,7 @@ export const isUserIdAvailable = async (id: string) => {
     const users = collection(db, 'users')
     const docs = await getDocs(query(users, where('id', '==', id)))
 
-    return docs.empty;
+    return docs.empty
 }
 
 export const isProjectIdAvailable = async (userUid: string, projectId: string) => {
@@ -80,19 +80,19 @@ export const isProjectIdAvailable = async (userUid: string, projectId: string) =
         where('authorUid', '==', userUid)
     ))
 
-    return docs.empty;
+    return docs.empty
 }
 
 export const createProject = async (userUid: string, projectId: string) => {
     try {
         await runTransaction(db, async (transaction) => {
-            const userRef = doc(db, 'users', userUid);
+            const userRef = doc(db, 'users', userUid)
             const userDoc = await transaction.get(userRef)
             const userProjects = userDoc.get('projects') as string [] | null
     
             const projectV4Id = v4()
     
-            const documentId = `${userUid}__${projectV4Id}`;
+            const documentId = `${userUid}__${projectV4Id}`
 
             const now = new Date()
     
@@ -103,7 +103,7 @@ export const createProject = async (userUid: string, projectId: string) => {
                 authorUid: userUid,
                 createdAt: now,
                 updatedAt: now
-            };
+            }
         
             transaction.set(doc(db, 'projects', documentId), projectDoc)
             transaction.set(userRef, { projects: userProjects
@@ -125,9 +125,9 @@ export const deleteProject = async (projectUid: string) => {
         await runTransaction(db, async (transaction) => {
             const [userUid, projectV4Id] = projectUid.split('__')
 
-            const projectRef = doc(db, 'projects', projectUid);
-            const userRef = doc(db, 'users', userUid);
-            const userDoc = await transaction.get(userRef);
+            const projectRef = doc(db, 'projects', projectUid)
+            const userRef = doc(db, 'users', userUid)
+            const userDoc = await transaction.get(userRef)
         
             const userProjects = userDoc.get('projects') as string[] | null
             const userPublishedProjects: number = userDoc.get('publishedProjectsCount') || 0
@@ -155,14 +155,14 @@ export const deleteProject = async (projectUid: string) => {
 export const updateProject = async (uid: string, data: Partial<ProjectData>) => {
     try {
         await runTransaction(db, async (transaction) => {
-            const projectRef = doc(db, 'projects', uid);
+            const projectRef = doc(db, 'projects', uid)
             const projectDoc = await transaction.get(projectRef)
             const prevPublished = projectDoc.get('published')
 
             if (typeof data.published === 'boolean' && data.published !== prevPublished) {
                 const [userUid] = uid.split('__')
-                const userRef = doc(db, 'users', userUid);
-                const userDoc = await transaction.get(userRef);
+                const userRef = doc(db, 'users', userUid)
+                const userDoc = await transaction.get(userRef)
                 const userPublishedProjects: number = userDoc.get('publishedProjectsCount') || 0
 
                 transaction.set(userRef, {
@@ -182,7 +182,7 @@ export const updateProject = async (uid: string, data: Partial<ProjectData>) => 
             success: true
         }
     } catch (error) {
-        console.error(error);
+        console.error(error)
 
         return {
             success: false,

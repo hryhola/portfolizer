@@ -1,9 +1,9 @@
 import React from 'react'
-import { EditableComponentProps } from '../../ui/types';
-import { cn } from '@/lib/utils';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Input } from '@/components/ui/input';
-import Link from 'next/link';
+import { EditableComponentProps } from '../../ui/types'
+import { cn } from '@/lib/utils'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Input } from '@/components/ui/input'
+import Link from 'next/link'
 
 type ProjectSignProps = EditableComponentProps & {
     authorId: string
@@ -44,5 +44,5 @@ export const ProjectSign: React.FC<ProjectSignProps> = (props) => {
                 ? <Input className='relative top-[-6px]' variant='slim' type='date' name='date' placeholder='Date' {...defaultInputValue} />
                 : props.date!.getFullYear()}
         </div>}
-    </h3>;
+    </h3>
 }

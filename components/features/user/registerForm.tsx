@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -14,15 +14,15 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import { isUserIdAvailable } from '@/lib/firebase/client/db';
-import { debounce } from '@/lib/function';
-import { registerWithEmail, signInWithProvider } from '@/lib/firebase/client/auth';
-import { useRouter } from 'next/navigation';
-import { useToast } from '@/hooks/use-toast';
+import { FcGoogle } from 'react-icons/fc'
+import { FaGithub } from 'react-icons/fa'
+import { useState } from 'react'
+import { cn } from '@/lib/utils'
+import { isUserIdAvailable } from '@/lib/firebase/client/db'
+import { debounce } from '@/lib/function'
+import { registerWithEmail, signInWithProvider } from '@/lib/firebase/client/auth'
+import { useRouter } from 'next/navigation'
+import { useToast } from '@/hooks/use-toast'
 
 const formSchema = z.object({
     id: z.string().min(1).max(50).regex(/^[0-9a-zA-Z-_]+$/),
@@ -47,7 +47,7 @@ export const RegisterForm: React.FC = () => {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         if (values.password !== values.passwordConfirm) {
             form.setError('passwordConfirm', { message: 'Passwords do not match!' })
-            return;
+            return
         }
 
         setIsLoading(true)
@@ -71,25 +71,25 @@ export const RegisterForm: React.FC = () => {
 
     const handleUserIdChange = debounce(async () => {
         const id = form.getValues('id')
-        const state = form.getFieldState('id');
+        const state = form.getFieldState('id')
         const isError = state.error?.message
 
         if (!id || !/[A-Za-z-_]+/.test(id) || isError || state.invalid) {
-            setUserIdTaken(null);
+            setUserIdTaken(null)
             return
         }
 
         if (await isUserIdAvailable(id)) {
-            setUserIdTaken(false);
+            setUserIdTaken(false)
         } else {
-            setUserIdTaken(true);
+            setUserIdTaken(true)
         }
     }, 250)
 
     const createProviderSignInHandler = (provider: 'google' | 'github') => async () => {
         setIsLoading(true)
     
-        const result = await signInWithProvider(provider);
+        const result = await signInWithProvider(provider)
         
         setIsLoading(false)
 
@@ -208,5 +208,5 @@ export const RegisterForm: React.FC = () => {
                 </Button>
             </div>
         </form>
-    </Form>;
+    </Form>
 }

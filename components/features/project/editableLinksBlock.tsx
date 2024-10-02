@@ -1,16 +1,16 @@
 'use client'
 
 import React, { useRef, useState } from 'react'
-import { Plus } from 'lucide-react';
-import { moveOrderedElementUp, moveOrderedElementDown } from '@/lib/array';
-import { useProjectContext } from './projectFormWrapper';
-import { Button } from '@/components/ui/button';
-import { EditButtons } from '@/components/ui/editButtons';
-import { Input } from '@/components/ui/input';
+import { Plus } from 'lucide-react'
+import { moveOrderedElementUp, moveOrderedElementDown } from '@/lib/array'
+import { useProjectContext } from './projectFormWrapper'
+import { Button } from '@/components/ui/button'
+import { EditButtons } from '@/components/ui/editButtons'
+import { Input } from '@/components/ui/input'
 
 export const EditableLinksBlock: React.FC = () => {
-    const nameInput = useRef<HTMLInputElement>(null);
-    const urlInput = useRef<HTMLInputElement>(null);
+    const nameInput = useRef<HTMLInputElement>(null)
+    const urlInput = useRef<HTMLInputElement>(null)
     const { links, setLinks } = useProjectContext()
     const [message, setMessage] = useState('')
 
@@ -37,8 +37,8 @@ export const EditableLinksBlock: React.FC = () => {
     }
 
     const handleAdd = () => {
-        const name = nameInput.current?.value;
-        const url = urlInput.current?.value;
+        const name = nameInput.current?.value
+        const url = urlInput.current?.value
 
         if (typeof name !== 'string' || !name.length) {
             setMessage('Empty name')

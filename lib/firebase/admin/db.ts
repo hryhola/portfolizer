@@ -1,8 +1,8 @@
-import 'server-only';
+import 'server-only'
 
-import { getFirestore } from 'firebase-admin/firestore';
-import { adminApp } from './index';
-import { ComplexityLevelValue } from '@/components/features/project/complexityLevel';
+import { getFirestore } from 'firebase-admin/firestore'
+import { adminApp } from './index'
+import { ComplexityLevelValue } from '@/components/features/project/complexityLevel'
 
 export const adminDb = getFirestore(adminApp)
 
@@ -25,14 +25,14 @@ export type UserData = {
 }
 
 export const getUser = async (params: { id: string } | { uid: string }) => {
-    let document: FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData, FirebaseFirestore.DocumentData> | null = null;
+    let document: FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData, FirebaseFirestore.DocumentData> | null = null
 
     if ('uid' in params) {
         document = await adminDb.collection('users').doc(params.uid).get()
     } else {
         const query = await adminDb.collection('users').where('id', '==', params.id).get()
 
-        document = query.size === 0 ? null : query.docs[0];
+        document = query.size === 0 ? null : query.docs[0]
     }
 
 
@@ -91,7 +91,7 @@ export const getProject = async (authorId: string, projectId: string) => {
     const user = await getUser({ id: authorId })
 
     if (!user) {
-        return null;
+        return null
     }
 
     const q = await adminDb.collection('projects')

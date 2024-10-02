@@ -1,36 +1,36 @@
-import 'server-only';
+import 'server-only'
 
-import { SessionCookieOptions, UserInfo } from 'firebase-admin/auth';
-import { cookies } from 'next/headers';
+import { SessionCookieOptions, UserInfo } from 'firebase-admin/auth'
+import { cookies } from 'next/headers'
 
 import { auth } from './auth'
-import { adminDb } from './db';
+import { adminDb } from './db'
 
 export const isUserAuthenticated = async (session?: string) => {
-    const _session = session ?? getSession();
+    const _session = session ?? getSession()
 
-    if (!_session) return false;
+    if (!_session) return false
 
     try {
-        const isRevoked = !(await auth.verifySessionCookie(_session, true));
+        const isRevoked = !(await auth.verifySessionCookie(_session, true))
     
-        return !isRevoked;
+        return !isRevoked
     } catch (error) {
-        console.log(error);
+        console.log(error)
 
-        return false;
+        return false
     }
 }
 
 export const getCurrentUser = async () => {
-    const session = getSession();
+    const session = getSession()
 
     if (!(await isUserAuthenticated(session))) {
-        return null;
+        return null
     }
 
-    const decodedIdToken = await auth.verifySessionCookie(session!);
-    const userRecord = await auth.getUser(decodedIdToken.uid);
+    const decodedIdToken = await auth.verifySessionCookie(session!)
+    const userRecord = await auth.getUser(decodedIdToken.uid)
     const userDocumentRef = adminDb.collection('users').doc(userRecord.uid)
     const userDocument = await userDocumentRef.get()
 
@@ -71,12 +71,12 @@ export const createSessionCookie = async (
     idToken: string,
     sessionCookieOptions: SessionCookieOptions
 ) => {
-    return auth.createSessionCookie(idToken, sessionCookieOptions);
+    return auth.createSessionCookie(idToken, sessionCookieOptions)
 }
 
 export const revokeAllSessions = async (session: string) => {
-    const decodedIdToken = await auth.verifySessionCookie(session);
+    const decodedIdToken = await auth.verifySessionCookie(session)
 
-    return auth.revokeRefreshTokens(decodedIdToken.sub);
+    return auth.revokeRefreshTokens(decodedIdToken.sub)
 }
 

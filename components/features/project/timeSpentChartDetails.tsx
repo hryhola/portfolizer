@@ -29,13 +29,13 @@ export function TimeSpentChartDetails(props: Props) {
         '#4338ca',
         '#172554',
         '#082f49',
-    ];
+    ]
 
     const processedData = [...props.data]
         .sort((a, b) => b.minutes - a.minutes)
-        .map((a, i) => ({ ...a, fill: colors[i] }));
+        .map((a, i) => ({ ...a, fill: colors[i] }))
 
-    const chartConfig = processedData.reduce((acc, curr, i) => ({ ...acc, [curr.id]: { ...curr, color: colors[i] } }), {});
+    const chartConfig = processedData.reduce((acc, curr, i) => ({ ...acc, [curr.id]: { ...curr, color: colors[i] } }), {})
 
     return (<>
         <Accordion type='single' collapsible>

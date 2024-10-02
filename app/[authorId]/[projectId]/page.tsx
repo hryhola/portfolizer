@@ -1,22 +1,22 @@
-import { ComplexityLevelsBlock } from '@/components/features/project/complexityLevelsBlock';
-import { EditApproveButtons } from '@/components/features/project/editApproveButtons';
-import { ProjectFeatures } from '@/components/features/project/features';
-import { HeaderImage } from '@/components/features/project/headerImage';
-import { LinksBlock } from '@/components/features/project/linksBlock';
-import { ProjectDescription } from '@/components/features/project/projectDescription';
-import { PreEditButtons } from '@/components/features/project/preEditButtons';
-import { ProjectFormWrapper } from '@/components/features/project/projectFormWrapper';
-import { ProjectName } from '@/components/features/project/projectName';
-import { ProjectPhotos } from '@/components/features/project/projectPhotos';
-import { ProjectSign } from '@/components/features/project/projectSign';
-import { ProjectTimeSpent } from '@/components/features/project/projectTimeSpent';
-import { ProjectTimeTotal } from '@/components/features/project/projectTimeTotal';
-import { StackBlock } from '@/components/features/project/stackBlock';
-import { getProject } from '@/lib/firebase/admin/db';
-import { getCurrentUser } from '@/lib/firebase/admin/session';
-import { unpackRecords } from '@/lib/object';
-import { notFound } from 'next/navigation';
-import { FC } from 'react';
+import { ComplexityLevelsBlock } from '@/components/features/project/complexityLevelsBlock'
+import { EditApproveButtons } from '@/components/features/project/editApproveButtons'
+import { ProjectFeatures } from '@/components/features/project/features'
+import { HeaderImage } from '@/components/features/project/headerImage'
+import { LinksBlock } from '@/components/features/project/linksBlock'
+import { ProjectDescription } from '@/components/features/project/projectDescription'
+import { PreEditButtons } from '@/components/features/project/preEditButtons'
+import { ProjectFormWrapper } from '@/components/features/project/projectFormWrapper'
+import { ProjectName } from '@/components/features/project/projectName'
+import { ProjectPhotos } from '@/components/features/project/projectPhotos'
+import { ProjectSign } from '@/components/features/project/projectSign'
+import { ProjectTimeSpent } from '@/components/features/project/projectTimeSpent'
+import { ProjectTimeTotal } from '@/components/features/project/projectTimeTotal'
+import { StackBlock } from '@/components/features/project/stackBlock'
+import { getProject } from '@/lib/firebase/admin/db'
+import { getCurrentUser } from '@/lib/firebase/admin/session'
+import { unpackRecords } from '@/lib/object'
+import { notFound } from 'next/navigation'
+import { FC } from 'react'
 
 type Page = {
     searchParams: { mode: string },
@@ -30,7 +30,7 @@ export default async function Page(page: Page) {
         return notFound()
     }
 
-    const currentUser = await getCurrentUser();
+    const currentUser = await getCurrentUser()
 
     if (!project.published && currentUser?.uid !== project.authorUid) {
         return notFound()
@@ -40,7 +40,7 @@ export default async function Page(page: Page) {
 
     const mode = page.searchParams.mode === 'edit' && isCurrentUsersProject
         ? 'edit'
-        : 'view';
+        : 'view'
 
     const timeSpent = unpackRecords(project.time)
     const stack = unpackRecords(project.stack)
@@ -64,7 +64,7 @@ export default async function Page(page: Page) {
                 headerImageSrc={project.headerImageSrc}
             >
                 {props.children}
-            </ProjectFormWrapper>;
+            </ProjectFormWrapper>
         }
     }
 
@@ -86,5 +86,5 @@ export default async function Page(page: Page) {
             <ProjectFeatures data={features} mode={mode} />
         </div>
         <ProjectPhotos data={photos} mode={mode} />
-    </Wrapper>);
+    </Wrapper>)
 }

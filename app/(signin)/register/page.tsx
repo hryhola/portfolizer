@@ -1,5 +1,5 @@
-import { RegisterForm } from '@/components/features/user/registerForm';
-import Link from 'next/link';
+import { RegisterForm } from '@/components/features/user/registerForm'
+import Link from 'next/link'
 
 export default function Page() {
     return <div className='space-y-5'>

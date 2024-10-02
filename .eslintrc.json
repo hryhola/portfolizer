@@ -19,6 +19,7 @@
     "@typescript-eslint/no-unsafe-function-type": "off",
     "@stylistic/js/quotes": ["error", "single"],
     "@stylistic/js/jsx-quotes": ["error", "prefer-single"],
-    "@stylistic/js/indent": ["error", 4]
+    "@stylistic/js/indent": ["error", 4],
+    "@stylistic/js/semi": ["error", "never"]
   }
 }

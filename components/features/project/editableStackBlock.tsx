@@ -1,19 +1,19 @@
 'use client'
 
 import React, { useRef, useState } from 'react'
-import { Plus } from 'lucide-react';
-import { moveOrderedElementDown, moveOrderedElementUp } from '@/lib/array';
-import { useProjectContext } from './projectFormWrapper';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { EditButtons } from '@/components/ui/editButtons';
-import { Separator } from '@/components/ui/separator';
+import { Plus } from 'lucide-react'
+import { moveOrderedElementDown, moveOrderedElementUp } from '@/lib/array'
+import { useProjectContext } from './projectFormWrapper'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { EditButtons } from '@/components/ui/editButtons'
+import { Separator } from '@/components/ui/separator'
 
 export const EditableStackBlock: React.FC = () => {
     const [message, setMessage] = useState('')
-    const { stack, setStack } = useProjectContext();
+    const { stack, setStack } = useProjectContext()
 
-    const inputRef = useRef<HTMLInputElement | null>(null);
+    const inputRef = useRef<HTMLInputElement | null>(null)
 
     const handleRemove: React.MouseEventHandler<HTMLButtonElement> = (e) => {
         const id = (e.currentTarget as HTMLButtonElement).dataset.id
@@ -38,14 +38,14 @@ export const EditableStackBlock: React.FC = () => {
     }
 
     const handleAdd = () => {
-        const value = inputRef.current?.value;
+        const value = inputRef.current?.value
 
         if (!value) {
             setMessage('Empty value is not acceptable')
             return
         }
 
-        const separatorIndex = value.indexOf(':');
+        const separatorIndex = value.indexOf(':')
 
         if (separatorIndex === -1) {
             setMessage('The column symbols is missing')
@@ -103,5 +103,5 @@ export const EditableStackBlock: React.FC = () => {
             </Button>
         </li>
         {message && <li className='text-sm text-destructive'>{message}</li>}
-    </ul>;
+    </ul>
 }

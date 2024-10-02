@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
 import React, { useRef } from 'react'
-import { Button } from '@/components/ui/button';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button'
+import { useSearchParams, useRouter } from 'next/navigation'
 
 interface EditApproveButtonsProps {
     published: boolean
@@ -12,22 +12,22 @@ export const EditApproveButtons: React.FC<EditApproveButtonsProps> = (props) => 
     const publishCheckboxRef = useRef<HTMLInputElement>(null)
     const submitButtonRef = useRef<HTMLInputElement>(null)
 
-    const router = useRouter();
-    const searchParams = useSearchParams();
+    const router = useRouter()
+    const searchParams = useSearchParams()
 
     const handleCancel = () => {
         const query = new URLSearchParams(searchParams.toString())
 
         query.delete('mode')
       
-        const newUrl = `${window.location.pathname}?${query.toString()}`;
+        const newUrl = `${window.location.pathname}?${query.toString()}`
 
         router.push(newUrl)
     }
 
     const handlePublish = () => {
         if (!publishCheckboxRef.current || !submitButtonRef.current) {
-            return;
+            return
         }
 
         publishCheckboxRef.current.checked = !props.published
@@ -40,5 +40,5 @@ export const EditApproveButtons: React.FC<EditApproveButtonsProps> = (props) => 
         <Button className='pointer-events-auto' type='submit' ref={submitButtonRef as any}>Save</Button>
         {!props.published && <Button className='pointer-events-auto' onClick={handlePublish} type='button'>Save & Publish</Button>}
         <input className='hidden' type='checkbox' defaultChecked={props.published} name='published' ref={publishCheckboxRef} />
-    </div>;
+    </div>
 }

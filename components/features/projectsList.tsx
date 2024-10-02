@@ -1,13 +1,13 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { MultiSelect } from '@/components/ui/multi-select'
-import { ProjectCard, ProjectCardProps } from './projectCard';
-import { Button } from '@/components/ui/button';
-import { ArrowDownWideNarrow, ArrowUpWideNarrow } from 'lucide-react';
+import { ProjectCard, ProjectCardProps } from './projectCard'
+import { Button } from '@/components/ui/button'
+import { ArrowDownWideNarrow, ArrowUpWideNarrow } from 'lucide-react'
 
 type SortByType = 'date-created' | 'work-hours' | 'complexity'
 type SortDirection = 'ascending' | 'descending'
@@ -20,7 +20,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
     const [searchText, setSearchText] = useState('')
     const [sortDirection, setSortDirection] = useState<SortDirection>('descending')
     const [sortBy, setSortBy] = useState<SortByType>('date-created')
-    const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([]);
+    const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([])
 
     const [list, setList] = useState(props.projects)
 
@@ -29,51 +29,51 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
             if (!acc.includes(f)) acc.push(f)
         })
         
-        return acc;
-    }, [] as string[]);
+        return acc
+    }, [] as string[])
 
     function sortList(array: ProjectCardProps[], by: SortByType, direction: SortDirection) {
         return [...array].sort((a, b) => {
-            let comparison = 0;
+            let comparison = 0
     
             // Map complexity values to numbers for comparison
             const complexityMap = {
                 'Low': 1,
                 'Medium': 2,
                 'High': 3
-            };
+            }
     
             switch (by) {
             case 'date-created':
-                comparison = (a.dateCreated?.getTime() || 0)  - (b.dateCreated?.getTime() || 0);
-                break;
+                comparison = (a.dateCreated?.getTime() || 0)  - (b.dateCreated?.getTime() || 0)
+                break
             case 'work-hours':
                 // Handle cases where totalHours is undefined (treat undefined as 0 or set your own logic)
-                const hoursA = a.totalHours ?? 0;
-                const hoursB = b.totalHours ?? 0;
-                comparison = hoursA - hoursB;
-                break;
+                const hoursA = a.totalHours ?? 0
+                const hoursB = b.totalHours ?? 0
+                comparison = hoursA - hoursB
+                break
             case 'complexity':
                 // Convert the string values to numbers using the complexityMap
-                const complexityA = complexityMap[a.totalComplexity || 'Low']; // Default to 'Low' if undefined
-                const complexityB = complexityMap[b.totalComplexity || 'Low']; // Default to 'Low' if undefined
-                comparison = complexityA - complexityB;
-                break;
+                const complexityA = complexityMap[a.totalComplexity || 'Low'] // Default to 'Low' if undefined
+                const complexityB = complexityMap[b.totalComplexity || 'Low'] // Default to 'Low' if undefined
+                comparison = complexityA - complexityB
+                break
             default:
-                break;
+                break
             }
     
             // If descending, reverse the comparison result
             if (direction === 'descending') {
-                comparison *= -1;
+                comparison *= -1
             }
     
-            return comparison;
-        });
+            return comparison
+        })
     }
 
     useEffect(() => {
-        let filtered = props.projects;
+        let filtered = props.projects
 
         if (selectedFrameworks.length) {
             filtered = props.projects.filter(p => p.frameworks.some(f => selectedFrameworks?.includes(f)))
@@ -83,7 +83,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
             filtered = props.projects.filter(p => p.name.toLowerCase().includes(searchText.toLowerCase().trim()))
         }
 
-        setList(sortList(filtered, sortBy, sortDirection));
+        setList(sortList(filtered, sortBy, sortDirection))
     }, [searchText, sortBy, sortDirection, selectedFrameworks])
 
     return <>
@@ -134,5 +134,5 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
         <div className='space-y-5 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-5'>
             {list.map(p => <ProjectCard key={p.id} {...p} />)}
         </div>
-    </>;
+    </>
 }

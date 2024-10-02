@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { getCurrentUser } from '@/lib/firebase/admin/session';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
+import { Button } from '@/components/ui/button'
+import { getCurrentUser } from '@/lib/firebase/admin/session'
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 interface HeroBannerProps {
     className?: string
@@ -20,5 +20,5 @@ export const HeroBanner: React.FC<HeroBannerProps> = async (props) => {
                 <Button className='shadow-md shadow-gray-500'>Register</Button>
             </Link>
         </div>}
-    </div>;
+    </div>
 }

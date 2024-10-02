@@ -5,9 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
-import { FaTelegramPlane, FaGithub, FaLinkedin } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6';
-import { BsFillTelephoneFill } from 'react-icons/bs';
+import { FaTelegramPlane, FaGithub, FaLinkedin } from 'react-icons/fa'
+import { FaXTwitter } from 'react-icons/fa6'
+import { BsFillTelephoneFill } from 'react-icons/bs'
 import {
     Dialog,
     DialogContent,
@@ -26,7 +26,7 @@ import { updateUser } from '@/lib/firebase/client/db'
 import { useRouter } from 'next/navigation'
 import type { UserInfo } from 'firebase-admin/auth'
 import { LinkProvidersButton } from './user/linkProvidersButton'
-import { MdEmail } from 'react-icons/md';
+import { MdEmail } from 'react-icons/md'
 import { cleanUpStorage, uploadProfilePicture } from '@/lib/firebase/client/storage'
 import { MAX_IMAGE_SIZE } from '@/lib/const'
 import { useToast } from '@/hooks/use-toast'
@@ -53,7 +53,7 @@ type EditUserDetailsProps = {
     } & Omit<UserData, 'projectIds' | 'createdAt' | 'updatedAt'>
 
 export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
-    const { imageSrc, uid: _uid, ...userDataWithoutImage } = props;
+    const { imageSrc, uid: _uid, ...userDataWithoutImage } = props
 
     const toast = useToast()
     const [isLoading, setIsLoading] = useState(false)
@@ -72,27 +72,27 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
         setErrorMessage('')
         setIsLoading(true)
 
-        const { image, ...updatedFields } = values;
+        const { image, ...updatedFields } = values
 
-        let imageSrc;
+        let imageSrc
 
         if (image) {
-            const uploadResult = await uploadProfilePicture(props.uid, image);
+            const uploadResult = await uploadProfilePicture(props.uid, image)
 
             if (uploadResult.success) {
-                imageSrc = uploadResult.downloadURL;
+                imageSrc = uploadResult.downloadURL
 
                 cleanUpStorage('users/' + props.uid, [uploadResult.downloadURL]).catch(e => console.error(e))
             } else {
                 setIsLoading(false)
-                setErrorMessage(uploadResult.error || 'Something went wrong');
+                setErrorMessage(uploadResult.error || 'Something went wrong')
             }
         }
 
         const result = await updateUser(props.uid, {
             ...updatedFields,
             imageSrc
-        }, { existCheck: 'errorIfNot' });
+        }, { existCheck: 'errorIfNot' })
 
         setIsLoading(false)
 
@@ -107,10 +107,10 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
             if (props.id !== updatedFields.id) {
                 router.push('/' + updatedFields.id)
             } else {
-                router.refresh();
+                router.refresh()
             }
         } else {
-            setErrorMessage(result.error || 'Something went wrong');
+            setErrorMessage(result.error || 'Something went wrong')
         }
     }
 
@@ -174,7 +174,7 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                                         onBlur={field.onBlur}
                                         onChange={(e) => {
                                             if (e.target.files) {
-                                                field.onChange(e.target.files[0]);
+                                                field.onChange(e.target.files[0])
                                                 setImagePreviewSrc(URL.createObjectURL(e.target.files[0]))
                                             }
                                         }}
@@ -319,5 +319,5 @@ export const EditUserDetails: React.FC<EditUserDetailsProps> = (props) => {
                 </form>
             </Form>
         </DialogContent>
-    </Dialog>;
+    </Dialog>
 }

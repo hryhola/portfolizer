@@ -24,23 +24,23 @@ export const getAverageComplexity = (project: ProjectData): ComplexityLevelValue
         'Low': 1,
         'Medium': 2,
         'High': 3
-    };
+    }
 
     // Sum the complexity values
-    const total = array.reduce((sum, record) => sum + complexityMapping[record.value], 0);
+    const total = array.reduce((sum, record) => sum + complexityMapping[record.value], 0)
 
     // Calculate the average complexity value
-    const average = total / array.length;
+    const average = total / array.length
 
     // Round the average to the nearest integer
-    const roundedAverage = Math.round(average);
+    const roundedAverage = Math.round(average)
 
     // Map the rounded value back to a complexity string
     const complexityReverseMapping = {
         1: 'Low' as const,
         2: 'Medium' as const,
         3: 'High' as const
-    };
+    }
 
-    return complexityReverseMapping[roundedAverage as 1 | 2 | 3];
+    return complexityReverseMapping[roundedAverage as 1 | 2 | 3]
 }

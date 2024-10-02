@@ -1,6 +1,6 @@
-import { HeroBanner } from '@/components/features/heroBanner';
-import { TopProjects } from '@/components/features/topProjects';
-import { TopUsers } from '@/components/features/topUsers';
+import { HeroBanner } from '@/components/features/heroBanner'
+import { TopProjects } from '@/components/features/topProjects'
+import { TopUsers } from '@/components/features/topUsers'
 
 export default function Home() {
     return (
@@ -11,5 +11,5 @@ export default function Home() {
                 <TopProjects />
             </div>
         </div>
-    );
+    )
 }

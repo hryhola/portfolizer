@@ -1,21 +1,21 @@
-import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import * as React from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 import {
     CheckIcon,
     XCircle,
     ChevronDown,
     XIcon,
-} from 'lucide-react';
+} from 'lucide-react'
 
-import { cn } from '@/lib/utils';
-import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils'
+import { Separator } from '@/components/ui/separator'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from '@/components/ui/popover';
+} from '@/components/ui/popover'
 import {
     Command,
     CommandEmpty,
@@ -24,7 +24,7 @@ import {
     CommandItem,
     CommandList,
     CommandSeparator,
-} from '@/components/ui/command';
+} from '@/components/ui/command'
 
 /**
  * Variants for the multi-select component to handle different styles.
@@ -48,7 +48,7 @@ const multiSelectVariants = cva(
             variant: 'default',
         },
     }
-);
+)
 
 /**
  * Props for MultiSelect component
@@ -133,54 +133,54 @@ export const MultiSelect = React.forwardRef<
         ref
     ) => {
         const [selectedValues, setSelectedValues] =
-      React.useState<string[]>(defaultValue);
-        const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
+      React.useState<string[]>(defaultValue)
+        const [isPopoverOpen, setIsPopoverOpen] = React.useState(false)
 
         const handleInputKeyDown = (
             event: React.KeyboardEvent<HTMLInputElement>
         ) => {
             if (event.key === 'Enter') {
-                setIsPopoverOpen(true);
+                setIsPopoverOpen(true)
             } else if (event.key === 'Backspace' && !event.currentTarget.value) {
-                const newSelectedValues = [...selectedValues];
-                newSelectedValues.pop();
-                setSelectedValues(newSelectedValues);
-                onValueChange(newSelectedValues);
+                const newSelectedValues = [...selectedValues]
+                newSelectedValues.pop()
+                setSelectedValues(newSelectedValues)
+                onValueChange(newSelectedValues)
             }
-        };
+        }
 
         const toggleOption = (option: string) => {
             const newSelectedValues = selectedValues.includes(option)
                 ? selectedValues.filter((value) => value !== option)
-                : [...selectedValues, option];
-            setSelectedValues(newSelectedValues);
-            onValueChange(newSelectedValues);
-        };
+                : [...selectedValues, option]
+            setSelectedValues(newSelectedValues)
+            onValueChange(newSelectedValues)
+        }
 
         const handleClear = () => {
-            setSelectedValues([]);
-            onValueChange([]);
-        };
+            setSelectedValues([])
+            onValueChange([])
+        }
 
         const handleTogglePopover = () => {
-            setIsPopoverOpen((prev) => !prev);
-        };
+            setIsPopoverOpen((prev) => !prev)
+        }
 
         const clearExtraOptions = () => {
-            const newSelectedValues = selectedValues.slice(0, maxCount);
-            setSelectedValues(newSelectedValues);
-            onValueChange(newSelectedValues);
-        };
+            const newSelectedValues = selectedValues.slice(0, maxCount)
+            setSelectedValues(newSelectedValues)
+            onValueChange(newSelectedValues)
+        }
 
         const toggleAll = () => {
             if (selectedValues.length === options.length) {
-                handleClear();
+                handleClear()
             } else {
-                const allValues = options.map((option) => option.value);
-                setSelectedValues(allValues);
-                onValueChange(allValues);
+                const allValues = options.map((option) => option.value)
+                setSelectedValues(allValues)
+                onValueChange(allValues)
             }
-        };
+        }
 
         return (
             <Popover
@@ -202,8 +202,8 @@ export const MultiSelect = React.forwardRef<
                             <div className='flex justify-between items-center w-full'>
                                 <div className='flex flex-wrap items-center'>
                                     {selectedValues.slice(0, maxCount).map((value) => {
-                                        const option = options.find((o) => o.value === value);
-                                        const IconComponent = option?.icon;
+                                        const option = options.find((o) => o.value === value)
+                                        const IconComponent = option?.icon
                                         return (
                                             <Badge
                                                 key={value}
@@ -218,12 +218,12 @@ export const MultiSelect = React.forwardRef<
                                                 <XCircle
                                                     className='ml-2 h-4 w-4 cursor-pointer'
                                                     onClick={(event) => {
-                                                        event.stopPropagation();
-                                                        toggleOption(value);
+                                                        event.stopPropagation()
+                                                        toggleOption(value)
                                                     }}
                                                 />
                                             </Badge>
-                                        );
+                                        )
                                     })}
                                     {selectedValues.length > maxCount && (
                                         <Badge
@@ -236,8 +236,8 @@ export const MultiSelect = React.forwardRef<
                                             <XCircle
                                                 className='ml-2 h-4 w-4 cursor-pointer'
                                                 onClick={(event) => {
-                                                    event.stopPropagation();
-                                                    clearExtraOptions();
+                                                    event.stopPropagation()
+                                                    clearExtraOptions()
                                                 }}
                                             />
                                         </Badge>
@@ -247,8 +247,8 @@ export const MultiSelect = React.forwardRef<
                                     <XIcon
                                         className='h-4 mx-2 cursor-pointer text-muted-foreground'
                                         onClick={(event) => {
-                                            event.stopPropagation();
-                                            handleClear();
+                                            event.stopPropagation()
+                                            handleClear()
                                         }}
                                     />
                                     <Separator
@@ -300,7 +300,7 @@ export const MultiSelect = React.forwardRef<
                                 </CommandItem>}
                 
                                 {options.map((option) => {
-                                    const isSelected = selectedValues.includes(option.value);
+                                    const isSelected = selectedValues.includes(option.value)
                                     return (
                                         <CommandItem
                                             key={option.value}
@@ -322,7 +322,7 @@ export const MultiSelect = React.forwardRef<
                                             )}
                                             <span>{option.label}</span>
                                         </CommandItem>
-                                    );
+                                    )
                                 })}
                             </CommandGroup>
                             <CommandSeparator />
@@ -354,8 +354,8 @@ export const MultiSelect = React.forwardRef<
                     </Command>
                 </PopoverContent>
             </Popover>
-        );
+        )
     }
-);
+)
 
-MultiSelect.displayName = 'MultiSelect';
+MultiSelect.displayName = 'MultiSelect'

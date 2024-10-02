@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
 import React from 'react'
-import { EditableComponentProps } from '../../ui/types';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useProjectContext } from './projectFormWrapper';
-import Image from 'next/image';
+import { EditableComponentProps } from '../../ui/types'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { useProjectContext } from './projectFormWrapper'
+import Image from 'next/image'
 
 export interface PhotosData {
     src: string
@@ -53,12 +53,12 @@ export const ProjectPhotos: React.FC<ProjectPhotosProps> = (props) => {
                         const newFiles: PhotosData[] = []
 
                         for (let i = 0; i < Math.min(event.target.files.length, 50); i++) {
-                            newFiles.push({ src: URL.createObjectURL(event.target.files[i]), file: event.target.files[i] });
+                            newFiles.push({ src: URL.createObjectURL(event.target.files[i]), file: event.target.files[i] })
                         }
 
-                        context.setPhotos(prev => [...prev, ...newFiles]);
+                        context.setPhotos(prev => [...prev, ...newFiles])
                     }}
                 />
             </>}
-        </div></>;
+        </div></>
 }

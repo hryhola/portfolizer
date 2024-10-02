@@ -1,8 +1,8 @@
-import Link from 'next/link';
+import Link from 'next/link'
 import React from 'react'
-import { ComplexityLevelValue } from './project/complexityLevel';
-import { cn } from '@/lib/utils';
-import { MdAccessTime, MdSignalCellular1Bar, MdSignalCellular2Bar , MdSignalCellular4Bar } from 'react-icons/md';
+import { ComplexityLevelValue } from './project/complexityLevel'
+import { cn } from '@/lib/utils'
+import { MdAccessTime, MdSignalCellular1Bar, MdSignalCellular2Bar , MdSignalCellular4Bar } from 'react-icons/md'
 
 export interface ProjectCardProps {
     authorId: string
@@ -48,5 +48,5 @@ export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
             </ul> : <></>}
             <p className={cn({ 'self-end': props.frameworks.length }, 'font-italic tracking-[-4px]')}>{props.dateCreated && props.dateCreated.getFullYear()}</p>
         </div>
-    </div>;
+    </div>
 }

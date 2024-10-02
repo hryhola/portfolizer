@@ -1,16 +1,16 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, linkWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, linkWithPopup, signInWithEmailAndPassword } from 'firebase/auth'
 
-import type { APIResponse } from '@/types';
+import type { APIResponse } from '@/types'
 import { auth } from './index'
-import { createUserIfNotExist } from './db';
+import { createUserIfNotExist } from './db'
 
 export const signInWithProvider = async (providerId: 'google' | 'github') => {
     const provider = providerId === 'google'
         ? new GoogleAuthProvider()
-        : new GithubAuthProvider();
+        : new GithubAuthProvider()
 
     try {
-        const userCredential = await signInWithPopup(auth, provider);
+        const userCredential = await signInWithPopup(auth, provider)
 
         const createResult = await createUserIfNotExist(userCredential.user.uid, {
             id: userCredential.user.uid,
@@ -18,10 +18,10 @@ export const signInWithProvider = async (providerId: 'google' | 'github') => {
         })
 
         if (!createResult.success) {
-            return createResult;
+            return createResult
         }
 
-        const idToken = await userCredential.user.getIdToken();
+        const idToken = await userCredential.user.getIdToken()
 
         const response = await fetch('/api/auth/sign-in', {
             method: 'POST',
@@ -29,16 +29,16 @@ export const signInWithProvider = async (providerId: 'google' | 'github') => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ idToken }),
-        });
+        })
 
         if (!response.ok) {
-            return { success: false, error: 'Something went wrong' };
+            return { success: false, error: 'Something went wrong' }
         }
 
-        const resBody = (await response.json()) as APIResponse<string>;
+        const resBody = (await response.json()) as APIResponse<string>
 
         if (!resBody.success) {
-            return { success: false, error: resBody.error || 'Something went wrong' };
+            return { success: false, error: resBody.error || 'Something went wrong' }
         }
 
         return {
@@ -62,12 +62,12 @@ export const signInWithProvider = async (providerId: 'google' | 'github') => {
 export const linkProvider  = async (providerId: 'google' | 'github') => {
     const provider = providerId === 'google'
         ? new GoogleAuthProvider()
-        : new GithubAuthProvider();
+        : new GithubAuthProvider()
 
     try {
-        const userCredential = await linkWithPopup(auth.currentUser!, provider);
+        const userCredential = await linkWithPopup(auth.currentUser!, provider)
 
-        const idToken = await userCredential.user.getIdToken();
+        const idToken = await userCredential.user.getIdToken()
 
         const response = await fetch('/api/auth/sign-in', {
             method: 'POST',
@@ -75,27 +75,27 @@ export const linkProvider  = async (providerId: 'google' | 'github') => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ idToken }),
-        });
+        })
 
         if (!response.ok) {
-            return { success: false, error: 'Something went wrong' };
+            return { success: false, error: 'Something went wrong' }
         }
 
-        const resBody = (await response.json()) as APIResponse<string>;
+        const resBody = (await response.json()) as APIResponse<string>
 
         if (!resBody.success) {
-            return { success: false, error: resBody.error || 'Something went wrong' };
+            return { success: false, error: resBody.error || 'Something went wrong' }
         }
 
         return { success: true }
     } catch (error) {
-        console.error('Error when linking ' + providerId, error);
+        console.error('Error when linking ' + providerId, error)
 
         if (error instanceof Error && error.message.includes('auth/credential-already-in-use')) {
-            return { success: false, error: 'This profile is already linked to a different account.' };
+            return { success: false, error: 'This profile is already linked to a different account.' }
         }
 
-        return { success: false, error: 'Something went wrong' };
+        return { success: false, error: 'Something went wrong' }
     }
 }
 
@@ -108,10 +108,10 @@ export const registerWithEmail = async (id: string, email: string, name: string,
         })
 
         if (!createResult.success) {
-            return createResult;
+            return createResult
         }
 
-        const idToken = await userCredential.user.getIdToken();
+        const idToken = await userCredential.user.getIdToken()
 
         const response = await fetch('/api/auth/sign-in', {
             method: 'POST',
@@ -119,16 +119,16 @@ export const registerWithEmail = async (id: string, email: string, name: string,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ idToken }),
-        });
+        })
 
         if (!response.ok) {
-            return { success: false, error: 'Something went wrong' };
+            return { success: false, error: 'Something went wrong' }
         }
 
-        const resBody = (await response.json()) as APIResponse<string>;
+        const resBody = (await response.json()) as APIResponse<string>
 
         if (!resBody.success) {
-            return { success: false, error: resBody.error || 'Something went wrong' };
+            return { success: false, error: resBody.error || 'Something went wrong' }
         }
 
         return { success: true }
@@ -147,7 +147,7 @@ export const signInWithEmail = async (email: string, password: string) => {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password)
 
-        const idToken = await userCredential.user.getIdToken();
+        const idToken = await userCredential.user.getIdToken()
 
         const response = await fetch('/api/auth/sign-in', {
             method: 'POST',
@@ -155,16 +155,16 @@ export const signInWithEmail = async (email: string, password: string) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ idToken }),
-        });
+        })
 
         if (!response.ok) {
-            return { success: false, error: 'Something went wrong' };
+            return { success: false, error: 'Something went wrong' }
         }
 
-        const resBody = (await response.json()) as APIResponse<string>;
+        const resBody = (await response.json()) as APIResponse<string>
 
         if (!resBody.success) {
-            return { success: false, error: resBody.error || 'Something went wrong' };
+            return { success: false, error: resBody.error || 'Something went wrong' }
         }
 
         return { success: true }
@@ -181,27 +181,27 @@ export const signInWithEmail = async (email: string, password: string) => {
 
 export async function signOut() {
     try {
-        await auth.signOut();
+        await auth.signOut()
 
         const response = await fetch('/api/auth/sign-out', {
             headers: {
                 'Content-Type': 'application/json',
             },
-        });
+        })
 
         if (!response.ok) {
-            return { success: false, error: 'Something went wrong' };
+            return { success: false, error: 'Something went wrong' }
         }
 
-        const resBody = (await response.json()) as unknown as APIResponse<string>;
+        const resBody = (await response.json()) as unknown as APIResponse<string>
     
         if (!resBody.success) {
-            return { success: false, error: resBody.error || 'Something went wrong' };
+            return { success: false, error: resBody.error || 'Something went wrong' }
         }
 
         return { success: true }
     } catch (error) {
-        console.error('Error signing out with Google', error);
+        console.error('Error signing out with Google', error)
     
         return { success: false, error: 'Something went wrong' }
     }

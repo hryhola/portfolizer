@@ -1,11 +1,11 @@
-import 'server-only';
+import 'server-only'
 
-import { initializeApp, getApps, cert } from 'firebase-admin/app';
-import 'firebase/firestore';
+import { initializeApp, getApps, cert } from 'firebase-admin/app'
+import 'firebase/firestore'
 
 // Decode the base64 string
-const firebaseAdminSdkBase64 = process.env.FIREBASE_ADMIN_CERT_BASE64!;
-const serviceAccount = JSON.parse(Buffer.from(firebaseAdminSdkBase64, 'base64').toString('utf-8'));
+const firebaseAdminSdkBase64 = process.env.FIREBASE_ADMIN_CERT_BASE64!
+const serviceAccount = JSON.parse(Buffer.from(firebaseAdminSdkBase64, 'base64').toString('utf-8'))
 
 export const adminApp =
     getApps().find((it) => it.name === 'firebase-admin-app') ||
@@ -14,5 +14,5 @@ export const adminApp =
             credential: cert(serviceAccount),
         },
         'firebase-admin-app'
-    );
+    )
 

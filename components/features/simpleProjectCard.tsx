@@ -1,6 +1,6 @@
-import { getUser, ProjectData } from '@/lib/firebase/admin/db';
-import Image from 'next/image';
-import Link from 'next/link';
+import { getUser, ProjectData } from '@/lib/firebase/admin/db'
+import Image from 'next/image'
+import Link from 'next/link'
 
 type SimpleProjectCardProps = ProjectData
 
@@ -24,5 +24,5 @@ export const SimpleProjectCard: React.FC<SimpleProjectCardProps> = async (props)
         {props.headerImageSrc
             ? <Image className='w-full max-w-[500px] min-h-52 object-center object-cover' src={props.headerImageSrc} width={500} height={272} alt='Project Picture' />
             : <div className='text-6xl flex-grow grid place-items-center'>📝</div>}
-    </div>;
+    </div>
 }

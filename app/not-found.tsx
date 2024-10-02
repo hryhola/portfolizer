@@ -1,7 +1,7 @@
 'use client'
 
-import Error from 'next/error';
+import Error from 'next/error'
 
 export default function Page() {
-    return <Error statusCode={404} withDarkMode={false} />;
+    return <Error statusCode={404} withDarkMode={false} />
 }

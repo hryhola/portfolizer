@@ -1,12 +1,12 @@
 'use client'
 
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { linkProvider } from '@/lib/firebase/client/auth';
-import { UserInfo } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
-import { FaGithub } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
+import { Button } from '@/components/ui/button'
+import { useToast } from '@/hooks/use-toast'
+import { linkProvider } from '@/lib/firebase/client/auth'
+import { UserInfo } from 'firebase/auth'
+import { useRouter } from 'next/navigation'
+import { FaGithub } from 'react-icons/fa'
+import { FcGoogle } from 'react-icons/fc'
 
 interface LinkProvidersButtonProps {
     providers: {
@@ -20,7 +20,7 @@ export const LinkProvidersButton: React.FC<LinkProvidersButtonProps> = (props) =
     const router = useRouter()
 
     const createLinkHandler = (providerId: 'google' | 'github') => async () => {
-        const result = await linkProvider(providerId);
+        const result = await linkProvider(providerId)
 
         if (result.success) {
             router.refresh()
@@ -29,7 +29,7 @@ export const LinkProvidersButton: React.FC<LinkProvidersButtonProps> = (props) =
                 title: 'Linked new provider to the account'
             })
         
-            return;
+            return
         }
 
         toast({
@@ -48,5 +48,5 @@ export const LinkProvidersButton: React.FC<LinkProvidersButtonProps> = (props) =
             <FaGithub size={16} />
             {props.providers.github?.displayName && <span className='ml-2'>{props.providers.github?.displayName}</span>}
         </Button>
-    </div>;
+    </div>
 }

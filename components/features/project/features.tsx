@@ -1,6 +1,6 @@
 import React from 'react'
-import { EditableComponentProps } from '../../ui/types';
-import { EditableFeatures } from './editableFeatures';
+import { EditableComponentProps } from '../../ui/types'
+import { EditableFeatures } from './editableFeatures'
 
 export interface FeatureData {
     id: string,
@@ -19,5 +19,5 @@ export const ProjectFeatures: React.FC<FeaturesProps> = (props) => {
             {props.mode === 'view' && props.data.map(f => <li key={f.order}>{f.text}</li>)}
             {props.mode === 'edit' && <EditableFeatures />}
         </ul>
-    </div>;
+    </div>
 }

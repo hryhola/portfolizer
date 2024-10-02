@@ -1,28 +1,28 @@
-import type { Metadata } from 'next';
-import localFont from 'next/font/local';
+import type { Metadata } from 'next'
+import localFont from 'next/font/local'
 import { Toaster } from '@/components/ui/toaster'
 import { Header } from '../components/features/header'
-import './globals.css';
+import './globals.css'
 
 const isocpeur = localFont({
     src: './fonts/ISOCPEUR.ttf',
     variable: '--font-isocpeur'
-});
+})
 
 const isocp = localFont({
     src: './fonts/ISOCP Regular.ttf',
     variable: '--font-isocp'
-});
+})
 
 const isocpeurItalic = localFont({
     src: './fonts/ISOCTEURItalic.ttf',
     variable: '--font-isocpeur-italic'
-});
+})
 
 export const metadata: Metadata = {
     title: 'Portfolizer',
     description: '',
-};
+}
 
 export default function RootLayout({
     children,
@@ -38,5 +38,5 @@ export default function RootLayout({
                 <Toaster />
             </body>
         </html>
-    );
+    )
 }

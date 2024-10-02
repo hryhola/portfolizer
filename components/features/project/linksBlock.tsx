@@ -1,7 +1,7 @@
 import React from 'react'
-import { EditableComponentProps } from '../../ui/types';
-import { cn } from '@/lib/utils';
-import { EditableLinksBlock } from './editableLinksBlock';
+import { EditableComponentProps } from '../../ui/types'
+import { cn } from '@/lib/utils'
+import { EditableLinksBlock } from './editableLinksBlock'
 
 export interface LinkData {
     id: string,
@@ -20,5 +20,5 @@ export const LinksBlock: React.FC<LinksBlockProps> = (props) => {
             {props.mode === 'view' && props.data.map(l => <li key={l.id} className='py-3'>{l.id} <a className='underline' target='_blank' href={l.url}>{l.url}</a></li>)}
             {props.mode === 'edit' && <EditableLinksBlock />}
         </ul>
-    </>;
+    </>
 }

@@ -1,12 +1,12 @@
-import Image from 'next/image';
-import { FaTelegramPlane, FaGithub, FaLinkedin } from 'react-icons/fa';
-import { BsFillTelephoneFill } from 'react-icons/bs';
-import { FaXTwitter } from 'react-icons/fa6';
-import { MdEmail } from 'react-icons/md';
-import { AddProject } from './addProject';
-import { EditUserDetails } from './editUserDetails';
-import { getCurrentUser } from '@/lib/firebase/admin/session';
-import { SignOutButton } from './signOutButton';
+import Image from 'next/image'
+import { FaTelegramPlane, FaGithub, FaLinkedin } from 'react-icons/fa'
+import { BsFillTelephoneFill } from 'react-icons/bs'
+import { FaXTwitter } from 'react-icons/fa6'
+import { MdEmail } from 'react-icons/md'
+import { AddProject } from './addProject'
+import { EditUserDetails } from './editUserDetails'
+import { getCurrentUser } from '@/lib/firebase/admin/session'
+import { SignOutButton } from './signOutButton'
 
 interface UserBlockProps {
     id: string
@@ -75,5 +75,5 @@ export const UserBlock: React.FC<UserBlockProps> = async (props) => {
                     </div>}
                 </div>
             </div>)}
-    </>;
+    </>
 }

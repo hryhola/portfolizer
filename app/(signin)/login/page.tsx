@@ -1,5 +1,5 @@
-import { LoginForm } from '@/components/features/user/loginForm';
-import Link from 'next/link';
+import { LoginForm } from '@/components/features/user/loginForm'
+import Link from 'next/link'
 
 export default async function Page() {
     return <div className='space-y-5'>

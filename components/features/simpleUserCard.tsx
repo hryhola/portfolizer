@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from 'next/image'
+import Link from 'next/link'
 
 interface SimpleUserCardProps {
     id: string
@@ -21,5 +21,5 @@ export const SimpleUserCard: React.FC<SimpleUserCardProps> = (props) => {
             </Link>
             <span>{projectsCount} {projectsCount > 1 ? 'projects' : 'project'}</span>
         </p>
-    </div>;
+    </div>
 }

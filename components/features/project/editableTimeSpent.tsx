@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useRef, useState } from 'react'
-import { TimeData } from './timeSpentChart';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
-import { useProjectContext } from './projectFormWrapper';
+import { TimeData } from './timeSpentChart'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
+import { Plus } from 'lucide-react'
+import { useProjectContext } from './projectFormWrapper'
 
 const TimeSpentRow: React.FC<TimeData> = (props) => {
     const { setTime } = useProjectContext()
@@ -97,5 +97,5 @@ export const EditableTimeSpent: React.FC = () => {
             </li>
             {message && <li className='text-sm text-destructive'>{message}</li>}
         </ul>
-    </div>;
+    </div>
 }

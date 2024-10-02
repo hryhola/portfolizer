@@ -1,9 +1,9 @@
 'use client'
 
-import { useRouter } from 'next/navigation';
-import { signOut } from '@/lib/firebase/client/auth';
-import { Button } from '../ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation'
+import { signOut } from '@/lib/firebase/client/auth'
+import { Button } from '../ui/button'
+import { useToast } from '@/hooks/use-toast'
 
 export const SignOutButton: React.FC = () => {
     const router = useRouter()
@@ -23,5 +23,5 @@ export const SignOutButton: React.FC = () => {
         }
     }
 
-    return <Button onClick={handleSignOut} variant='link'>Sign Out</Button>;
+    return <Button onClick={handleSignOut} variant='link'>Sign Out</Button>
 }

@@ -1,11 +1,11 @@
 'use client'
 
-import { AlertDialogHeader, AlertDialogFooter } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
-import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogTitle, AlertDialogDescription, AlertDialogCancel, AlertDialogAction } from '@/components/ui/alert-dialog';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { deleteProject } from '@/lib/firebase/client/db';
-import { useToast } from '@/hooks/use-toast';
+import { AlertDialogHeader, AlertDialogFooter } from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogTitle, AlertDialogDescription, AlertDialogCancel, AlertDialogAction } from '@/components/ui/alert-dialog'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { deleteProject } from '@/lib/firebase/client/db'
+import { useToast } from '@/hooks/use-toast'
 
 interface PreEditButtonsProps {
     projectName: string
@@ -24,13 +24,13 @@ export const PreEditButtons: React.FC<PreEditButtonsProps> = (props) => {
 
         query.append('mode', 'edit')
 
-        const newUrl = `${window.location.pathname}?${query.toString()}`;
+        const newUrl = `${window.location.pathname}?${query.toString()}`
 
         router.replace(newUrl)
     }
 
     const handleDelete = async () => {
-        const result = await deleteProject(props.projectUid);
+        const result = await deleteProject(props.projectUid)
 
         if (!result.success) {
             toast.toast({
@@ -39,14 +39,14 @@ export const PreEditButtons: React.FC<PreEditButtonsProps> = (props) => {
                 description: result.error || 'Something went wrong'
             })
 
-            return;
+            return
         }
 
         toast.toast({
             description: 'Deleted project ' + props.projectId
         })
 
-        router.push('/' + props.authorId);
+        router.push('/' + props.authorId)
         router.refresh()
     }
 
@@ -71,5 +71,5 @@ export const PreEditButtons: React.FC<PreEditButtonsProps> = (props) => {
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
-    </div>;
+    </div>
 }

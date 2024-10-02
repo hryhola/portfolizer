@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
 import React, { useState } from 'react'
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
+import { Input } from '../ui/input'
+import { Button } from '../ui/button'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -20,11 +20,11 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
-import { cn } from '@/lib/utils';
-import { createProject, isProjectIdAvailable } from '@/lib/firebase/client/db';
-import { IoAddOutline } from 'react-icons/io5';
-import { useRouter } from 'next/navigation';
-import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils'
+import { createProject, isProjectIdAvailable } from '@/lib/firebase/client/db'
+import { IoAddOutline } from 'react-icons/io5'
+import { useRouter } from 'next/navigation'
+import { useToast } from '@/hooks/use-toast'
 
 const formSchema = z.object({
     id: z.string().regex(/^[0-9a-zA-Z-_]+$/).min(1).max(50)
@@ -53,16 +53,16 @@ export const AddProject: React.FC<AddProjectProps> = (props) => {
 
         if (!isAvailable) {
             setIsLoading(false)
-            form.setError('id', { message: 'This project id is not available' });
-            return;
+            form.setError('id', { message: 'This project id is not available' })
+            return
         }
 
         const result = await createProject(props.authorUid, values.id)
 
         if (!result.success) {
-            form.setError('id', { message: result.error });
+            form.setError('id', { message: result.error })
             setIsLoading(false)
-            return;
+            return
         }
 
         setIsLoading(false)
@@ -72,7 +72,7 @@ export const AddProject: React.FC<AddProjectProps> = (props) => {
             description: 'Redirecting...'
         })
     
-        router.push(`${props.authorId}/${values.id}?mode=edit`);
+        router.push(`${props.authorId}/${values.id}?mode=edit`)
     }
 
     return <Dialog open={open} onOpenChange={setOpen}>
@@ -111,5 +111,5 @@ export const AddProject: React.FC<AddProjectProps> = (props) => {
                 </form>
             </Form>
         </DialogContent>
-    </Dialog>;
+    </Dialog>
 }

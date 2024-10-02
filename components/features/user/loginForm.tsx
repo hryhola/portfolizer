@@ -1,5 +1,5 @@
-'use client';
-import { useRouter } from 'next/navigation';
+'use client'
+import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -14,11 +14,11 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
-import { signInWithEmail, signInWithProvider } from '@/lib/firebase/client/auth';
-import { useState } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import { FcGoogle } from 'react-icons/fc'
+import { FaGithub } from 'react-icons/fa'
+import { signInWithEmail, signInWithProvider } from '@/lib/firebase/client/auth'
+import { useState } from 'react'
+import { useToast } from '@/hooks/use-toast'
 
 const formSchema = z.object({
     email: z.string().email().min(1).max(50),
@@ -37,7 +37,7 @@ export const LoginForm: React.FC = () => {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true)
 
-        const result = await signInWithEmail(values.email, values.password);
+        const result = await signInWithEmail(values.email, values.password)
 
         setIsLoading(false)
 
@@ -47,7 +47,7 @@ export const LoginForm: React.FC = () => {
                 description: 'Redirecting...'
             })
             router.refresh()
-            return;
+            return
         }
 
         setFormError(result.error || 'Something went wrong')
@@ -56,7 +56,7 @@ export const LoginForm: React.FC = () => {
     const createProviderSignInHandler = (provider: 'google' | 'github') => async () => {
         setIsLoading(true)
 
-        const result = await signInWithProvider(provider);
+        const result = await signInWithProvider(provider)
 
         console.log(result)
 
@@ -128,5 +128,5 @@ export const LoginForm: React.FC = () => {
                 </Button>
             </div>
         </form>
-    </Form>;
+    </Form>
 }

@@ -1,8 +1,8 @@
 import React from 'react'
-import { MdSignalCellular1Bar, MdSignalCellular2Bar , MdSignalCellular4Bar  } from 'react-icons/md';
-import { IoIosInformationCircleOutline } from 'react-icons/io';
-import { cn } from '@/lib/utils';
-import { Tip } from '@/components/ui/tip';
+import { MdSignalCellular1Bar, MdSignalCellular2Bar , MdSignalCellular4Bar  } from 'react-icons/md'
+import { IoIosInformationCircleOutline } from 'react-icons/io'
+import { cn } from '@/lib/utils'
+import { Tip } from '@/components/ui/tip'
 
 export type ComplexityLevelValue = 'Low' | 'Medium' | 'High'
 
@@ -13,7 +13,7 @@ type Props = {
 }
 
 const ComplexityLevel = (props: Props) => {
-    let LevelIcon = MdSignalCellular4Bar;
+    let LevelIcon = MdSignalCellular4Bar
 
     if (props.level === 'Medium') {
         LevelIcon = MdSignalCellular2Bar

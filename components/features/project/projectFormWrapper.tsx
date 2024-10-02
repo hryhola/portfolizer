@@ -1,20 +1,20 @@
-'use client';
+'use client'
 
 import React, { FormEventHandler, createContext, useContext, useRef, useState } from 'react'
-import { StackData } from './stackBlock';
-import { ComplexityLevelData } from './complexityLevelsBlock';
-import { LinkData } from './linksBlock';
-import { TimeData } from './timeSpentChart';
-import { FeatureData } from './features';
-import { PhotosData } from './projectPhotos';
-import { ProjectData } from '@/lib/firebase/admin/db';
-import { packRecords } from '@/lib/object';
-import { useToast } from '@/hooks/use-toast';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { updateProject } from '@/lib/firebase/client/db';
-import { MAX_IMAGE_SIZE } from '@/lib/const';
-import { cleanUpStorage, uploadProjectPicture } from '@/lib/firebase/client/storage';
-import { cn } from '@/lib/utils';
+import { StackData } from './stackBlock'
+import { ComplexityLevelData } from './complexityLevelsBlock'
+import { LinkData } from './linksBlock'
+import { TimeData } from './timeSpentChart'
+import { FeatureData } from './features'
+import { PhotosData } from './projectPhotos'
+import { ProjectData } from '@/lib/firebase/admin/db'
+import { packRecords } from '@/lib/object'
+import { useToast } from '@/hooks/use-toast'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { updateProject } from '@/lib/firebase/client/db'
+import { MAX_IMAGE_SIZE } from '@/lib/const'
+import { cleanUpStorage, uploadProjectPicture } from '@/lib/firebase/client/storage'
+import { cn } from '@/lib/utils'
 
 const FormContext = createContext<{
     stack: StackData[]
@@ -58,8 +58,8 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
     const formRef = useRef<HTMLFormElement>(null)
 
     const toast = useToast()
-    const router = useRouter();
-    const searchParams = useSearchParams();
+    const router = useRouter()
+    const searchParams = useSearchParams()
 
     const uploadPictures = async (formData: FormData) => {
         const files = photos
@@ -78,11 +78,11 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
                 description: 'Max file size is 5 mb'
             })
 
-            return false;
+            return false
         }
 
         const uploadTasks = await Promise.all(files.map(async f => {
-            const result = await uploadProjectPicture(props.uid, f.file);
+            const result = await uploadProjectPicture(props.uid, f.file)
 
             if (!result.success) {
                 toast.toast({
@@ -109,7 +109,7 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
                 }
             }
 
-            return photo;
+            return photo
         })
 
         const headerResult = uploadTasks.find(t => t.localFile === localHeaderImageFile)
@@ -123,14 +123,14 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
 
-        setIsLoading(true);
+        setIsLoading(true)
 
-        const formData = new FormData(formRef.current!);
+        const formData = new FormData(formRef.current!)
 
         const imageUploadResult = await uploadPictures(formData)
 
         if (!imageUploadResult) {
-            return;
+            return
         }
 
         const [newHeaderSrc, newPhotos] = imageUploadResult
@@ -140,7 +140,7 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
             [newHeaderSrc ? newHeaderSrc : props.headerImageSrc, ...newPhotos.map(p => p.src)].filter(p => typeof p === 'string')
         ).catch(e => console.error(e))
 
-        const name = formData.get('name');
+        const name = formData.get('name')
 
         if (typeof name !== 'string') {
             setIsLoading(false)
@@ -177,7 +177,7 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
         }
 
 
-        const result = await updateProject(props.uid, project);
+        const result = await updateProject(props.uid, project)
 
         setIsLoading(false)
     
@@ -197,7 +197,7 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
     
         const query = new URLSearchParams(searchParams.toString())
         query.delete('mode')
-        const newUrl = `${window.location.pathname}?${query.toString()}`;
+        const newUrl = `${window.location.pathname}?${query.toString()}`
 
         router.push(newUrl)
         router.refresh()
@@ -221,5 +221,5 @@ export const ProjectFormWrapper: React.FC<ProjectFormWrapperProps> = (props) => 
             onSubmit={handleSubmit}
             ref={formRef}
         >{props.children}</form>
-    </FormContext.Provider>;
+    </FormContext.Provider>
 }

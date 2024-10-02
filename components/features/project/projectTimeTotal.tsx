@@ -1,13 +1,13 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils'
 import React from 'react'
 import { EditableComponentProps } from '@/components/ui/types'
-import { MdAccessTime } from 'react-icons/md';
-import { Input } from '@/components/ui/input';
+import { MdAccessTime } from 'react-icons/md'
+import { Input } from '@/components/ui/input'
 
 type ProjectTimeTotalProps = EditableComponentProps;
 
 export const ProjectTimeTotal: React.FC<ProjectTimeTotalProps> = (props) => {
-    const textClasses = 'text-xl sm:text-5xl font-bold sm:font-normal text-right whitespace-nowrap';
+    const textClasses = 'text-xl sm:text-5xl font-bold sm:font-normal text-right whitespace-nowrap'
     
     return <h3 className={cn(textClasses, 'flex items-center justify-end gap-1 sm:gap-4', props.className)}>
         {(typeof props.value === 'number' || props.mode === 'edit') && <>
@@ -23,5 +23,5 @@ export const ProjectTimeTotal: React.FC<ProjectTimeTotalProps> = (props) => {
                 : props.value}
             h
         </>}
-    </h3>;
+    </h3>
 }

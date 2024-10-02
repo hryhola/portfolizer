@@ -1,16 +1,16 @@
 
-'use client';
+'use client'
 
-import { cn } from '@/lib/utils';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip';
-import React from 'react';
+import { cn } from '@/lib/utils'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip'
+import React from 'react'
 
 export const Tip = ({
     content,
     children,
     className
 }: React.PropsWithChildren<{ content: string | React.ReactNode; className?: string }>) => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false)
   
     return (
         <TooltipProvider delayDuration={0}>
@@ -24,8 +24,8 @@ export const Tip = ({
                         onMouseLeave={() => setOpen(false)}
                         onTouchStart={() => setOpen(!open)}
                         onKeyDown={(e) => {
-                            e.preventDefault();
-                            if (e.key === 'Enter') setOpen(!open);
+                            e.preventDefault()
+                            if (e.key === 'Enter') setOpen(!open)
                         }}
                     >
                         {children}
@@ -36,5 +36,5 @@ export const Tip = ({
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>
-    );
-};
+    )
+}

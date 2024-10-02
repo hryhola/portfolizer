@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
 import React, { useState } from 'react'
-import { EditableComponentProps } from '../../ui/types';
-import { ImageUp } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { EditableComponentProps } from '../../ui/types'
+import { ImageUp } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input'
 
 interface EditableHeaderImageProps extends EditableComponentProps {
     value?: string
@@ -33,5 +33,5 @@ export const EditableHeaderImage: React.FC<EditableHeaderImageProps> = (props) =
             />
         </div>
         <Image className={cn(props.className, { 'opacity-50': props.mode === 'edit' })} src={src!} alt={props.alt} width={props.width} height={props.height} />;
-    </div>;
+    </div>
 }

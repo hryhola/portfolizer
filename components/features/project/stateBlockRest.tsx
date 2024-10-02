@@ -1,9 +1,9 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import type { StackData } from './stackBlock';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react'
+import { cn } from '@/lib/utils'
+import type { StackData } from './stackBlock'
+import { Button } from '@/components/ui/button'
 
 export const StateBlockRest: React.FC<{ data: StackData[] }> = (props) => {
     const [isExpanded, setIsExpanded] = useState(false)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils'
 
 export type TimeData = {
   id: string
@@ -15,22 +15,22 @@ type Props = {
 export const TimeSpentChart = (props: Props) => {
     let cleanedData = props.data
 
-    const sortedData = [...props.data].sort((a, b) => b.minutes - a.minutes);
+    const sortedData = [...props.data].sort((a, b) => b.minutes - a.minutes)
 
     if (sortedData.length > 5) {
-        const first4bars = sortedData.slice(0, 4);
-        const restBars = sortedData.slice(4, sortedData.length);
+        const first4bars = sortedData.slice(0, 4)
+        const restBars = sortedData.slice(4, sortedData.length)
         const other = restBars.reduce((acc, curr) => ({
             ...curr,
             id: 'other',
             label: 'Other',
             minutesSpent: curr.minutes + acc.minutes
-        }), { id: 'other', details: 'Other', minutes: 0 });
+        }), { id: 'other', details: 'Other', minutes: 0 })
 
         cleanedData = [...first4bars, other]
     }
 
-    const totalMinutes = cleanedData.reduce((sum, data) => sum + data.minutes, 0);
+    const totalMinutes = cleanedData.reduce((sum, data) => sum + data.minutes, 0)
 
 
     cleanedData.forEach(bar => {
