@@ -45,11 +45,12 @@ export const TimeSpentChart = (props: Props) => {
         'bg-chart-5'
     ]
 
-    return <div className='flex flex-col md:flex-row flex-wrap items-center md:items-stretch justify-start w-full md:border border-black rounded'>
+    return <div className='flex flex-col md:flex-row flex-wrap items-center md:items-stretch justify-start w-full md:border border-black rounded md:shadow-lg'>
         {cleanedData.map((b, i) => <div
             key={b.id}
-            style={{ width: b.percentOfMinutesSpent + '%' }}
+            style={{ maxWidth: b.percentOfMinutesSpent + '%' }}
             className={cn(
+                'flex-grow text-sm',
                 bgColors[i],
                 'p-2 text-white font-semibold flex justify-center items-center min-w-16 border-black',
                 {
@@ -58,7 +59,7 @@ export const TimeSpentChart = (props: Props) => {
                     'rounded md:rounded-none border md:border-none my-px md:my-0 text-center': i !== 0 && i !== cleanedData.length - 1
                 }
             )}>
-            {(b.minutes / 60).toFixed(2) + 'h ' + b.id}
+            {<span className='drop-shadow-md'>{(b.minutes / 60).toFixed(2) + 'h ' + b.id}</span>}
         </div>)}
     </div>
 }

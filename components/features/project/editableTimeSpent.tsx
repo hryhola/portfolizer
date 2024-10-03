@@ -80,7 +80,7 @@ export const EditableTimeSpent: React.FC = () => {
 
     return <div className='mt-10 text-center'>
         <h3 className='font-mono mb-3'>Time</h3>
-        <ul className='space-y-2'>
+        <ul className='space-y-2 mb-3'>
             {time.map(t => <TimeSpentRow key={t.id} {...t} />)}
             <li className='flex max-w-[550px] mx-auto'>
                 <Input className='rounded-r-none'

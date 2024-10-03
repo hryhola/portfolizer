@@ -42,7 +42,7 @@ export function TimeSpentChartDetails(props: Props) {
             <AccordionItem className='border-0' value='item-1'>
                 <AccordionTrigger className='justify-center gap-4'>time spent in details</AccordionTrigger>
                 <AccordionContent>
-                    <div className='grid grid-cols-2 border border-black rounded'>
+                    <div className='grid grid-cols-2 border border-black rounded p-5 md:p-0 shadow-lg'>
                         <ChartContainer
                             config={chartConfig}
                             className='aspect-square h-72 md:h-96 col-span-2 md:col-auto mx-auto md:ml-auto md:mr-0'
@@ -60,9 +60,9 @@ export function TimeSpentChartDetails(props: Props) {
                                 />
                             </PieChart>
                         </ChartContainer>
-                        <div className='flex flex-col justify-center space-y-5'>
+                        <div className='flex col-span-2 md:col-auto flex-col justify-center space-y-5'>
                             <h4 className='text-2xl font-semibold'>Time</h4>
-                            <ul className='space-y-2 max-w-[500px]'>
+                            <ul className='space-y-2 md:max-w-[500px]'>
                                 {processedData.map(r => <li className='' key={r.id}>
                                     <p className='flex gap-4 items-center text-xl'><span className='size-3' style={{ background: r.fill }} ></span> {r.id}: {r.minutes} min</p>
                                     {r.details ? <p className='text-gray-500'>{r.details}</p> : <></>}
