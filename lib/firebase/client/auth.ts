@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, linkWithPopup, signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, linkWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth'
 
 import type { APIResponse } from '@/types'
 import { auth } from './index'
@@ -202,6 +202,20 @@ export async function signOut() {
         return { success: true }
     } catch (error) {
         console.error('Error signing out with Google', error)
+    
+        return { success: false, error: 'Something went wrong' }
+    }
+}
+
+export async function sendResetPasswordEmail(email: string) {
+    try {
+        await sendPasswordResetEmail(auth, email)
+
+        return {
+            success: true
+        }
+    } catch (error) {
+        console.error('Error resetting password', error)
     
         return { success: false, error: 'Something went wrong' }
     }

@@ -19,6 +19,7 @@ import { FaGithub } from 'react-icons/fa'
 import { signInWithEmail, signInWithProvider } from '@/lib/firebase/client/auth'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
+import Link from 'next/link'
 
 const formSchema = z.object({
     email: z.string().email().min(1).max(50),
@@ -117,6 +118,7 @@ export const LoginForm: React.FC = () => {
                     </FormItem>
                 )}
             />
+            <p className='text-sm'>Forget password? <Link className='hover:underline' href='/reset-password'>Sent reset link</Link></p>
             {formError && <p className='text-sm text-destructive'>{formError}</p>}
             <div className='flex items-stretch gap-2'>
                 <Button className='shadow-md shadow-gray-500' disabled={isLoading} type='submit'>Login</Button>
