@@ -52,7 +52,7 @@ export const UserBlock: React.FC<UserBlockProps> = async (props) => {
     const isCurrentUserPage = currentUser && currentUser.id === props.id
 
     return <>
-        <div className='flex justify-between items-center'>
+        <div className='flex justify-between flex-wrap items-center'>
             <h1 className='text-5xl font-bold drop-shadow-md'>{props.name}</h1>
             {isCurrentUserPage && <SignOutButton />}
         </div>

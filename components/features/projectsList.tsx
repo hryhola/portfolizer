@@ -99,7 +99,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
                     checked={onlyCommercialProjects}
                     onCheckedChange={(val) => setOnlyCommercialProjects(typeof val === 'boolean' ? val : false)}
                 />
-                <Label className='whitespace-nowrap ml-2 mr-3 hover:cursor-pointer'
+                <Label className='whitespace-nowrap ml-2 mr-3 hover:cursor-pointer text-xs sm:text-sm'
                     htmlFor='commercial'
                     onClick={() => setOnlyCommercialProjects(prev => !prev)}
                 >
@@ -112,14 +112,14 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
                 />
             </div>
 
-            <div className='xl:ml-4 md:col-span-1 flex items-center self-baseline gap-2'>
-                <Button className='px-1 space-x-2' variant='ghost'
+            <div className='xl:ml-4 md:col-span-1 flex items-center self-baseline gap-1 sm:gap-2'>
+                <Button className='px-1 space-x-px sm:space-x-2' variant='ghost'
                     onClick={() => setSortDirection((prev) => prev === 'ascending' ? 'descending' : 'ascending')}
                 >
-                    <Label className='whitespace-nowrap cursor-pointer drop-shadow-sm' htmlFor='sort-projects-by'>Sort by</Label>
+                    <Label className='whitespace-nowrap cursor-pointer drop-shadow-sm text-xs sm:text-sm' htmlFor='sort-projects-by'>Sort by</Label>
                     {sortDirection === 'ascending'
-                        ? <ArrowUpWideNarrow />
-                        : <ArrowDownWideNarrow />}
+                        ? <ArrowUpWideNarrow className='scale-75 sm:scale-100' />
+                        : <ArrowDownWideNarrow className='scale-75 sm:scale-100' />}
                 </Button>
                 
                 <Select name='sort-projects-by' value={sortBy} onValueChange={(value: SortByType) => setSortBy(value)}>
@@ -136,7 +136,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
             </div>
 
             <div className='xl:ml-4 sm:col-span-3 md:col-span-1 flex items-center gap-2'>
-                <Label htmlFor='filter-projects-by' className='whitespace-nowrap'>Filter by</Label>
+                <Label htmlFor='filter-projects-by' className='whitespace-nowrap text-xs sm:text-sm'>Filter by</Label>
                 <MultiSelect
                     className='flex-grow border-gray-500 shadow-lg'
                     name='filter-projects-by'

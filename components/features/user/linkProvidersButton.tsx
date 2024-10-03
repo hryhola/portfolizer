@@ -39,7 +39,7 @@ export const LinkProvidersButton: React.FC<LinkProvidersButtonProps> = (props) =
         })
     }
 
-    return <div className='space-x-2'>
+    return <div className='flex gap-2 flex-wrap'>
         <Button variant='outline' onClick={createLinkHandler('google')} disabled={!!props.providers.google?.displayName}>
             <FcGoogle size={16} />
             {props.providers.google?.displayName && <span className='ml-2'>{props.providers.google?.displayName}</span>}

@@ -23,5 +23,5 @@ export const SignOutButton: React.FC = () => {
         }
     }
 
-    return <Button onClick={handleSignOut} variant='link'>Sign Out</Button>
+    return <Button className='px-1 relative top-1' onClick={handleSignOut} variant='link'>Sign Out</Button>
 }

@@ -11,7 +11,7 @@ interface HeaderImageProps extends EditableComponentProps {
 export const HeaderImage: React.FC<HeaderImageProps> = (props) => {
     const width = 1400
     const height = 300
-    const className = 'w-full h-80 object-cover border-b border-black'
+    const className = 'w-full h-24 sm:h-40 md:h-52 xl-60 2xl:h-80 object-cover border-b border-black'
     const alt='Project Header Image'
 
     if (props.mode === 'edit') {
