@@ -1,20 +1,15 @@
-'use client';
+'use client'
 
 import React from 'react'
-import { FeatureData } from './features';
-import { moveOrderedElementUp, moveOrderedElementDown } from '@/lib/array';
-import { Plus } from 'lucide-react';
-import { v4 } from 'uuid';
-import { useProjectContext } from './projectFormWrapper';
-import { Button } from '@/components/ui/button';
-import { EditButtons } from '@/components/ui/editButtons';
-import { Textarea } from '@/components/ui/textarea';
+import { moveOrderedElementUp, moveOrderedElementDown } from '@/lib/array'
+import { Plus } from 'lucide-react'
+import { v4 } from 'uuid'
+import { useProjectContext } from './projectFormWrapper'
+import { Button } from '@/components/ui/button'
+import { EditButtons } from '@/components/ui/editButtons'
+import { Textarea } from '@/components/ui/textarea'
 
-interface EditableFeaturesProps {
-    data: FeatureData[]
-}
-
-export const EditableFeatures: React.FC<EditableFeaturesProps> = (props) => {
+export const EditableFeatures: React.FC = () => {
     const { features, setFeatures } = useProjectContext()
 
     const handleRemove: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -55,8 +50,8 @@ export const EditableFeatures: React.FC<EditableFeaturesProps> = (props) => {
             <div className='flex mb-1'>
                 <EditButtons id={f.id} onDown={handleDown} onRemove={handleRemove} onUp={handleUp} />
             </div>
-            <Textarea defaultValue={f.text} />
+            <Textarea id={`feature-${f.id}-text`} name={`feature-${f.id}-text`} defaultValue={f.text} />
         </li>)}
         <li><Button type='button' onClick={handleAdd}><Plus /></Button></li>
-    </>;
+    </>
 }

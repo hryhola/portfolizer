@@ -1,7 +1,6 @@
-import { ChevronUp, ChevronDown } from 'lucide-react';
+import { ChevronUp, ChevronDown } from 'lucide-react'
 import React from 'react'
-import { Button } from './button';
-import { cn } from '@/lib/utils';
+import { Button } from './button'
 
 interface EditButtonsProps {
     id: string,
@@ -14,7 +13,7 @@ interface EditButtonsProps {
 export const EditButtons: React.FC<EditButtonsProps> = (props) => {
     return <>
         <Button variant='ghost'
-            type="button"
+            type='button'
             onClick={props.onRemove}
             data-id={props.id}
         >{ props.removeButtonContent ? props.removeButtonContent : '❌' }</Button>
@@ -34,5 +33,5 @@ export const EditButtons: React.FC<EditButtonsProps> = (props) => {
         >
             <ChevronDown />
         </Button>
-    </>;
+    </>
 }
