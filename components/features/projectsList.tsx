@@ -8,6 +8,7 @@ import { MultiSelect } from '@/components/ui/multi-select'
 import { ProjectCard, ProjectCardProps } from './projectCard'
 import { Button } from '@/components/ui/button'
 import { ArrowDownWideNarrow, ArrowUpWideNarrow } from 'lucide-react'
+import { Checkbox } from '../ui/checkbox'
 
 type SortByType = 'date-created' | 'work-hours' | 'complexity'
 type SortDirection = 'ascending' | 'descending'
@@ -21,6 +22,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
     const [sortDirection, setSortDirection] = useState<SortDirection>('descending')
     const [sortBy, setSortBy] = useState<SortByType>('date-created')
     const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([])
+    const [onlyCommercialProjects, setOnlyCommercialProjects] = useState(false)
 
     const [list, setList] = useState(props.projects)
 
@@ -75,6 +77,10 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
     useEffect(() => {
         let filtered = props.projects
 
+        if (onlyCommercialProjects) {
+            filtered = props.projects.filter(p => p.client?.length)
+        }
+
         if (selectedFrameworks.length) {
             filtered = props.projects.filter(p => p.frameworks.some(f => selectedFrameworks?.includes(f)))
         }
@@ -84,15 +90,27 @@ export const ProjectsList: React.FC<ProjectsListProps> = (props) => {
         }
 
         setList(sortList(filtered, sortBy, sortDirection))
-    }, [searchText, sortBy, sortDirection, selectedFrameworks])
+    }, [searchText, sortBy, sortDirection, selectedFrameworks, onlyCommercialProjects])
 
     return <>
         <div className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols-[3fr_1fr_2fr] gap-2'>
-            <Input className='sm:col-span-2 md:col-span-1 border-gray-500 drop-shadow-lg'
-                placeholder='Search'
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-            />
+            <div className='sm:col-span-2 md:col-span-1 flex items-center'>
+                <Checkbox name='commercial'
+                    checked={onlyCommercialProjects}
+                    onCheckedChange={(val) => setOnlyCommercialProjects(typeof val === 'boolean' ? val : false)}
+                />
+                <Label className='whitespace-nowrap ml-2 mr-3 hover:cursor-pointer'
+                    htmlFor='commercial'
+                    onClick={() => setOnlyCommercialProjects(prev => !prev)}
+                >
+                    Only Commercial Projects
+                </Label>
+                <Input className=' border-gray-500 drop-shadow-lg'
+                    placeholder='Search'
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                />
+            </div>
 
             <div className='xl:ml-4 md:col-span-1 flex items-center self-baseline gap-2'>
                 <Button className='px-1 space-x-2' variant='ghost'

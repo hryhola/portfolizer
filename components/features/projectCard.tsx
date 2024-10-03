@@ -22,7 +22,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
     return <div style={{ backgroundImage: props.headerImageSrc ? `url(${props.headerImageSrc})` : 'none' }}
         className='bg-cover bg-center flex justify-between min-h-32 border border-black rounded overflow-hidden drop-shadow-lg'
     >
-        <div className='bg-white min-w-44 p-5 border-r border-black'>
+        <div className='bg-white lg:min-w-56 p-5 border-r border-black grid grid-rows-[min-content]'>
             {!props.published && <p className='uppercase font-italic tracking-[-2px] font-bold text-sm'>unpublished</p>}
             <h3 className='text-2xl'>
                 <Link className='hover:underline' href={props.authorId + '/' + props.id}>
@@ -40,7 +40,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = (props) => {
                 &nbsp;
                 {props.totalComplexity} Complexity
             </p>}
-            <p>{props.client}</p>
+            {props.client && <p className='self-end font-italic tracking-[-0.25em]'>{props.client}</p>}
         </div>
         <div className='bg-gradient-to-l w-1/2 md:w-1/4 from-white grid justify-end text-right p-5'>
             {props.frameworks.length ? <ul className=''>
