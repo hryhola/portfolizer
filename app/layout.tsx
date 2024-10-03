@@ -20,8 +20,8 @@ const isocpeurItalic = localFont({
 })
 
 export const metadata: Metadata = {
-    title: 'Portfolizer',
-    description: '',
+    title: 'Portfolizer — Show Your Portfolio Everyone',
+    description: 'Portfolizer — Showcase your portfolio to everyone. Sign up easily via email, Google, or GitHub. Create and publish detailed projects with descriptions, clients, complexity, timelines, links, features, and photos. Share your work and grow your presence!',
 }
 
 export default function RootLayout({

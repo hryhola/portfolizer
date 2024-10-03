@@ -1,11 +1,27 @@
 import { UserBlock } from '@/components/features/userBlock'
 import { UserProjectsList } from '@/components/features/userProjectsList'
 import { getUser } from '@/lib/firebase/admin/db'
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 type Page = {
-    searchParams: { mode: string },
     params: { authorId: string }
+}
+
+export async function generateMetadata({ params }: Page): Promise<Metadata> {
+    const user = await getUser({ id: params.authorId })
+
+    if (!user) {
+        return {}
+    }
+
+    return {
+        title: `${user.name} | Portfolizer`,
+        description: user.bio,
+        openGraph: {
+            images: user.imageSrc ? [user.imageSrc] : [],
+        },
+    }
 }
 
 export default async function Page(page: Page) {

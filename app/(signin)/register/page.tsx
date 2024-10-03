@@ -1,5 +1,10 @@
 import { RegisterForm } from '@/components/features/user/registerForm'
+import { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+    title: 'Register — Portfolizer',
+}
 
 export default function Page() {
     return <div className='space-y-5'>

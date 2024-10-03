@@ -1,3 +1,6 @@
+import { notFound } from 'next/navigation'
+import { FC } from 'react'
+import { Metadata } from 'next'
 import { ComplexityLevelsBlock } from '@/components/features/project/complexityLevelsBlock'
 import { EditApproveButtons } from '@/components/features/project/editApproveButtons'
 import { ProjectFeatures } from '@/components/features/project/features'
@@ -15,16 +18,30 @@ import { StackBlock } from '@/components/features/project/stackBlock'
 import { getProject } from '@/lib/firebase/admin/db'
 import { getCurrentUser } from '@/lib/firebase/admin/session'
 import { unpackRecords } from '@/lib/object'
-import { notFound } from 'next/navigation'
-import { FC } from 'react'
 
 type Page = {
     searchParams: { mode: string },
     params: { authorId: string, projectId: string }
 }
 
+export async function generateMetadata({ params }: Page): Promise<Metadata> {
+    const project = await getProject(params.authorId, params.projectId)
+
+    if (!project) {
+        return {}
+    }
+
+    return {
+        title: `${project.name} — ${project.authorName}  | Portfolizer`,
+        description: project.description,
+        openGraph: {
+            images: project.headerImageSrc ? [project.headerImageSrc] : []
+        },
+    }
+}
+
 export default async function Page(page: Page) {
-    const project = await getProject(page.params.authorId, page.params.projectId)!
+    const project = await getProject(page.params.authorId, page.params.projectId)
 
     if (!project) {
         return notFound()
