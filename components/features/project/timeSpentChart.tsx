@@ -50,9 +50,9 @@ export const TimeSpentChart = (props: Props) => {
             key={b.id}
             style={{ maxWidth: b.percentOfMinutesSpent + '%' }}
             className={cn(
-                'flex-grow text-sm',
+                'text-sm text-center text-white font-semibold',
                 bgColors[i],
-                'p-2 text-white font-semibold flex justify-center items-center min-w-16 border-black',
+                'p-2 flex-grow flex justify-center items-center min-w-16 border-black overflow-hidden',
                 {
                     'rounded-l rounded-r md:rounded-r-none border md:border-none': i === 0,
                     'rounded-r rounded-l md:rounded-l-none border md:border-none': i === cleanedData.length - 1,
