@@ -1,8 +1,10 @@
 import { UserBlock } from '@/components/features/userBlock'
 import { UserProjectsList } from '@/components/features/userProjectsList'
+import { ProjectsListSkeleton } from '@/components/ui/skeletons/projectsListSkeleton'
 import { getUser } from '@/lib/firebase/admin/db'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
 
 type Page = {
     params: { authorId: string }
@@ -33,6 +35,8 @@ export default async function Page(page: Page) {
 
     return <div className='container mx-auto px-5 my-5 space-y-5'>
         <UserBlock {...user} />
-        <UserProjectsList user={user} />
-    </div> 
+        <Suspense fallback={<ProjectsListSkeleton />}>
+            <UserProjectsList user={user} />
+        </Suspense>
+    </div>
 }
